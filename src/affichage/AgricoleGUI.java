@@ -1,13 +1,14 @@
 package affichage;
 
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -15,6 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.JTextField;
 
 public class AgricoleGUI extends JFrame implements ActionListener {
 
@@ -22,22 +24,29 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private JPanel contentPane, carte, grille;
 	private JMenuBar menu;
 	private JMenu Fichier, Apparence;
-	private JMenuItem ouvrir, quitter, sombre, clair, Aide;
-	private JButton recherche;
+	private JMenuItem recherche, quitter, sombre, clair, Aide;
+	private JTextField nomcarte, info;
+	private ImageIcon img;
+	private Image drone;
 	
 	public AgricoleGUI(){
 		super("Vision Détection : Agricole");
 		
-		setMinimumSize(new Dimension(800, 650));
+		setMinimumSize(new Dimension(1250, 720));
 		setPreferredSize(new Dimension(2000, 800));
 		
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.GRAY);
 		contentPane.setBorder(null);
 		contentPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		setContentPane(contentPane);
+		String pwd = System.getProperty("user.dir");
+		img = new ImageIcon(pwd + "/src/affichage/drone.png");
+		drone = img.getImage();
+		drone = drone.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		
 		menu = new JMenuBar();
 		setJMenuBar(menu);
@@ -67,9 +76,9 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		menu.add(Aide);		
 		Aide.addActionListener(this);
 		
-		ouvrir = new JMenuItem("Ouvrir");
-		Fichier.add(ouvrir);
-		ouvrir.addActionListener(this);
+		recherche = new JMenuItem("Nouvelle Recherche");
+		Fichier.add(recherche);
+		recherche.addActionListener(this);
 		
 		quitter = new JMenuItem("Quitter/Fermer Vision Détection");
 		Fichier.add(quitter);
@@ -84,11 +93,33 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		clair.addActionListener(this);
 		contentPane.setLayout(null);
 		
-		recherche =  new JButton ("Nouvelle recherche");
-		recherche.setBackground(new Color(204, 190, 121));
-		getContentPane().add(recherche);
-		recherche.addActionListener(this);
-		recherche.setBounds(10, 10, 150, 25);
+		carte = new JPanel();
+		carte.setBackground(new Color(0, 128, 128));
+		carte.setBounds(274, 50, 950, 600);
+		contentPane.add(carte);
+		
+		nomcarte = new JTextField();
+		nomcarte.setBounds(274, 25, 90, 25);
+		contentPane.add(nomcarte);
+		nomcarte.setColumns(10);
+		nomcarte.setText("Cartographie : ");
+		nomcarte.setEditable(false);
+		nomcarte.setBackground(new Color(204, 190, 121));
+		
+		info = new JTextField();
+		info.setBounds(10, 25, 90, 25);
+		contentPane.add(info);
+		info.setColumns(10);
+		info.setText("Informations : ");
+		info.setEditable(false);
+		info.setBackground(new Color(204, 190, 121));
+		
+		grille = new JPanel();
+		grille.setBounds(10, 50, 255, 600);
+		contentPane.add(grille);
+		grille.setLayout(null);
+		grille.setBackground(new Color(204, 190, 121));
+		
 	}
 	
 	@Override
@@ -111,12 +142,16 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		}
 		
 		if(e.getSource()==recherche) {
-			JDialog bd = new JDialog(this, "Option de recherche", true);
-			bd.setBackground(Color.lightGray);
-			bd.setSize(250, 100);
-			bd.setBounds(750, 350, 250, 250);
-			bd.setVisible(true);
+			JFrame fen = new VisionGUI();
+			fen.getContentPane().setBackground(Color.DARK_GRAY);
+			String pwd = System.getProperty("user.dir");
+	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
+	        fen.setIconImage(icon); 
+			fen.setSize(560, 260);
+			fen.setBounds(300, 200, 560, 260);
+			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			fen.setVisible(true);
+			this.setVisible(false);
 		}
 	}
-	
 }

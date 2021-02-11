@@ -8,10 +8,12 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.JTextField;
 
 public class VisionGUI extends JFrame implements ActionListener {
 
@@ -21,30 +23,92 @@ public class VisionGUI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton agricole, otage;
+	private JTextField depart, fin, choix, xinit, yinit, xfin, yfin;
+	private JLabel droneimg;
+	private ImageIcon img;
+	private Image drone;
 	
 	public VisionGUI(){
 		super("Vision Détection");
 		
-		setMinimumSize(new Dimension(600, 400));
+		setMinimumSize(new Dimension(560, 260));
 		setPreferredSize(new Dimension(2000, 800));
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		contentPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
+		droneimg = new JLabel("");
+		droneimg.setBounds(440, 11, 50, 50);
+		String pwd = System.getProperty("user.dir");
+		img = new ImageIcon(pwd + "/src/affichage/drone.png");
+		drone = img.getImage();
+		drone = drone.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		droneimg.setIcon(new ImageIcon(drone));
+		contentPane.add(droneimg);
 		
 		agricole = new JButton("Agriculture");
 		agricole.setBackground(new Color(204, 190, 121));
 		getContentPane().add(agricole);
 		agricole.addActionListener(this);
-		agricole.setBounds(10, 10, 150, 25);
+		agricole.setBounds(400, 109, 130, 30);
 		
 		otage = new JButton("Prise d'otage");
 		otage.setBackground(new Color(204, 190, 121));
 		getContentPane().add(otage);
 		otage.addActionListener(this);
-		otage.setBounds(10, 10, 150, 25);
+		otage.setBounds(400, 150, 130, 30);
+		
+		depart = new JTextField();
+		depart.setBounds(47, 27, 283, 30);
+		contentPane.add(depart);
+		depart.setColumns(10);
+		depart.setText("Coordonées de départ : ");
+		depart.setEditable(false);
+		depart.setBackground(new Color(204, 190, 121));
+		
+		fin = new JTextField();
+		fin.setBounds(47, 109, 283, 30);
+		contentPane.add(fin);
+		fin.setColumns(10);
+		fin.setText("Coordonées d'arrivée : ");
+		fin.setEditable(false);
+		fin.setBackground(new Color(204, 190, 121));
+		
+		choix = new JTextField();
+		choix.setBounds(400, 68, 130, 30);
+		contentPane.add(choix);
+		choix.setColumns(10);
+		choix.setText("Votre domaine : ");
+		choix.setEditable(false);
+		choix.setBackground(new Color(204, 190, 121));
+		
+		xinit = new JTextField();
+		xinit.setBounds(47, 68, 130, 30);
+		contentPane.add(xinit);
+		xinit.setColumns(10);
+		xinit.setBackground(new Color(204, 190, 121));
+		
+		yinit = new JTextField();
+		yinit.setBounds(200, 68, 130, 30);
+		contentPane.add(yinit);
+		yinit.setColumns(10);
+		yinit.setBackground(new Color(204, 190, 121));
+		
+		xfin = new JTextField();
+		xfin.setBounds(47, 150, 130, 30);
+		contentPane.add(xfin);
+		xfin.setColumns(10);
+		xfin.setBackground(new Color(204, 190, 121));
+		
+		yfin = new JTextField();
+		yfin.setBounds(200, 150, 130, 30);
+		contentPane.add(yfin);
+		yfin.setColumns(10);
+		yfin.setBackground(new Color(204, 190, 121));
+		
 	}
 	
 	@Override
@@ -56,10 +120,11 @@ public class VisionGUI extends JFrame implements ActionListener {
 			String pwd = System.getProperty("user.dir");
 	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
 	        fen.setIconImage(icon); 
-			fen.setSize(1000, 500);
-			fen.setBounds(300, 200, 1000, 500);
+			fen.setSize(1250, 720);
+			fen.setBounds(300, 200, 1250, 720);
 			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			fen.setVisible(true);
+			this.setVisible(false);
 		}
 		
 		if(e.getSource()==otage) {
@@ -72,7 +137,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 			fen.setBounds(300, 200, 1000, 500);
 			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			fen.setVisible(true);
+			this.setVisible(false);
 		}
 	}
-	
 }

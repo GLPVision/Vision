@@ -15,8 +15,8 @@ public class TestVisionGUI {
 		String pwd = System.getProperty("user.dir");
        	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
         fen.setIconImage(icon); 
-		fen.setSize(600, 400);
-		fen.setBounds(300, 200, 600, 400);
+		fen.setSize(560, 260);
+		fen.setBounds(300, 200, 560, 260);
 		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fen.setVisible(true);
 	}
