@@ -69,12 +69,6 @@ public class Carte {
 
     public void export() throws IOException {
         StringBuffer out = new StringBuffer();
-        if(otage){
-            out.append("otage;\n");
-        }
-        else{
-            out.append("agricole\n");
-        }
         out.append(date.getJour() + ";" + date.getMois() + ";" + date.getAnnee() + ";" + date.getHeure().getHeure() + ";" + date.getHeure().getMinute() + ";" + date.getHeure().getSeconde() + "\n");
         out.append(x + ";" + y + ";\n");
         for (int i=0 ; i<x ; i++){
@@ -85,7 +79,14 @@ public class Carte {
             line = line + "\n";
             out.append(line);
         }
-        BufferedWriter bw = new BufferedWriter(new FileWriter(".\\" + "exp.csv"));
+        BufferedWriter bw = null;
+        System.out.println(otage);
+        if (otage) {
+            bw = new BufferedWriter(new FileWriter(".\\" + "last_otage.csv"));
+        }
+        else{
+            bw = new BufferedWriter(new FileWriter(".\\" + "last_agricole.csv"));
+        }
         bw.write(out.toString()); //ecriture du fichier
         bw.close(); //fermer le fichier
     }
