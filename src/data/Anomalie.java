@@ -6,7 +6,7 @@ public class Anomalie extends Element{
 
     public Anomalie(Coordonnees c) {
         super(c);
-        anomalie = "Inconnu";
+        anomalie = "inconnu";
     }
     public String getDesc(){
         return anomalie;
