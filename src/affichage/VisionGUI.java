@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -68,6 +69,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		depart.setText("Coordonées de départ : ");
 		depart.setEditable(false);
 		depart.setBackground(new Color(204, 190, 121));
+		depart.setBorder(null);
 		
 		fin = new JTextField();
 		fin.setBounds(47, 109, 283, 30);
@@ -76,6 +78,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		fin.setText("Coordonées d'arrivée : ");
 		fin.setEditable(false);
 		fin.setBackground(new Color(204, 190, 121));
+		fin.setBorder(null);
 		
 		choix = new JTextField();
 		choix.setBounds(400, 68, 130, 30);
@@ -84,31 +87,35 @@ public class VisionGUI extends JFrame implements ActionListener {
 		choix.setText("Votre domaine : ");
 		choix.setEditable(false);
 		choix.setBackground(new Color(204, 190, 121));
+		choix.setBorder(null);
 		
 		xinit = new JTextField();
 		xinit.setBounds(47, 68, 130, 30);
 		contentPane.add(xinit);
 		xinit.setColumns(10);
 		xinit.setBackground(new Color(204, 190, 121));
+		xinit.setBorder(null);
 		
 		yinit = new JTextField();
 		yinit.setBounds(200, 68, 130, 30);
 		contentPane.add(yinit);
 		yinit.setColumns(10);
 		yinit.setBackground(new Color(204, 190, 121));
+		yinit.setBorder(null);
 		
 		xfin = new JTextField();
 		xfin.setBounds(47, 150, 130, 30);
 		contentPane.add(xfin);
 		xfin.setColumns(10);
 		xfin.setBackground(new Color(204, 190, 121));
+		xfin.setBorder(null);
 		
 		yfin = new JTextField();
 		yfin.setBounds(200, 150, 130, 30);
 		contentPane.add(yfin);
 		yfin.setColumns(10);
 		yfin.setBackground(new Color(204, 190, 121));
-		
+		yfin.setBorder(null);
 	}
 	
 	@Override
@@ -119,7 +126,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
 			String pwd = System.getProperty("user.dir");
 	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
-	        fen.setIconImage(icon); 
+	        fen.setIconImage(icon);
+	        fen.setResizable(false);
 			fen.setSize(1250, 720);
 			fen.setBounds(300, 200, 1250, 720);
 			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,11 +136,14 @@ public class VisionGUI extends JFrame implements ActionListener {
 		}
 		
 		if(e.getSource()==otage) {
+			@SuppressWarnings("unused")
+			String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 			JFrame fen = new OtageGUI();
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
 			String pwd = System.getProperty("user.dir");
 	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
-	        fen.setIconImage(icon); 
+	        fen.setIconImage(icon);
+	        fen.setResizable(false);
 			fen.setSize(1000, 500);
 			fen.setBounds(300, 200, 1000, 500);
 			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

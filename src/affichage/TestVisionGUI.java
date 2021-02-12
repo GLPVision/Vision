@@ -14,9 +14,10 @@ public class TestVisionGUI {
 		fen.getContentPane().setBackground(Color.DARK_GRAY);
 		String pwd = System.getProperty("user.dir");
        	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
-        fen.setIconImage(icon); 
+        fen.setIconImage(icon);
+        fen.setResizable(false);
 		fen.setSize(560, 260);
-		fen.setBounds(300, 200, 560, 260);
+		fen.setBounds(550, 350, 560, 260);
 		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fen.setVisible(true);
 	}

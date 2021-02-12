@@ -105,6 +105,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		nomcarte.setText("Cartographie : ");
 		nomcarte.setEditable(false);
 		nomcarte.setBackground(new Color(204, 190, 121));
+		nomcarte.setBorder(null);
 		
 		info = new JTextField();
 		info.setBounds(10, 25, 90, 25);
@@ -113,6 +114,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		info.setText("Informations : ");
 		info.setEditable(false);
 		info.setBackground(new Color(204, 190, 121));
+		info.setBorder(null);
 		
 		grille = new JPanel();
 		grille.setBounds(10, 50, 255, 600);
@@ -146,7 +148,8 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
 			String pwd = System.getProperty("user.dir");
 	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
-	        fen.setIconImage(icon); 
+	        fen.setIconImage(icon);
+	        fen.setResizable(false);
 			fen.setSize(560, 260);
 			fen.setBounds(300, 200, 560, 260);
 			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
