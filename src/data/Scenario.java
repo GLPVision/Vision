@@ -1,5 +1,9 @@
 package data;
 
 public abstract class Scenario {
-    Carte carte;
+    protected Carte carte;
+
+    public Carte getCarte() {
+        return carte;
+    }
 }

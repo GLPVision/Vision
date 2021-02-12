@@ -134,5 +134,9 @@ public class Carte {
             nb_anomalie = nb;
         }
     }
+
+    public Element[][] getTab(){
+        return tab;
+    }
 }
 
