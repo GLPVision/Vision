@@ -21,5 +21,4 @@ public class TestVisionGUI {
 		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fen.setVisible(true);
 	}
-
 }

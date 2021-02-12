@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,7 +31,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 	private Image drone;
 	
 	public VisionGUI(){
-		super("Vision D�tection");
+		super("Vision Détection");
 		
 		setMinimumSize(new Dimension(560, 260));
 		setPreferredSize(new Dimension(2000, 800));
@@ -66,7 +67,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		depart.setBounds(47, 27, 283, 30);
 		contentPane.add(depart);
 		depart.setColumns(10);
-		depart.setText("Coordon�es de d�part : ");
+		depart.setText("Coordonées de départ : ");
 		depart.setEditable(false);
 		depart.setBackground(new Color(204, 190, 121));
 		depart.setBorder(null);
@@ -75,7 +76,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		fin.setBounds(47, 109, 283, 30);
 		contentPane.add(fin);
 		fin.setColumns(10);
-		fin.setText("Coordon�es d'arriv�e : ");
+		fin.setText("Coordonées d'arrivée : ");
 		fin.setEditable(false);
 		fin.setBackground(new Color(204, 190, 121));
 		fin.setBorder(null);
@@ -122,33 +123,61 @@ public class VisionGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==agricole) {
-			JFrame fen = new AgricoleGUI();
-			fen.getContentPane().setBackground(Color.DARK_GRAY);
-			String pwd = System.getProperty("user.dir");
-	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
-	        fen.setIconImage(icon);
-	        fen.setResizable(false);
-			fen.setSize(1250, 720);
-			fen.setBounds(300, 200, 1250, 720);
-			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			fen.setVisible(true);
-			this.setVisible(false);
+			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
+				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+			else{
+				int x = Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText());
+				int y = Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText());
+				JFrame fen = null;
+				try {
+					fen = new AgricoleGUI(x, y);
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
+				fen.getContentPane().setBackground(Color.DARK_GRAY);
+				String pwd = System.getProperty("user.dir");
+				Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png");
+				fen.setIconImage(icon);
+				fen.setResizable(false);
+				fen.setSize(1250, 720);
+				fen.setBounds(300, 200, 1250, 720);
+				fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				fen.setVisible(true);
+				this.setVisible(false);
+			}
 		}
 		
 		if(e.getSource()==otage) {
-			@SuppressWarnings("unused")
-			String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
-			JFrame fen = new OtageGUI();
-			fen.getContentPane().setBackground(Color.DARK_GRAY);
-			String pwd = System.getProperty("user.dir");
-	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
-	        fen.setIconImage(icon);
-	        fen.setResizable(false);
-			fen.setSize(1000, 500);
-			fen.setBounds(300, 200, 1000, 500);
-			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			fen.setVisible(true);
-			this.setVisible(false);
+			//@SuppressWarnings("unused")
+			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
+				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+			else {
+				String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
+				while (txt.isEmpty()){
+					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages", "Erreur", JOptionPane.ERROR_MESSAGE);
+					txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
+				}
+				int x = Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText());
+				int y = Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText());
+				JFrame fen = null;
+				try {
+					fen = new OtageGUI(x, y, Integer.parseInt(txt));
+				} catch (IOException | InterruptedException ioException) {
+					ioException.printStackTrace();
+				}
+				fen.getContentPane().setBackground(Color.DARK_GRAY);
+				String pwd = System.getProperty("user.dir");
+				Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png");
+				fen.setIconImage(icon);
+				fen.setResizable(false);
+				fen.setSize(1000, 500);
+				fen.setBounds(300, 200, 1000, 500);
+				fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				fen.setVisible(true);
+				this.setVisible(false);
+			}
 		}
 	}
 }

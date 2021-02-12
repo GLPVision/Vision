@@ -1,21 +1,18 @@
 package affichage;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Toolkit;
+import data.Carte;
+import data.Element;
+import data.Otage;
+import data.Scenario;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 public class OtageGUI extends JFrame implements ActionListener {
 	
@@ -28,9 +25,16 @@ public class OtageGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
+
+	private JList content;
+	private DefaultListModel list;
+	private Otage otage;
+	private int nbOtage;
+	private int x;
+	private int y;
 	
-	public OtageGUI(){
-		super("Vision Détection : Prise d'otages");
+	public OtageGUI(int x, int y, int nbOtage) throws IOException, InterruptedException {
+		super("Vision DÃ©tection : Prise d'otages");
 		
 		setMinimumSize(new Dimension(1250, 720));
 		setPreferredSize(new Dimension(2000, 800));
@@ -73,22 +77,35 @@ public class OtageGUI extends JFrame implements ActionListener {
 		Fichier.add(recherche);
 		recherche.addActionListener(this);
 		
-		quitter = new JMenuItem("Quitter/Fermer Vision Détection");
+		quitter = new JMenuItem("Quitter/Fermer Vision DÃ©tection");
 		Fichier.add(quitter);
 		quitter.addActionListener(this);
 		
-		sombre = new JMenuItem("Thème Sombre");
+		sombre = new JMenuItem("ThÃ¨me Sombre");
 		Apparence.add(sombre);
 		sombre.addActionListener(this);
 		
-		clair = new JMenuItem("Thème Clair");
+		clair = new JMenuItem("ThÃ¨me Clair");
 		Apparence.add(clair);
 		clair.addActionListener(this);
 		contentPane.setLayout(null);
 		
 		carte = new JPanel();
+		carte.setLayout(new BorderLayout());
 		carte.setBackground(new Color(0, 128, 128));
 		carte.setBounds(274, 50, 950, 600);
+		list = new DefaultListModel();
+		content = new JList(list);
+		content.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		DefaultListCellRenderer cellRenderer = new DefaultListCellRenderer();
+		cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+		content.setCellRenderer(cellRenderer);
+		content.setFixedCellWidth(carte.getWidth()/x);
+		content.setFixedCellHeight(carte.getHeight()/y);
+		content.setVisibleRowCount(x);
+		content.setBackground(new Color(0, 128, 128));
+		content.setBorder(null);
+		carte.add(content, BorderLayout.CENTER);
 		contentPane.add(carte);
 		
 		nomcarte = new JTextField();
@@ -114,7 +131,12 @@ public class OtageGUI extends JFrame implements ActionListener {
 		contentPane.add(grille);
 		grille.setLayout(null);
 		grille.setBackground(new Color(204, 190, 121));
-		
+
+		this.x = x;
+		this.y = y;
+		this.nbOtage = nbOtage;
+
+		build_map_otage();
 	}
 	
 	@Override
@@ -133,7 +155,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 		}
 		
 		if(e.getSource()==Aide) {
-			JOptionPane.showMessageDialog(this, "Bienvenue sur Vision Détection ! \nL'application qui vous permet d'identifier une anomalie dans un espace définit ou d'identifier le nombre de personnes présentes lors d'une prise d'otage.", "Aide", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Bienvenue sur Vision DÃ©tection ! \nL'application qui vous permet d'identifier une anomalie dans un espace dÃ©fini ou d'identifier le nombre de personnes prÃ©sentes lors d'une prise d'otage.", "Aide", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 		if(e.getSource()==recherche) {
@@ -149,5 +171,27 @@ public class OtageGUI extends JFrame implements ActionListener {
 			fen.setVisible(true);
 			this.setVisible(false);
 		}
+	}
+
+	public void setNbOtage(int nbOtage){
+		this.nbOtage = nbOtage;
+	}
+	public void setX(int x){
+		this.x =x;
+	}
+	public void setY(int y){
+		this.y = y;
+	}
+	public void build_map_otage() throws IOException, InterruptedException {
+		otage = new Otage(x, y, nbOtage);
+		Carte map = otage.getCarte();
+		Element[][] tab = map.getTab();
+		for (int i=0 ; i<x ; i++){
+			for (int j=0 ; j<y ; j++){
+				list.addElement(tab[i][j].getDesc());
+			}
+
+		}
+
 	}
 }
