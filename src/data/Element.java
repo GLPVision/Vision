@@ -5,9 +5,13 @@ public class Element {
     private String desc;
     public Element(Coordonnees c){
         coordonnees = c;
-        this.desc = "rien";
+        this.desc = ".";
     }
     public String getDesc(){
         return desc;
+    }
+
+    public Coordonnees getCoordonnees() {
+        return coordonnees;
     }
 }

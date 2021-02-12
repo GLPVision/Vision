@@ -6,13 +6,13 @@ public class Feu extends Anomalie{
         super(c);
         switch ((int) (Math.random()*3)){
             case 0:
-                feu = "petit feu";
+                feu = "fs"; //feu small
                 break;
             case 1:
-                feu = "moyen feu";
+                feu = "fm"; //feu medium
                 break;
             case 2:
-                feu = "grand feu";
+                feu = "fl"; //feu large
                 break;
         }
     }

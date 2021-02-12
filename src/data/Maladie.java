@@ -6,16 +6,16 @@ public class Maladie extends Anomalie {
         super(c);
         switch ((int) (Math.random()*4)){
             case 0:
-                maladie = "mort";
+                maladie = "m"; //mort
                 break;
             case 1:
-                maladie = "virus";
+                maladie = "v"; //virus
                 break;
             case 2:
-                maladie = "bactérie";
+                maladie = "b"; //bacterie
                 break;
             case 3:
-                maladie = "vieux";
+                maladie = "a"; //age
                 break;
         }
     }

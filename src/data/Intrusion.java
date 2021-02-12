@@ -4,25 +4,28 @@ public class Intrusion extends Anomalie{
     private String intrusion;
     public Intrusion(Coordonnees c) {
         super(c);
-        switch ((int) (Math.random()*5)){
+        switch ((int) (Math.random()*6)){
             case 0:
-                intrusion = "homme";
+                intrusion = "ho"; //homme
                 break;
 
             case 1:
-                intrusion = "lapin";
+                intrusion = "la"; //lapin
                 break;
 
             case 2:
-                intrusion = "chèvre";
+                intrusion = "mo"; //mouton
                 break;
 
             case 3:
-                intrusion = "vache";
+                intrusion = "va"; //vache
                 break;
 
             case 4:
-                intrusion = "cochon";
+                intrusion = "co"; //cochon
+                break;
+            case 5:
+                intrusion = "oi"; //oiseaux
                 break;
         }
     }
