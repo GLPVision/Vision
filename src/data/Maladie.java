@@ -1,24 +1,27 @@
 package data;
 
+/**
+ * Classe maladie
+ * @author QIU Antoine
+ */
 public class Maladie extends Anomalie {
+    /**
+     * Maladie
+     */
     private String maladie;
+    /**
+     * Constructeur, initialise les variables
+     * @param c Coodonnées
+     */
     public Maladie(Coordonnees c) {
         super(c);
-        switch ((int) (Math.random()*4)){
-            case 0:
-                maladie = "m"; //mort
-                break;
-            case 1:
-                maladie = "v"; //virus
-                break;
-            case 2:
-                maladie = "b"; //bacterie
-                break;
-            case 3:
-                maladie = "a"; //age
-                break;
-        }
+        maladie = "m";
     }
+
+    /**
+     * Fonction qui retourne la description
+     * @return Description
+     */
     public String getDesc(){
         return maladie;
     }

@@ -149,22 +149,21 @@ public class VisionGUI extends JFrame implements ActionListener {
 		}
 		
 		if(e.getSource()==otage) {
-			//@SuppressWarnings("unused")
 			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
 				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 			else {
-				String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
-				while (txt.isEmpty()){
-					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages", "Erreur", JOptionPane.ERROR_MESSAGE);
-					txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
-				}
 				int x = Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText());
 				int y = Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText());
+				String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
+				while (txt.isEmpty() || Integer.parseInt(txt) > (x*y)/4){
+					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE);
+					txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
+				}
 				JFrame fen = null;
 				try {
 					fen = new OtageGUI(x, y, Integer.parseInt(txt));
-				} catch (IOException | InterruptedException ioException) {
+				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}
 				fen.getContentPane().setBackground(Color.DARK_GRAY);

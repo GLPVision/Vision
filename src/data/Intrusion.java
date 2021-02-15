@@ -1,34 +1,28 @@
 package data;
 
+/**
+ * Classe intrusion
+ * @author QIU Antoine
+ */
 public class Intrusion extends Anomalie{
+    /**
+     * Description
+     */
     private String intrusion;
+
+    /**
+     * Constructeur, initialise les variables
+     * @param c Coordonnées
+     */
     public Intrusion(Coordonnees c) {
         super(c);
-        switch ((int) (Math.random()*6)){
-            case 0:
-                intrusion = "ho"; //homme
-                break;
-
-            case 1:
-                intrusion = "la"; //lapin
-                break;
-
-            case 2:
-                intrusion = "mo"; //mouton
-                break;
-
-            case 3:
-                intrusion = "va"; //vache
-                break;
-
-            case 4:
-                intrusion = "co"; //cochon
-                break;
-            case 5:
-                intrusion = "oi"; //oiseaux
-                break;
-        }
+        intrusion = "i";
     }
+
+    /**
+     * Focntion qui retourne la description
+     * @return Description
+     */
     public String getDesc(){
         return intrusion;
     }

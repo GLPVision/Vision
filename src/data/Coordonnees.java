@@ -1,22 +1,26 @@
 package data;
 
+/**
+ * Classe coordonnées
+ * @author QIU Antoine
+ */
 public class Coordonnees {
+    /**
+     * Coordonnées x
+     */
     private int x;
+    /**
+     * Coordonnées y
+     */
     private int y;
+
+    /**
+     * Constructeur, initialise les variables
+     * @param x Coordonnées x
+     * @param y Coordonnées y
+     */
     public Coordonnees(int x, int y){
         this.x = x;
         this.y = y;
-    }
-    public void setX(int x){
-        this.x = x;
-    }
-    public void setY(int y){
-        this.y = y;
-    }
-    public int getX(){
-        return x;
-    }
-    public int getY(){
-        return y;
     }
 }

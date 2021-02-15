@@ -26,13 +26,26 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	private JTextField nomcarte, info;
 	private ImageIcon img;
 	private Image drone;
-
+	/**
+	 * JList contient une liste
+	 */
 	private JList content;
+	/**
+	 * Liste contient la carte
+	 */
 	private DefaultListModel list;
+	/**
+	 * Scénario
+	 */
 	private Agriculture agricole;
+	/**
+	 * taille x de la matrice
+	 */
 	private int x;
+	/**
+	 * taille y de la matrice
+	 */
 	private int y;
-	
 	public AgricoleGUI(int x, int y) throws IOException {
 		super("Vision Détection : Agricole");
 		
@@ -95,18 +108,20 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		
 		carte = new JPanel();
-		carte.setLayout(new BorderLayout());
+		carte.setLayout(new BorderLayout()); //layout pour remplir le panel
 		carte.setBackground(new Color(0, 128, 128));
 		carte.setBounds(274, 50, 950, 600);
-		list = new DefaultListModel();
-		content = new JList(list);
-		content.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list = new DefaultListModel(); //initialisation
+		content = new JList(list); //list dans JList
+		content.setLayoutOrientation(JList.HORIZONTAL_WRAP); //liste horizontale
+		//centre text de chaque case
 		DefaultListCellRenderer cellRenderer = new DefaultListCellRenderer();
 		cellRenderer.setHorizontalAlignment(JLabel.CENTER);
 		content.setCellRenderer(cellRenderer);
+		//taille de case en fonction du nombre de cases
 		content.setFixedCellWidth(carte.getWidth()/y);
 		content.setFixedCellHeight(carte.getHeight()/x);
-		content.setVisibleRowCount(x);
+		content.setVisibleRowCount(x); //largeur de x cases
 		content.setBackground(new Color(0, 128, 128));
 		content.setBorder(null);
 		carte.add(content, BorderLayout.CENTER);
@@ -139,7 +154,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		this.x = x;
 		this.y = y;
 
-		build_map_agricole();
+		build_map_agricole(); //construit la carte dans le gui
 	}
 
 
@@ -178,19 +193,33 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Fonction qui règle les coordonnées x
+	 * @param x Coordonnées x
+	 */
 	public void setX(int x){
 		this.x =x;
 	}
+
+	/**
+	 * Fonction qui règle les coordonnées y
+	 * @param y Coordonnées y
+	 */
 	public void setY(int y){
 		this.y = y;
 	}
+
+	/**
+	 * Fonction qui construit la carte
+	 * @throws IOException Erreur d'écriture lors de l'exportation
+	 */
 	public void build_map_agricole() throws IOException {
 		agricole = new Agriculture(x, y);
-		Carte map = agricole.getCarte();
-		Element[][] tab = map.getTab();
-		for (int i=0 ; i<x ; i++){
-			for (int j=0 ; j<y ; j++){
-				list.addElement(tab[i][j].getDesc());
+		Carte map = agricole.getCarte(); //récupère la carte
+		Element[][] tab = map.getTab(); //récupère la matrice
+		for (int i=0 ; i<x ; i++){ //parcours x
+			for (int j=0 ; j<y ; j++){ //parcours y
+				list.addElement(tab[i][j].getDesc()); //ajout à la liste
 			}
 		}
 	}
