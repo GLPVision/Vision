@@ -44,7 +44,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		
 		droneimg = new JLabel("");
 		droneimg.setBounds(440, 11, 50, 50);
-		String pwd = System.getProperty("user.dir");
+		String pwd = System.getProperty("user.dir");//Permet d'afficher le logo de vision
 		img = new ImageIcon(pwd + "/src/affichage/drone.png");
 		drone = img.getImage();
 		drone = drone.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -67,7 +67,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		depart.setBounds(47, 27, 283, 30);
 		contentPane.add(depart);
 		depart.setColumns(10);
-		depart.setText("Coordonées de départ : ");
+		depart.setText("Coordonées de départ : ");//Permet de rentr� les coordonn�es de d�part
 		depart.setEditable(false);
 		depart.setBackground(new Color(204, 190, 121));
 		depart.setBorder(null);
@@ -76,7 +76,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 		fin.setBounds(47, 109, 283, 30);
 		contentPane.add(fin);
 		fin.setColumns(10);
-		fin.setText("Coordonées d'arrivée : ");
+		fin.setText("Coordonées d'arrivée : ");//Permet de rentr� les coordonn�es de d�part
+		depart.setEditable(false);
 		fin.setEditable(false);
 		fin.setBackground(new Color(204, 190, 121));
 		fin.setBorder(null);
@@ -90,41 +91,43 @@ public class VisionGUI extends JFrame implements ActionListener {
 		choix.setBackground(new Color(204, 190, 121));
 		choix.setBorder(null);
 		
-		xinit = new JTextField();
+		xinit = new JTextField(); //x d�but
 		xinit.setBounds(47, 68, 130, 30);
 		contentPane.add(xinit);
 		xinit.setColumns(10);
 		xinit.setBackground(new Color(204, 190, 121));
 		xinit.setBorder(null);
 		
-		yinit = new JTextField();
+		yinit = new JTextField();//y d�but
 		yinit.setBounds(200, 68, 130, 30);
 		contentPane.add(yinit);
 		yinit.setColumns(10);
 		yinit.setBackground(new Color(204, 190, 121));
 		yinit.setBorder(null);
 		
-		xfin = new JTextField();
+		xfin = new JTextField();//x d'arriver
 		xfin.setBounds(47, 150, 130, 30);
 		contentPane.add(xfin);
 		xfin.setColumns(10);
 		xfin.setBackground(new Color(204, 190, 121));
 		xfin.setBorder(null);
 		
-		yfin = new JTextField();
+		yfin = new JTextField();//y d'arriver
 		yfin.setBounds(200, 150, 130, 30);
 		contentPane.add(yfin);
 		yfin.setColumns(10);
 		yfin.setBackground(new Color(204, 190, 121));
 		yfin.setBorder(null);
 	}
-	
+	/**
+	 * permet d'interagir avec les boutons
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==agricole) {
 			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
-				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
 			}
 			else{
 				int x = Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText());
@@ -150,14 +153,14 @@ public class VisionGUI extends JFrame implements ActionListener {
 		
 		if(e.getSource()==otage) {
 			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
-				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);//Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
 			}
 			else {
 				int x = Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText());
 				int y = Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText());
 				String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 				while (txt.isEmpty() || Integer.parseInt(txt) > (x*y)/4){
-					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si le nombre d'otage saisie n'est pas valide
 					txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 				}
 				JFrame fen = null;

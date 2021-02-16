@@ -49,8 +49,8 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	public AgricoleGUI(int x, int y) throws IOException {
 		super("Vision Détection : Agricole");
 		
-		setMinimumSize(new Dimension(1250, 720));
-		setPreferredSize(new Dimension(2000, 800));
+		setMinimumSize(new Dimension(1250, 720));//Taille minimum de notre fen�tre
+		setPreferredSize(new Dimension(2000, 800));//Dimension de notre fen�tre 
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);
@@ -62,17 +62,17 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		drone = img.getImage();
 		drone = drone.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		
-		menu = new JMenuBar();
+		menu = new JMenuBar();//Barre de menu
 		setJMenuBar(menu);
-		menu.setBackground(Color.lightGray);
+		menu.setBackground(Color.lightGray);//Couleur de l'arri�re plan
 		
 		Fichier = new JMenu("Fichier");
 		menu.add(Fichier);
 		
-		Apparence = new JMenu("Apparence");
+		Apparence = new JMenu("Apparence");//Permet � l'utuilisateur de choisir entre le th�me sombre et le th�me clair
 		menu.add(Apparence);
 		
-		Aide = new JMenuItem("Aide ?") {
+		Aide = new JMenuItem("Aide ?") { //Affiche un message d'aide
 			
 			private static final long serialVersionUID = 1L;
 
@@ -90,19 +90,19 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		menu.add(Aide);		
 		Aide.addActionListener(this);
 		
-		recherche = new JMenuItem("Nouvelle Recherche");
+		recherche = new JMenuItem("Nouvelle Recherche");//Permet de changer de map
 		Fichier.add(recherche);
 		recherche.addActionListener(this);
 		
-		quitter = new JMenuItem("Quitter/Fermer Vision Détection");
+		quitter = new JMenuItem("Quitter/Fermer Vision Détection");//Permet � l'utilisateur de quitter l'application
 		Fichier.add(quitter);
 		quitter.addActionListener(this);
 		
-		sombre = new JMenuItem("Thème Sombre");
+		sombre = new JMenuItem("Thème Sombre");//Affiche le theme sombre de notre application
 		Apparence.add(sombre);
 		sombre.addActionListener(this);
 		
-		clair = new JMenuItem("Thème Clair");
+		clair = new JMenuItem("Thème Clair");//Affiche le theme clair de notre application
 		Apparence.add(clair);
 		clair.addActionListener(this);
 		contentPane.setLayout(null);
@@ -181,7 +181,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 			JFrame fen = new VisionGUI();
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
 			String pwd = System.getProperty("user.dir");
-	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
+	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); //Affiche le logo du projet vision en haut � gauche de notre fen�tre
 	        fen.setIconImage(icon);
 	        fen.setResizable(false);
 			fen.setSize(560, 260);
