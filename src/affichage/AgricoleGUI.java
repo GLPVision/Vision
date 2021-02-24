@@ -181,7 +181,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 			JFrame fen = new VisionGUI();
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
 			String pwd = System.getProperty("user.dir");
-	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); //Affiche le logo du projet vision en haut � gauche de notre fen�tre
+	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); //Affiche le logo du projet vision en haut à gauche de notre fenêtre
 	        fen.setIconImage(icon);
 	        fen.setResizable(false);
 			fen.setSize(560, 260);

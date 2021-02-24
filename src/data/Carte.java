@@ -74,7 +74,7 @@ public class Carte {
                 scan();
             }
         }
-        export();
+        //export();
     }
 
     /**

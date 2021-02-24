@@ -1,6 +1,6 @@
 package affichage;
 
-import java.awt.Image; 
+import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -13,7 +13,7 @@ public class TestVisionGUI {
 		JFrame fen = new VisionGUI();
 		fen.getContentPane().setBackground(Color.DARK_GRAY);
 		String pwd = System.getProperty("user.dir");
-       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
+       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png");
         fen.setIconImage(icon);
         fen.setResizable(false);
 		fen.setSize(560, 260);
