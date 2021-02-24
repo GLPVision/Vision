@@ -4,6 +4,8 @@ import data.Carte;
 import data.Element;
 import data.Otage;
 import data.Scenario;
+import moteur.build;
+import moteur.traitement;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -155,9 +157,10 @@ public class OtageGUI extends JFrame implements ActionListener {
 		this.y = y;
 		this.nbOtage = nbOtage;
 
-		build_map_otage(); //construit la carte dans le gui
+		otage = (Otage) traitement.creer(true, x, y, nbOtage);
+		new build(otage, x, y, list).start(); //construit la carte dans le gui
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -181,7 +184,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 			JFrame fen = new VisionGUI();
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
 			String pwd = System.getProperty("user.dir");
-	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); 
+	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/res/drone.png");
 	        fen.setIconImage(icon);
 	        fen.setResizable(false);
 			fen.setSize(560, 260);

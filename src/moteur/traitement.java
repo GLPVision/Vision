@@ -14,7 +14,7 @@ public class traitement {
     private int maladie;
     private int inconnue;
     private Carte carte;
-    private Scenario scenario;
+    private static Scenario scenario;
     public traitement(int nbOtage, int nbAssaillant, int nbTotal, int individu, int feu, int maladie, int inconnue, Carte carte){
         this.nbOtage = nbOtage;
         this.nbAssaillant = nbAssaillant;
@@ -25,13 +25,14 @@ public class traitement {
         this. inconnue = inconnue;
         this.carte = carte;
     }
-    public void creer(boolean otage){
+    public static Scenario creer(boolean otage, int x, int y, int nbOtage){
         if(otage){
-            scenario = new Otage();
+            scenario = new Otage(x, y, nbOtage);
         }
         else {
-            scenario = new Agriculture();
+            scenario = new Agriculture(x, y);
         }
+        return scenario;
     }
     public void supp() {
         this.nbOtage = 0;

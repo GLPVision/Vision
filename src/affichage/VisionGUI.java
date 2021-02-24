@@ -140,7 +140,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 				}
 				fen.getContentPane().setBackground(Color.DARK_GRAY);
 				String pwd = System.getProperty("user.dir");
-				Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png");
+				Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/res/drone.png");
 				fen.setIconImage(icon);
 				fen.setResizable(false);
 				fen.setSize(1250, 720);

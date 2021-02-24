@@ -12,9 +12,8 @@ public class Otage extends Scenario{
      * @param x Coordonnées x
      * @param y Coordonnées y
      * @param nbOtage Nombre d'otages
-     * @throws IOException Erreur d'écriture lors de l'exportation
      */
-    public Otage(int x, int y, int nbOtage) throws IOException {
+    public Otage(int x, int y, int nbOtage){
         carte = new Carte(x, y, true, nbOtage); //otage + otage/4 < x*y/2
     }
 }

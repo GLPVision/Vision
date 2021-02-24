@@ -49,9 +49,8 @@ public class Carte {
      * @param y Coordonnées y
      * @param mode Otage ou agricole
      * @param nb_otage Nombre d'otages
-     * @throws IOException Erreur d'écriture lors de l'exportation
      */
-    public Carte(int x, int y, boolean mode, int nb_otage) throws IOException {
+    public Carte(int x, int y, boolean mode, int nb_otage){
         this.x = x;
         this.y = y;
         this.otage = mode;
@@ -64,7 +63,7 @@ public class Carte {
      * Fonction initialisation
      * @throws IOException Erreur d'écriture lors de l'exportation
      */
-    public void init() throws IOException {
+    public void init(){
         setDate();
         generer();
         scan();

@@ -4,6 +4,8 @@ import data.Agriculture;
 import data.Carte;
 import data.Element;
 import data.Otage;
+import moteur.build;
+import moteur.traitement;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -154,7 +156,8 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		this.x = x;
 		this.y = y;
 
-		build_map_agricole(); //construit la carte dans le gui
+		agricole = (Agriculture) traitement.creer(false, x, y, 0);
+		new build(agricole, x, y, list).start(); //construit la carte dans le gui
 	}
 
 
@@ -181,7 +184,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 			JFrame fen = new VisionGUI();
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
 			String pwd = System.getProperty("user.dir");
-	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png"); //Affiche le logo du projet vision en haut à gauche de notre fenêtre
+	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/res/drone.png"); //Affiche le logo du projet vision en haut à gauche de notre fenêtre
 	        fen.setIconImage(icon);
 	        fen.setResizable(false);
 			fen.setSize(560, 260);

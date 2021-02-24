@@ -13,7 +13,7 @@ public class Agriculture extends Scenario {
      * @param y Coordonnées y
      * @throws IOException Erreur d'écriture lors de l'exportation
      */
-    public Agriculture(int x, int y) throws IOException {
+    public Agriculture(int x, int y){
         carte = new Carte(x, y, false, 0); //nouvelle carte
     }
 }
