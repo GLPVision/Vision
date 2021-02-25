@@ -68,7 +68,7 @@ public class Carte {
         generer();
         scan();
         if(otage){
-            while(nb_assaillant < nb_otage/4){  //au moins 1 assaillant pour 4 otages
+            while(nb_assaillant <= nb_otage/4){  //au moins 1 assaillant pour 4 otages
                 generer();
                 scan();
             }
@@ -93,7 +93,7 @@ public class Carte {
             for (int j=0 ; j<y ; j++){ //parcours y
                 String desc; //initilisation de la variable
                 if(otage){
-                    int random = (int) (Math.random()*5); //aléatoire
+                    int random = (int) (Math.random()*(5*nb_otage)); //aléatoire
                     switch(random){
                         case 1:
                             tab[i][j] = new Personne(new Coordonnees(i, j)); //personne
@@ -198,6 +198,14 @@ public class Carte {
      */
     public Element[][] getTab(){
         return tab;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }
 

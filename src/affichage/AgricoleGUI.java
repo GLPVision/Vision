@@ -1,19 +1,13 @@
 package affichage;
 
-import data.Agriculture;
-import data.Carte;
-import data.Element;
-import data.Otage;
 import moteur.build;
 import moteur.traitement;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
-import javax.swing.*;
-import javax.swing.border.LineBorder;
 
 public class AgricoleGUI extends JFrame implements ActionListener {
 
@@ -26,8 +20,6 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private ImageIcon img;
-	private Image drone;
 	/**
 	 * JList contient une liste
 	 */
@@ -36,10 +28,6 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	 * Liste contient la carte
 	 */
 	private DefaultListModel list;
-	/**
-	 * Scénario
-	 */
-	private Agriculture agricole;
 	/**
 	 * taille x de la matrice
 	 */
@@ -59,10 +47,6 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		contentPane.setBorder(null);
 		contentPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		setContentPane(contentPane);
-		String pwd = System.getProperty("user.dir");
-		img = new ImageIcon(pwd + "/src/affichage/drone.png");
-		drone = img.getImage();
-		drone = drone.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		
 		menu = new JMenuBar();//Barre de menu
 		setJMenuBar(menu);
@@ -156,14 +140,17 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		this.x = x;
 		this.y = y;
 
-		agricole = (Agriculture) traitement.creer(false, x, y, 0);
-		new build(agricole, x, y, list).start(); //construit la carte dans le gui
+		traitement t = new traitement();
+		t.creer(false, x, y, 0);
+		t.scan();
+		t.majGUI();
+		new build(t.getScenario(), x, y, list).start(); //construit la carte dans le gui
+		t.supp();
 	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource()==quitter) {
 			System.exit(0);
 		}
@@ -183,9 +170,8 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		if(e.getSource()==recherche) {
 			JFrame fen = new VisionGUI();
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
-			String pwd = System.getProperty("user.dir");
-	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/res/drone.png"); //Affiche le logo du projet vision en haut à gauche de notre fenêtre
-	        fen.setIconImage(icon);
+			ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png")); //Affiche le logo du projet vision en haut à gauche de notre fenêtre
+	        fen.setIconImage(icon.getImage());
 	        fen.setResizable(false);
 			fen.setSize(560, 260);
 			fen.setBounds(300, 200, 560, 260);
@@ -194,36 +180,5 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 			this.setVisible(false);
 		}
 
-	}
-
-	/**
-	 * Fonction qui règle les coordonnées x
-	 * @param x Coordonnées x
-	 */
-	public void setX(int x){
-		this.x =x;
-	}
-
-	/**
-	 * Fonction qui règle les coordonnées y
-	 * @param y Coordonnées y
-	 */
-	public void setY(int y){
-		this.y = y;
-	}
-
-	/**
-	 * Fonction qui construit la carte
-	 * @throws IOException Erreur d'écriture lors de l'exportation
-	 */
-	public void build_map_agricole() throws IOException {
-		agricole = new Agriculture(x, y);
-		Carte map = agricole.getCarte(); //récupère la carte
-		Element[][] tab = map.getTab(); //récupère la matrice
-		for (int i=0 ; i<x ; i++){ //parcours x
-			for (int j=0 ; j<y ; j++){ //parcours y
-				list.addElement(tab[i][j].getDesc()); //ajout à la liste
-			}
-		}
 	}
 }

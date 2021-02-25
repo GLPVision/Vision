@@ -132,6 +132,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 			else{
 				int x = Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText());
 				int y = Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText());
+				x = Math.abs(x);
+				y = Math.abs(y);
 				JFrame fen = null;
 				try {
 					fen = new AgricoleGUI(x, y);
@@ -139,9 +141,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 					ioException.printStackTrace();
 				}
 				fen.getContentPane().setBackground(Color.DARK_GRAY);
-				String pwd = System.getProperty("user.dir");
-				Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/res/drone.png");
-				fen.setIconImage(icon);
+				ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
+				fen.setIconImage(icon.getImage());
 				fen.setResizable(false);
 				fen.setSize(1250, 720);
 				fen.setBounds(300, 200, 1250, 720);
@@ -158,6 +159,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 			else {
 				int x = Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText());
 				int y = Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText());
+				x = Math.abs(x);
+				y = Math.abs(y);
 				String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 				while (txt.isEmpty() || Integer.parseInt(txt) > (x*y)/4){
 					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si le nombre d'otage saisie n'est pas valide
@@ -170,9 +173,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 					ioException.printStackTrace();
 				}
 				fen.getContentPane().setBackground(Color.DARK_GRAY);
-				String pwd = System.getProperty("user.dir");
-				Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/affichage/drone.png");
-				fen.setIconImage(icon);
+				ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
+				fen.setIconImage(icon.getImage());
 				fen.setResizable(false);
 				fen.setSize(1000, 500);
 				fen.setBounds(300, 200, 1000, 500);

@@ -1,20 +1,13 @@
 package affichage;
 
-import data.Carte;
-import data.Element;
-import data.Otage;
-import data.Scenario;
 import moteur.build;
 import moteur.traitement;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
-import javax.swing.*;
-import javax.swing.border.LineBorder;
 
 public class OtageGUI extends JFrame implements ActionListener {
 	
@@ -35,10 +28,6 @@ public class OtageGUI extends JFrame implements ActionListener {
 	 * Liste contient la carte
 	 */
 	private DefaultListModel list;
-	/**
-	 * Scénario
-	 */
-	private Otage otage;
 	/**
 	 * Nombre d'otages
 	 */
@@ -157,13 +146,16 @@ public class OtageGUI extends JFrame implements ActionListener {
 		this.y = y;
 		this.nbOtage = nbOtage;
 
-		otage = (Otage) traitement.creer(true, x, y, nbOtage);
-		new build(otage, x, y, list).start(); //construit la carte dans le gui
+		traitement t = new traitement();
+		t.creer(true, x, y, nbOtage);
+		t.scan();
+		t.majGUI();
+		new build(t.getScenario(), x, y, list).start(); //construit la carte dans le gui
+		t.supp();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource()==quitter) {
 			System.exit(0);
 		}
@@ -183,9 +175,8 @@ public class OtageGUI extends JFrame implements ActionListener {
 		if(e.getSource()==recherche) {
 			JFrame fen = new VisionGUI();
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
-			String pwd = System.getProperty("user.dir");
-	       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/res/drone.png");
-	        fen.setIconImage(icon);
+			ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
+			fen.setIconImage(icon.getImage());
 	        fen.setResizable(false);
 			fen.setSize(560, 260);
 			fen.setBounds(300, 200, 560, 260);
@@ -193,46 +184,5 @@ public class OtageGUI extends JFrame implements ActionListener {
 			fen.setVisible(true);
 			this.setVisible(false);
 		}
-	}
-
-	/**
-	 * Fonction qui règle le nombre d'otages
-	 * @param nbOtage Nombre d'otages
-	 */
-	public void setNbOtage(int nbOtage){
-		this.nbOtage = nbOtage;
-	}
-
-	/**
-	 * Fonction qui règle les coordonnées x
-	 * @param x Coordonnées x
-	 */
-	public void setX(int x){
-		this.x =x;
-	}
-
-	/**
-	 * Fonction qui règle les coordonnées y
-	 * @param y Coordonnées y
-	 */
-	public void setY(int y){
-		this.y = y;
-	}
-
-	/**
-	 * Fonction qui construit la carte
-	 * @throws IOException Erreur d'écriture lors de l'exportation
-	 */
-	public void build_map_otage() throws IOException {
-		otage = new Otage(x, y, nbOtage);
-		Carte map = otage.getCarte(); //récupère la carte
-		Element[][] tab = map.getTab(); //récupère la matrice
-		for (int i=0 ; i<x ; i++){ //parcours x
-			for (int j=0 ; j<y ; j++){ //parcours y
-				list.addElement(tab[i][j].getDesc()); //ajout à la liste
-			}
-
-		}
-
 	}
 }

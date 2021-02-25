@@ -3,18 +3,16 @@ package affichage;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.Color;
 
 public class TestVisionGUI {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		JFrame fen = new VisionGUI();
 		fen.getContentPane().setBackground(Color.DARK_GRAY);
-		String pwd = System.getProperty("user.dir");
-       	Image icon = Toolkit.getDefaultToolkit().getImage(pwd + "/src/res/drone.png");
-        fen.setIconImage(icon);
+		ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
+        fen.setIconImage(icon.getImage());
         fen.setResizable(false);
 		fen.setSize(560, 260);
 		fen.setBounds(550, 350, 560, 260);
