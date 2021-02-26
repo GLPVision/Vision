@@ -2,6 +2,8 @@ package moteur;
 
 import data.*;
 
+import javax.swing.*;
+
 public class traitement {
     private int nbOtage;
     private int nbAssaillant;
@@ -41,7 +43,17 @@ public class traitement {
         }
     }
 
-    public void majGUI(){
+    public void majGUI(boolean otage, JLabel text){ //fonction a appeler avec un action listener lié a la selection d'un element
+        if(otage){
+            text.setText("nb assaillants :" +
+                    "\nnb otages :" +
+                    "\nnb total :");
+        }
+        else{
+            text.setText(("nb anomalies :" +
+                    "\nnb intrusions :" +
+                    "\netc"));
+        }
 
     }
     public void supp() {

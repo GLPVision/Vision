@@ -98,7 +98,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		carte.setBackground(new Color(0, 128, 128));
 		carte.setBounds(274, 50, 950, 600);
 		list = new DefaultListModel(); //initialisation
-		content = new JList(list); //list dans JList
+		content = new JList(list); //list dans JList AJOUTER ACTIONLISTENER
 		content.setLayoutOrientation(JList.HORIZONTAL_WRAP); //liste horizontale
 		//centre text de chaque case
 		DefaultListCellRenderer cellRenderer = new DefaultListCellRenderer();
@@ -132,9 +132,11 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		info.setBorder(null);
 		
 		grille = new JPanel();
+		JLabel text = new JLabel("texte");//ajouter un element texte a grille (jtextfield, jtextarea ou jlabel)
 		grille.setBounds(10, 50, 255, 600);
 		contentPane.add(grille);
-		grille.setLayout(null);
+		grille.setLayout(new FlowLayout());
+		grille.add(text);
 		grille.setBackground(new Color(204, 190, 121));
 
 		this.x = x;
@@ -143,7 +145,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		traitement t = new traitement();
 		t.creer(false, x, y, 0);
 		t.scan();
-		t.majGUI();
+		t.majGUI(false, text);
 		new build(t.getScenario(), x, y, list).start(); //construit la carte dans le gui
 		t.supp();
 	}

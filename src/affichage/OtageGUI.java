@@ -137,9 +137,11 @@ public class OtageGUI extends JFrame implements ActionListener {
 		info.setBorder(null);
 		
 		grille = new JPanel();
+		JLabel text = new JLabel("texte");//ajouter un element texte a grille (jtextfield, jtextarea ou jlabel)
 		grille.setBounds(10, 50, 255, 600);
 		contentPane.add(grille);
-		grille.setLayout(null);
+		grille.setLayout(new FlowLayout());
+		grille.add(text);
 		grille.setBackground(new Color(204, 190, 121));
 
 		this.x = x;
@@ -149,7 +151,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 		traitement t = new traitement();
 		t.creer(true, x, y, nbOtage);
 		t.scan();
-		t.majGUI();
+		t.majGUI(true, text);
 		new build(t.getScenario(), x, y, list).start(); //construit la carte dans le gui
 		t.supp();
 	}
