@@ -91,7 +91,8 @@ public class Carte {
     public void generer(){
         for (int i=0 ; i<x ; i++){ //parcours x
             for (int j=0 ; j<y ; j++){ //parcours y
-                String desc; //initilisation de la variable
+                @SuppressWarnings("unused")
+				String desc; //initilisation de la variable
                 if(otage){
                     int random = (int) (Math.random()*(5*nb_otage)); //aléatoire
                     switch(random){

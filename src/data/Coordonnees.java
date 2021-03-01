@@ -8,11 +8,13 @@ public class Coordonnees {
     /**
      * Coordonnées x
      */
-    private int x;
+    @SuppressWarnings("unused")
+	private int x;
     /**
      * Coordonnées y
      */
-    private int y;
+    @SuppressWarnings("unused")
+	private int y;
 
     /**
      * Constructeur, initialise les variables

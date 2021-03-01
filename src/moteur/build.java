@@ -1,41 +1,45 @@
 package moteur;
 
-import data.Carte;
+import data.Carte; 
 import data.Element;
 import data.Scenario;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 
 public class build extends Thread{
     private Scenario scenario;
     private int x;
     private int y;
-    private DefaultListModel list;
+    @SuppressWarnings("rawtypes")
+	private DefaultListModel list;
     private ImageIcon personne = new ImageIcon(ClassLoader.getSystemResource("personne.png"));
     private ImageIcon intrusion = new ImageIcon(ClassLoader.getSystemResource("intrusion.png"));
     private ImageIcon maladie = new ImageIcon(ClassLoader.getSystemResource("maladie.png"));
     private ImageIcon feu = new ImageIcon(ClassLoader.getSystemResource("feu.png"));
     private ImageIcon inconnue = new ImageIcon(ClassLoader.getSystemResource("inconnue.png"));
     private ImageIcon cercle = new ImageIcon(ClassLoader.getSystemResource("cercle.png"));
-    public build(Scenario scenario, int x, int y, DefaultListModel list){
+    private boolean otage;
+    private JLabel text;
+    public build(Scenario scenario, int x, int y, @SuppressWarnings("rawtypes") DefaultListModel list, boolean otage, JLabel text){
         this.scenario = scenario;
         this.x = x;
         this.y = y;
         this.list = list;
+        this.otage = otage;
+        this.text = text;
     }
     public void run(){
         try {
             build_map(list);
-            entourer(list);
+            entourer(list, otage, text);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-    public void build_map(DefaultListModel list) throws InterruptedException {
+    @SuppressWarnings("unchecked")
+	public void build_map(@SuppressWarnings("rawtypes") DefaultListModel list) throws InterruptedException {
         Carte carte = scenario.getCarte(); //récupère la carte
         Element[][] tab = carte.getTab(); //récupère la matrice
         for (int i=0 ; i<x ; i++){ //parcours x
@@ -66,18 +70,35 @@ public class build extends Thread{
             //sleep(100);
         }
     }
-    public void entourer(DefaultListModel list) throws InterruptedException {
+    @SuppressWarnings("unchecked")
+	public void entourer(@SuppressWarnings("rawtypes") DefaultListModel list, boolean otage, JLabel text) throws InterruptedException {
         Carte carte = scenario.getCarte(); //récupère la carte
         Element[][] tab = carte.getTab(); //récupère la matrice
         for (int i=0 ; i<x ; i++){ //parcours x
             for (int j=0 ; j<y ; j++){ //parcours y
                 if(tab[i][j].getDesc() != "."){
                     list.set(i*x+j, merge((ImageIcon) list.getElementAt(i*x+j), new ImageIcon(cercle.getImage().getScaledInstance(600/y, 600/y, Image.SCALE_DEFAULT)))); //entourer
+                    majGUI(otage,text);
                 }
-                sleep(10);
+                sleep(50);
             }
         }
     }
+    
+    public void majGUI(boolean otage, JLabel text){ //fonction a appeler avec un action listener lié a la selection d'un element
+        if(otage){
+            text.setText("nb assaillants :" +
+                    "\nnb otages :" +
+                    "\nnb total :");
+        }
+        else{
+            text.setText(("nb anomalies :" +
+                    "\nnb intrusions :" +
+                    "\netc"));
+        }
+
+    }
+    
     public ImageIcon merge(ImageIcon a, ImageIcon b){
         Image imga = a.getImage();
         Image imgb = b.getImage();

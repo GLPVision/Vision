@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
 public class AgricoleGUI extends JFrame implements ActionListener {
 
@@ -20,22 +22,28 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
+	private JLabel text, repere, nombre, total;
+	private JButton prec, next;
 	/**
 	 * JList contient une liste
 	 */
-	private JList content;
+	private JList<?> content;
 	/**
 	 * Liste contient la carte
 	 */
-	private DefaultListModel list;
+	private DefaultListModel<?> list;
 	/**
 	 * taille x de la matrice
 	 */
+	@SuppressWarnings("unused")
 	private int x;
 	/**
 	 * taille y de la matrice
 	 */
+	@SuppressWarnings("unused")
 	private int y;
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public AgricoleGUI(int x, int y) throws IOException {
 		super("Vision Détection : Agricole");
 		
@@ -108,36 +116,74 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		content.setFixedCellWidth(carte.getWidth()/y);
 		content.setFixedCellHeight(carte.getHeight()/x);
 		content.setVisibleRowCount(x); //largeur de x cases
-		content.setBackground(new Color(0, 128, 128));
-		content.setBorder(null);
+		content.setBackground(new Color(0, 102, 51));
+		content.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		carte.add(content, BorderLayout.CENTER);
 		contentPane.add(carte);
 		
 		nomcarte = new JTextField();
+		nomcarte.setHorizontalAlignment(SwingConstants.CENTER);
 		nomcarte.setBounds(274, 25, 90, 25);
 		contentPane.add(nomcarte);
 		nomcarte.setColumns(10);
 		nomcarte.setText("Cartographie : ");
 		nomcarte.setEditable(false);
-		nomcarte.setBackground(new Color(204, 190, 121));
-		nomcarte.setBorder(null);
+		nomcarte.setBackground(SystemColor.activeCaption);
+		nomcarte.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
 		
 		info = new JTextField();
+		info.setHorizontalAlignment(SwingConstants.CENTER);
 		info.setBounds(10, 25, 90, 25);
 		contentPane.add(info);
 		info.setColumns(10);
 		info.setText("Informations : ");
 		info.setEditable(false);
-		info.setBackground(new Color(204, 190, 121));
-		info.setBorder(null);
+		info.setBackground(SystemColor.activeCaption);
+		info.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
 		
 		grille = new JPanel();
-		JLabel text = new JLabel("texte");//ajouter un element texte a grille (jtextfield, jtextarea ou jlabel)
+		grille.setBorder(new LineBorder(Color.BLACK, 3));
 		grille.setBounds(10, 50, 255, 600);
 		contentPane.add(grille);
-		grille.setLayout(new FlowLayout());
-		grille.add(text);
+		grille.setLayout(null);
 		grille.setBackground(new Color(204, 190, 121));
+		
+		repere = new JLabel("   Anomalies repérées");
+		repere.setHorizontalAlignment(SwingConstants.LEFT);
+		repere.setBounds(0, 0, 255, 30);
+		repere.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
+		grille.add(repere);
+		
+		nombre = new JLabel("   Nombre d'anomalies");
+		nombre.setHorizontalAlignment(SwingConstants.LEFT);
+		nombre.setBorder(new MatteBorder(3, 0, 3, 0, (Color) Color.BLACK));
+		nombre.setBounds(0, 300, 255, 30);
+		grille.add(nombre);
+		
+		total = new JLabel("   Total : ");
+		total.setHorizontalAlignment(SwingConstants.LEFT);
+		total.setBorder(new MatteBorder(3, 0, 3, 0, (Color) Color.BLACK));
+		total.setBounds(0, 450, 255, 30);
+		grille.add(total);
+		
+		prec = new JButton("Anomalie précédente");
+		prec.setBorder(null);
+		prec.setBackground(SystemColor.activeCaption);
+		prec.setBounds(10, 491, 235, 42);
+		grille.add(prec);
+		
+		next = new JButton("Anomalie suivante");
+		next.setBorder(null);
+		next.setBackground(SystemColor.activeCaption);
+		next.setBounds(10, 547, 235, 42);
+		grille.add(next);
+		
+		text = new JLabel("    texte");
+		text.setHorizontalAlignment(SwingConstants.LEFT);
+		text.setBounds(0, 28, 255, 42);
+		text.setBorder(null);
+		grille.add(text);
+		
 
 		this.x = x;
 		this.y = y;
@@ -145,8 +191,8 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		traitement t = new traitement();
 		t.creer(false, x, y, 0);
 		t.scan();
-		t.majGUI(false, text);
-		new build(t.getScenario(), x, y, list).start(); //construit la carte dans le gui
+		new build(t.getScenario(), x, y, list, false, text).start(); //construit la carte dans le gui
+		
 		t.supp();
 	}
 
@@ -167,6 +213,14 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		
 		if(e.getSource()==Aide) {
 			JOptionPane.showMessageDialog(this, "Bienvenue sur Vision Détection ! \nL'application qui vous permet d'identifier une anomalie dans un espace défini ou d'identifier le nombre de personnes présentes lors d'une prise d'otage.", "Aide", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+		if(e.getSource()==prec) {
+			
+		}
+		
+		if(e.getSource()==next) {
+			
 		}
 		
 		if(e.getSource()==recherche) {

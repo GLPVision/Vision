@@ -4,10 +4,13 @@ import moteur.build;
 import moteur.traitement;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import javax.swing.border.MatteBorder;
 
 public class OtageGUI extends JFrame implements ActionListener {
 	
@@ -20,27 +23,36 @@ public class OtageGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
+	private JLabel text, otage, repere, nombre, total;
+	private JButton prec, next;
+	
 	/**
 	 * JList contient une liste
 	 */
+	@SuppressWarnings("rawtypes")
 	private JList content;
 	/**
 	 * Liste contient la carte
 	 */
+	@SuppressWarnings("rawtypes")
 	private DefaultListModel list;
 	/**
 	 * Nombre d'otages
 	 */
+	@SuppressWarnings("unused")
 	private int nbOtage;
 	/**
 	 * taille x de la matrice
 	 */
+	@SuppressWarnings("unused")
 	private int x;
 	/**
 	 * taille y de la matrice
 	 */
+	@SuppressWarnings("unused")
 	private int y;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public OtageGUI(int x, int y, int nbOtage) throws IOException{
 		super("Vision Détection : Prise d'otages");
 		
@@ -114,36 +126,80 @@ public class OtageGUI extends JFrame implements ActionListener {
 		content.setFixedCellHeight(carte.getHeight()/y);
 		content.setVisibleRowCount(x); //largeur de x cases
 		content.setBackground(new Color(0, 128, 128));
-		content.setBorder(null);
+		content.setBorder(new LineBorder(Color.BLACK, 3));
 		carte.add(content, BorderLayout.CENTER);
 		contentPane.add(carte);
 		
 		nomcarte = new JTextField();
+		nomcarte.setHorizontalAlignment(SwingConstants.CENTER);
 		nomcarte.setBounds(274, 25, 90, 25);
 		contentPane.add(nomcarte);
 		nomcarte.setColumns(10);
 		nomcarte.setText("Cartographie : ");
 		nomcarte.setEditable(false);
-		nomcarte.setBackground(new Color(204, 190, 121));
-		nomcarte.setBorder(null);
+		nomcarte.setBackground(SystemColor.activeCaption);
+		nomcarte.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
 		
 		info = new JTextField();
+		info.setHorizontalAlignment(SwingConstants.CENTER);
 		info.setBounds(10, 25, 90, 25);
 		contentPane.add(info);
 		info.setColumns(10);
 		info.setText("Informations : ");
 		info.setEditable(false);
-		info.setBackground(new Color(204, 190, 121));
-		info.setBorder(null);
+		info.setBackground(SystemColor.activeCaption);
+		info.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
 		
 		grille = new JPanel();
-		JLabel text = new JLabel("texte");//ajouter un element texte a grille (jtextfield, jtextarea ou jlabel)
+		grille.setBorder(new LineBorder(Color.BLACK, 3));
 		grille.setBounds(10, 50, 255, 600);
 		contentPane.add(grille);
-		grille.setLayout(new FlowLayout());
-		grille.add(text);
+		grille.setLayout(null);
 		grille.setBackground(new Color(204, 190, 121));
-
+		
+		otage = new JLabel("   Nombre d'otages :");
+		otage.setHorizontalAlignment(SwingConstants.LEFT);
+		otage.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
+		otage.setBounds(0, 0, 255, 30);
+		grille.add(otage);
+		
+		repere = new JLabel("   Individus repérés");
+		repere.setBackground(SystemColor.activeCaption);
+		repere.setHorizontalAlignment(SwingConstants.LEFT);
+		repere.setBounds(0, 30, 255, 30);
+		repere.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
+		grille.add(repere);
+		
+		nombre = new JLabel("   Nombre total d'individus :");
+		nombre.setHorizontalAlignment(SwingConstants.LEFT);
+		nombre.setBorder(new MatteBorder(3, 0, 3, 0, (Color) new Color(0, 0, 0)));
+		nombre.setBounds(0, 420, 255, 30);
+		grille.add(nombre);
+		
+		total = new JLabel("   Nombre total d'assaillants : ");
+		total.setHorizontalAlignment(SwingConstants.LEFT);
+		total.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
+		total.setBounds(0, 450, 255, 30);
+		grille.add(total);
+		
+		prec = new JButton("Individu précédent");
+		prec.setBorder(null);
+		prec.setBackground(SystemColor.activeCaption);
+		prec.setBounds(10, 491, 235, 42);
+		grille.add(prec);
+		
+		next = new JButton("Individu suivant");
+		next.setBorder(null);
+		next.setBackground(SystemColor.activeCaption);
+		next.setBounds(10, 547, 235, 42);
+		grille.add(next);
+		
+		text = new JLabel("    texte");
+		text.setHorizontalAlignment(SwingConstants.LEFT);
+		text.setBounds(0, 60, 255, 42);
+		text.setBorder(null);
+		grille.add(text);
+		
 		this.x = x;
 		this.y = y;
 		this.nbOtage = nbOtage;
@@ -151,8 +207,9 @@ public class OtageGUI extends JFrame implements ActionListener {
 		traitement t = new traitement();
 		t.creer(true, x, y, nbOtage);
 		t.scan();
-		t.majGUI(true, text);
-		new build(t.getScenario(), x, y, list).start(); //construit la carte dans le gui
+		//t.majGUI(true, text);
+		new build(t.getScenario(), x, y, list, true, text).start(); //construit la carte dans le gui
+		
 		t.supp();
 	}
 
@@ -172,6 +229,14 @@ public class OtageGUI extends JFrame implements ActionListener {
 		
 		if(e.getSource()==Aide) {
 			JOptionPane.showMessageDialog(this, "Bienvenue sur Vision Détection ! \nL'application qui vous permet d'identifier une anomalie dans un espace défini ou d'identifier le nombre de personnes présentes lors d'une prise d'otage.", "Aide", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+		if(e.getSource()==prec) {
+			
+		}
+		
+		if(e.getSource()==next) {
+			
 		}
 		
 		if(e.getSource()==recherche) {
