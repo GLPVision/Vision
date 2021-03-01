@@ -230,7 +230,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	        fen.setIconImage(icon.getImage());
 	        fen.setResizable(false);
 			fen.setSize(560, 260);
-			fen.setBounds(300, 200, 560, 260);
+			fen.setBounds(550, 350, 560, 260);
 			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			fen.setVisible(true);
 			this.setVisible(false);
