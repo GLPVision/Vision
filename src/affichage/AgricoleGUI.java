@@ -22,7 +22,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JLabel text, repere, nombre, total;
+	private JLabel text, types, repere, nombre, total;
 	private JButton prec, next;
 	/**
 	 * JList contient une liste
@@ -185,6 +185,12 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		text.setBorder(null);
 		grille.add(text);
 		
+		types = new JLabel("    texte");
+		types.setVerticalAlignment(SwingConstants.TOP);
+		types.setHorizontalAlignment(SwingConstants.LEFT);
+		types.setBorder(null);
+		types.setBounds(0, 330, 255, 120);
+		grille.add(types);		
 
 		this.x = x;
 		this.y = y;
@@ -193,13 +199,6 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		t.creer(false, x, y, 0);
 		t.scan();
 		new build(t.getScenario(), x, y, list, false, text).start(); //construit la carte dans le gui
-		
-		JLabel text_1 = new JLabel("    texte");
-		text_1.setVerticalAlignment(SwingConstants.TOP);
-		text_1.setHorizontalAlignment(SwingConstants.LEFT);
-		text_1.setBorder(null);
-		text_1.setBounds(0, 330, 255, 120);
-		grille.add(text_1);
 		
 		t.supp();
 	}
