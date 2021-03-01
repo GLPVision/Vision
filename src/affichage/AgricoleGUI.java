@@ -179,8 +179,9 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		grille.add(next);
 		
 		text = new JLabel("    texte");
+		text.setVerticalAlignment(SwingConstants.TOP);
 		text.setHorizontalAlignment(SwingConstants.LEFT);
-		text.setBounds(0, 28, 255, 42);
+		text.setBounds(0, 30, 255, 270);
 		text.setBorder(null);
 		grille.add(text);
 		
@@ -192,6 +193,13 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		t.creer(false, x, y, 0);
 		t.scan();
 		new build(t.getScenario(), x, y, list, false, text).start(); //construit la carte dans le gui
+		
+		JLabel text_1 = new JLabel("    texte");
+		text_1.setVerticalAlignment(SwingConstants.TOP);
+		text_1.setHorizontalAlignment(SwingConstants.LEFT);
+		text_1.setBorder(null);
+		text_1.setBounds(0, 330, 255, 120);
+		grille.add(text_1);
 		
 		t.supp();
 	}

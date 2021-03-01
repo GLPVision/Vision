@@ -195,8 +195,9 @@ public class OtageGUI extends JFrame implements ActionListener {
 		grille.add(next);
 		
 		text = new JLabel("    texte");
+		text.setVerticalAlignment(SwingConstants.TOP);
 		text.setHorizontalAlignment(SwingConstants.LEFT);
-		text.setBounds(0, 60, 255, 42);
+		text.setBounds(0, 60, 255, 362);
 		text.setBorder(null);
 		grille.add(text);
 		
