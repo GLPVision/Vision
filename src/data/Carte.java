@@ -55,7 +55,7 @@ public class Carte {
         this.y = y;
         this.otage = mode;
         this.nb_otage = nb_otage;
-        tab = new Element[this.x][this.y];
+        tab = new Element[y][x];
         init();
     }
 
@@ -89,8 +89,8 @@ public class Carte {
      * Fonction pour générer la carte aléatoirement
      */
     public void generer(){
-        for (int i=0 ; i<x ; i++){ //parcours x
-            for (int j=0 ; j<y ; j++){ //parcours y
+        for (int i=0 ; i<y ; i++){ //parcours x
+            for (int j=0 ; j<x ; j++){ //parcours y
                 @SuppressWarnings("unused")
 				String desc; //initilisation de la variable
                 if(otage){
@@ -178,8 +178,8 @@ public class Carte {
      */
     public void scan(){
         int nb =0;
-        for (int i=0 ; i<x ; i++){ //parcours x
-            for (int j=0 ; j<y ; j++){ //parcours y
+        for (int i=0 ; i<y ; i++){ //parcours x
+            for (int j=0 ; j<x ; j++){ //parcours y
                 if (tab[i][j].getDesc() != "."){ //si pas rien
                     nb++;
                 }

@@ -1,5 +1,6 @@
 package affichage;
 
+import data.Element;
 import moteur.build;
 import moteur.traitement;
 
@@ -10,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class AgricoleGUI extends JFrame implements ActionListener {
 
@@ -22,9 +25,9 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JLabel repere, nombre, total;
-	private JTextArea text, types;
+	private JLabel repere, nombre, total, text, types;
 	private JButton prec, next;
+	private traitement t;
 	/**
 	 * JList contient une liste
 	 */
@@ -108,20 +111,28 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		carte.setBounds(274, 50, 950, 600);
 		list = new DefaultListModel(); //initialisation
 		content = new JList(list); //list dans JList AJOUTER ACTIONLISTENER
-		content.setLayoutOrientation(JList.VERTICAL_WRAP); //liste horizontale
+		content.setLayoutOrientation(JList.HORIZONTAL_WRAP); //liste horizontale
 		//centre text de chaque case
 		DefaultListCellRenderer cellRenderer = new DefaultListCellRenderer();
 		cellRenderer.setHorizontalAlignment(JLabel.CENTER);
 		content.setCellRenderer(cellRenderer);
 		//taille de case en fonction du nombre de cases
-		content.setFixedCellWidth(carte.getWidth()/y);
-		content.setFixedCellHeight(carte.getHeight()/x);
-		content.setVisibleRowCount(x); //largeur de x cases
+		content.setFixedCellWidth(carte.getWidth()/x);
+		content.setFixedCellHeight(carte.getHeight()/y);
+		content.setVisibleRowCount(y); //largeur de x cases
 		content.setBackground(new Color(0, 102, 51));
 		content.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		carte.add(content, BorderLayout.CENTER);
 		contentPane.add(carte);
-		
+
+		content.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				t.current();
+			}
+		});
+
+
 		nomcarte = new JTextField();
 		nomcarte.setHorizontalAlignment(SwingConstants.CENTER);
 		nomcarte.setBounds(274, 25, 90, 25);
@@ -172,23 +183,37 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		prec.setBackground(SystemColor.activeCaption);
 		prec.setBounds(10, 491, 235, 42);
 		grille.add(prec);
+
+		prec.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				t.previous();
+			}
+		});
 		
 		next = new JButton("Anomalie suivante");
 		next.setBorder(null);
 		next.setBackground(SystemColor.activeCaption);
 		next.setBounds(10, 547, 235, 42);
 		grille.add(next);
+
+		next.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				t.next();
+			}
+		});
 		
-		text = new JTextArea("    texte"); //lister les coordonnées
-		//text.setVerticalAlignment(SwingConstants.TOP);
-		//text.setHorizontalAlignment(SwingConstants.LEFT);
+		text = new JLabel("   Aucune sélection"); //lister les coordonnées
+		text.setVerticalAlignment(SwingConstants.TOP);
+		text.setHorizontalAlignment(SwingConstants.LEFT);
 		text.setBounds(0, 30, 255, 270);
 		text.setBorder(null);
 		grille.add(text);
 		
-		types = new JTextArea("    texte"); //
-		//types.setVerticalAlignment(SwingConstants.TOP);
-		//types.setHorizontalAlignment(SwingConstants.LEFT);
+		types = new JLabel(); //
+		types.setVerticalAlignment(SwingConstants.TOP);
+		types.setHorizontalAlignment(SwingConstants.LEFT);
 		types.setBorder(null);
 		types.setBounds(0, 330, 255, 120);
 		grille.add(types);		
@@ -196,9 +221,11 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		this.x = x;
 		this.y = y;
 
-		traitement t = new traitement(false, x, y, 0, total, text, types, list);
-		build b = new build(t.getScenario(), x, y, list, false, t); //construit la carte dans le gui
+		traitement t = new traitement(false, x, y, 0, total, text, types, list, content);
+		build b = new build(t); //construit la carte dans le gui
+		b.build_map();
 		t.start();
+		this.t = t;
 	}
 
 

@@ -10,9 +10,7 @@ import java.awt.image.BufferedImage;
 
 public class build{
     private Scenario scenario;
-    private int x;
-    private int y;
-    @SuppressWarnings("rawtypes")
+    private int x, y;
 	private DefaultListModel list;
     private ImageIcon personne = new ImageIcon(ClassLoader.getSystemResource("personne.png"));
     private ImageIcon intrusion = new ImageIcon(ClassLoader.getSystemResource("intrusion.png"));
@@ -24,24 +22,20 @@ public class build{
     private JLabel text;
     private traitement t;
 
-    public build(Scenario scenario, int x, int y, @SuppressWarnings("rawtypes") DefaultListModel list, boolean otage, traitement t){
-        this.scenario = scenario;
-        this.x = x;
-        this.y = y;
-        this.list = list;
-        this.otage = otage;
+    public build(traitement t){
+        this.scenario = t.getScenario();
+        this.x = t.getX();
+        this.y = t.getY();
+        this.list = t.getList();
+        this.otage = t.getOtage();
         this.t = t;
-        run();
     }
-    public void run(){
-        build_map(list);
-    }
-    @SuppressWarnings("unchecked")
-	public void build_map(@SuppressWarnings("rawtypes") DefaultListModel list){
+
+	public void build_map(){
         Carte carte = scenario.getCarte(); //récupère la carte
         Element[][] tab = carte.getTab(); //récupère la matrice
-        for (int i=0 ; i<x ; i++){ //parcours x
-            for (int j=0 ; j<y ; j++){ //parcours y
+        for (int i=0 ; i<y ; i++){ //parcours x
+            for (int j=0 ; j<x ; j++){ //parcours y
                 ImageIcon img = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
                 switch(tab[i][j].getDesc()){
                     case ".":
@@ -67,15 +61,14 @@ public class build{
                         break;
                 }
                 if(img == ble || img == null){
-                    list.addElement(new ImageIcon(img.getImage().getScaledInstance(950/y, 600/x, Image.SCALE_DEFAULT))); //ajout à la liste
+                    list.addElement(new ImageIcon(img.getImage().getScaledInstance(950/x, 600/y, Image.SCALE_DEFAULT))); //ajout à la liste
                 }
                 else{
-                    list.addElement(merge(new ImageIcon(ble.getImage().getScaledInstance(950/y, 600/x, Image.SCALE_DEFAULT)), new ImageIcon(img.getImage().getScaledInstance(600/x/2, 600/x/2, Image.SCALE_DEFAULT)))); //ajout à la liste
+                    list.addElement(merge(new ImageIcon(ble.getImage().getScaledInstance(950/x, 600/y, Image.SCALE_DEFAULT)), new ImageIcon(img.getImage().getScaledInstance(Math.min(950/x/2, 600/y/2), Math.min(950/x/2, 600/y/2), Image.SCALE_DEFAULT)))); //ajout à la liste
                 }
             }
         }
     }
-
 
     public static ImageIcon merge(ImageIcon a, ImageIcon b){ //a dessous et b dessus, a plus grand
         Image imga = a.getImage();

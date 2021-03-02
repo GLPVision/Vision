@@ -116,7 +116,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 		carte.setBounds(274, 50, 950, 600);
 		list = new DefaultListModel(); //initialisation
 		content = new JList(list); //list dans JList
-		content.setLayoutOrientation(JList.VERTICAL_WRAP); //liste horizontale
+		content.setLayoutOrientation(JList.HORIZONTAL_WRAP); //liste horizontale
 		//centre text de chaque cas
 		DefaultListCellRenderer cellRenderer = new DefaultListCellRenderer();
 		cellRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -124,7 +124,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 		//taille des cases en fonction du nombre de cases
 		content.setFixedCellWidth(carte.getWidth()/x);
 		content.setFixedCellHeight(carte.getHeight()/y);
-		content.setVisibleRowCount(x); //largeur de x cases
+		content.setVisibleRowCount(y); //largeur de x cases
 		content.setBackground(new Color(0, 128, 128));
 		content.setBorder(new LineBorder(Color.BLACK, 3));
 		carte.add(content, BorderLayout.CENTER);
@@ -204,9 +204,13 @@ public class OtageGUI extends JFrame implements ActionListener {
 		this.x = x;
 		this.y = y;
 		this.nbOtage = nbOtage;
+
+		/*
 		traitement t = new traitement(true, x, y, nbOtage, total, null, null, list);
-		build b = new build(t.getScenario(), x, y, list, false, t); //construit la carte dans le gui
+		build b = new build(t, x, y, list, false, t); //construit la carte dans le gui
 		t.start();
+
+		 */
 	}
 
 	@Override
