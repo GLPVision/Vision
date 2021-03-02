@@ -3,19 +3,20 @@ package moteur;
 import data.*;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 @SuppressWarnings("unused")
-public class traitement {
-    private int nbOtage;
-    private int nbAssaillant;
-    private int nbTotal;
-    private int intrusion;
-    private int feu;
-    private int maladie;
-    private int inconnue;
+public class traitement extends Thread {
+    private int nbOtage, nbAssaillant, nbTotal, intrusion, feu, maladie, inconnue;
     private Carte carte;
     private static Scenario scenario;
-    public void creer(boolean otage, int x, int y, int nbOtage){
+    private JLabel total;
+    private JTextArea text, types;
+    private boolean otage;
+    private DefaultListModel list;
+    private ImageIcon cercle = new ImageIcon(ClassLoader.getSystemResource("cercle.png"));
+    public traitement(boolean otage, int x, int y, int nbOtage, JLabel total, JTextArea text, JTextArea types, DefaultListModel list){
         if(otage){
             scenario = new Otage(x, y, nbOtage);
         }
@@ -23,9 +24,20 @@ public class traitement {
             scenario = new Agriculture(x, y);
         }
         carte = scenario.getCarte();
+        this.otage = otage;
+        this.total = total;
+        this.text = text;
+        this.types = types;
+        this.list = list;
     }
-
-    public void scan(){
+    public void run(){
+        try {
+            scan();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void scan() throws InterruptedException {
         Element[][] tab = carte.getTab();
         for(int i = 0 ; i<carte.getX() ; i++){
             for(int j = 0 ; j<carte.getY() ; j++){
@@ -39,7 +51,11 @@ public class traitement {
                     maladie++;
                 else if(tab[i][j].getDesc() == "x")
                     inconnue++;
-
+                if(tab[i][j].getDesc() != "."){
+                    entourer(i, j);
+                }
+                majGUI();
+                sleep(30);
             }
         }
     }
@@ -55,39 +71,21 @@ public class traitement {
         this.carte = null;
         scenario = null;
     }
-    public Scenario getScenario(){
+
+    public void majGUI(){ //fonction a appeler avec un action listener lié a la selection d'un element
+        if(otage){
+
+        }
+        else{
+            total.setText("   Total : " + (inconnue+feu+maladie+intrusion));
+        }
+    }
+
+    public void entourer(int x, int y){
+        list.set(x*carte.getY()+y, build.merge((ImageIcon) list.getElementAt(x*carte.getY()+y), new ImageIcon(cercle.getImage().getScaledInstance(600/carte.getX(), 600/carte.getX(), Image.SCALE_DEFAULT)))); //entourer
+    }
+
+    public static Scenario getScenario() {
         return scenario;
-    }
-
-    public int getNbOtage() {
-        return nbOtage;
-    }
-
-    public int getNbAssaillant() {
-        return nbAssaillant;
-    }
-
-    public int getNbTotal() {
-        return nbTotal;
-    }
-
-    public int getIntrusion() {
-        return intrusion;
-    }
-
-    public int getFeu() {
-        return feu;
-    }
-
-    public int getMaladie() {
-        return maladie;
-    }
-
-    public int getInconnue() {
-        return inconnue;
-    }
-
-    public Carte getCarte() {
-        return carte;
     }
 }

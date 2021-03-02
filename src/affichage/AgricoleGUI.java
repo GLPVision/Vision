@@ -22,7 +22,8 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JLabel text, types, repere, nombre, total;
+	private JLabel repere, nombre, total;
+	private JTextArea text, types;
 	private JButton prec, next;
 	/**
 	 * JList contient une liste
@@ -160,7 +161,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		nombre.setBounds(0, 300, 255, 30);
 		grille.add(nombre);
 		
-		total = new JLabel("   Total : ");
+		total = new JLabel("   Total : "); //
 		total.setHorizontalAlignment(SwingConstants.LEFT);
 		total.setBorder(new MatteBorder(3, 0, 3, 0, (Color) Color.BLACK));
 		total.setBounds(0, 450, 255, 30);
@@ -178,16 +179,16 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		next.setBounds(10, 547, 235, 42);
 		grille.add(next);
 		
-		text = new JLabel("    texte");
-		text.setVerticalAlignment(SwingConstants.TOP);
-		text.setHorizontalAlignment(SwingConstants.LEFT);
+		text = new JTextArea("    texte"); //lister les coordonnées
+		//text.setVerticalAlignment(SwingConstants.TOP);
+		//text.setHorizontalAlignment(SwingConstants.LEFT);
 		text.setBounds(0, 30, 255, 270);
 		text.setBorder(null);
 		grille.add(text);
 		
-		types = new JLabel("    texte");
-		types.setVerticalAlignment(SwingConstants.TOP);
-		types.setHorizontalAlignment(SwingConstants.LEFT);
+		types = new JTextArea("    texte"); //
+		//types.setVerticalAlignment(SwingConstants.TOP);
+		//types.setHorizontalAlignment(SwingConstants.LEFT);
 		types.setBorder(null);
 		types.setBounds(0, 330, 255, 120);
 		grille.add(types);		
@@ -195,12 +196,9 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		this.x = x;
 		this.y = y;
 
-		traitement t = new traitement();
-		t.creer(false, x, y, 0);
-		t.scan();
-		new build(t.getScenario(), x, y, list, false, text).start(); //construit la carte dans le gui
-		
-		t.supp();
+		traitement t = new traitement(false, x, y, 0, total, text, types, list);
+		build b = new build(t.getScenario(), x, y, list, false, t); //construit la carte dans le gui
+		t.start();
 	}
 
 
