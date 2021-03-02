@@ -16,10 +16,11 @@ public class build extends Thread{
 	private DefaultListModel list;
     private ImageIcon personne = new ImageIcon(ClassLoader.getSystemResource("personne.png"));
     private ImageIcon intrusion = new ImageIcon(ClassLoader.getSystemResource("intrusion.png"));
-    private ImageIcon maladie = new ImageIcon(ClassLoader.getSystemResource("maladie.png"));
+    private ImageIcon maladie = new ImageIcon(ClassLoader.getSystemResource("virus-2.jpg"));
     private ImageIcon feu = new ImageIcon(ClassLoader.getSystemResource("feu.png"));
     private ImageIcon inconnue = new ImageIcon(ClassLoader.getSystemResource("inconnue.png"));
     private ImageIcon cercle = new ImageIcon(ClassLoader.getSystemResource("cercle.png"));
+    private ImageIcon ble = new ImageIcon(ClassLoader.getSystemResource("champ.jpg"));
     private boolean otage;
     private JLabel text;
     public build(Scenario scenario, int x, int y, @SuppressWarnings("rawtypes") DefaultListModel list, boolean otage, JLabel text){
@@ -47,8 +48,8 @@ public class build extends Thread{
                 ImageIcon img = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
                 switch(tab[i][j].getDesc()){
                     case ".":
-                        list.addElement(".");
-                        continue;
+                        img = ble;
+                        break;
                     case "p":
                         img = personne;
                         break;
@@ -65,7 +66,13 @@ public class build extends Thread{
                         img = inconnue;
                         break;
                 }
-                list.addElement(new ImageIcon(img.getImage().getScaledInstance(600/y/2, 600/y/2, Image.SCALE_DEFAULT))); //ajout à la liste
+                if(img == ble){
+                    list.addElement(new ImageIcon(img.getImage().getScaledInstance(950/y, 600/x, Image.SCALE_DEFAULT))); //ajout à la liste
+                }
+                else{
+                    list.addElement(new ImageIcon(img.getImage().getScaledInstance(600/x/2, 600/x/2, Image.SCALE_DEFAULT))); //ajout à la liste
+
+                }
             }
             //sleep(100);
         }
@@ -77,10 +84,10 @@ public class build extends Thread{
         for (int i=0 ; i<x ; i++){ //parcours x
             for (int j=0 ; j<y ; j++){ //parcours y
                 if(tab[i][j].getDesc() != "."){
-                    list.set(i*x+j, merge((ImageIcon) list.getElementAt(i*x+j), new ImageIcon(cercle.getImage().getScaledInstance(600/y, 600/y, Image.SCALE_DEFAULT)))); //entourer
+                    list.set(i*x+j, merge((ImageIcon) list.getElementAt(i*x+j), new ImageIcon(cercle.getImage().getScaledInstance(600/x, 600/x, Image.SCALE_DEFAULT)))); //entourer
                     majGUI(otage,text);
                 }
-                sleep(50);
+                sleep(10);
             }
         }
     }

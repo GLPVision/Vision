@@ -135,7 +135,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 				y = Math.abs(y);
 				JFrame fen = null;
 				try {
-					fen = new AgricoleGUI(x, y);
+					fen = new AgricoleGUI(y, x);
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}
@@ -167,7 +167,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 				}
 				JFrame fen = null;
 				try {
-					fen = new OtageGUI(x, y, Integer.parseInt(txt));
+					fen = new OtageGUI(y, x, Integer.parseInt(txt));
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}

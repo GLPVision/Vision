@@ -116,7 +116,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 		carte.setBounds(274, 50, 950, 600);
 		list = new DefaultListModel(); //initialisation
 		content = new JList(list); //list dans JList
-		content.setLayoutOrientation(JList.HORIZONTAL_WRAP); //liste horizontale
+		content.setLayoutOrientation(JList.VERTICAL_WRAP); //liste horizontale
 		//centre text de chaque cas
 		DefaultListCellRenderer cellRenderer = new DefaultListCellRenderer();
 		cellRenderer.setHorizontalAlignment(JLabel.CENTER);
