@@ -74,7 +74,7 @@ public class traitement extends Thread {
         this. inconnue = 0;
         this.carte = null;
         scenario = null;
-        this.stop();
+        this.interrupt();
     }
 
     public void majGUI(){ //fonction a appeler avec un action listener lié a la selection d'un element
@@ -84,10 +84,10 @@ public class traitement extends Thread {
         else{
             total.setText("   Total : " + (inconnue+feu+maladie+intrusion));
             //text.setText();
-            types.setText("<html>Nombre de feux : " + feu +"<br/>" +
-                    "Nombre d'anomalies inconnues : " + inconnue +"<br/>" +
-                    "Nombre d'intrusions : " + intrusion +"<br/>" +
-                    "Nombre de maladies : " + maladie +"</html>");
+            types.setText("<html>Nombre de feux : " + feu + "<br/>" +
+                    "Nombre d'intrusions : " + intrusion + "<br/>" +
+                    "Nombre de maladies : " + maladie + "<br/>" +
+                    "Nombre d'anomalies inconnues : " + inconnue + "</html>");
         }
     }
 
@@ -99,7 +99,31 @@ public class traitement extends Thread {
         int selected = content.getSelectedIndex();
         int c1 = selected%x;
         int c2 = selected/x;
-        text.setText("   x: " + c1 + " y: " + c2);
+        String type = null;
+        switch(carte.getTab()[c2][c1].getDesc()){
+            case ".":
+                type = "rien";
+                break;
+            case "p":
+                type = "personne";
+                break;
+            case "i":
+                type = "intrusion";
+                break;
+            case "m":
+                type = "maladie";
+                break;
+            case "f":
+                type = "feu";
+                break;
+            case "x":
+                type = "inconnue";
+                break;
+            default:
+                break;
+        }
+        text.setText("<html>\tType d'anomalie : " + type + "<br/>" +
+                "\tCoordonnées : x=" + c1 + ", y=" + c2 + "</html>");
     }
     public void next(){
         int selected = content.getSelectedIndex();

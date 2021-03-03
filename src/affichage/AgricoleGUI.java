@@ -204,13 +204,14 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 			}
 		});
 		
-		text = new JLabel("   Aucune sélection"); //lister les coordonnées
+		text = new JLabel(""); //lister les coordonnées
 		text.setVerticalAlignment(SwingConstants.TOP);
 		text.setHorizontalAlignment(SwingConstants.LEFT);
 		text.setBounds(0, 30, 255, 270);
 		text.setBorder(null);
 		grille.add(text);
-		
+
+
 		types = new JLabel(); //
 		types.setVerticalAlignment(SwingConstants.TOP);
 		types.setHorizontalAlignment(SwingConstants.LEFT);

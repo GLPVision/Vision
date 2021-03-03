@@ -40,7 +40,7 @@ public class build{
                 switch(tab[i][j].getDesc()){
                     case ".":
                         if(otage)
-                            img = null;
+                            img = inconnue;
                         else
                             img = ble;
                         break;
@@ -60,11 +60,14 @@ public class build{
                         img = inconnue;
                         break;
                 }
-                if(img == ble || img == null){
+                if(img == ble || img == inconnue){
                     list.addElement(new ImageIcon(img.getImage().getScaledInstance(950/x, 600/y, Image.SCALE_DEFAULT))); //ajout à la liste
                 }
                 else{
-                    list.addElement(merge(new ImageIcon(ble.getImage().getScaledInstance(950/x, 600/y, Image.SCALE_DEFAULT)), new ImageIcon(img.getImage().getScaledInstance(Math.min(950/x/2, 600/y/2), Math.min(950/x/2, 600/y/2), Image.SCALE_DEFAULT)))); //ajout à la liste
+                    if(otage)
+                        list.addElement(merge(new ImageIcon(inconnue.getImage().getScaledInstance(950/x, 600/y, Image.SCALE_DEFAULT)), new ImageIcon(img.getImage().getScaledInstance(Math.min(950/x/2, 600/y/2), Math.min(950/x/2, 600/y/2), Image.SCALE_DEFAULT)))); //ajout à la liste
+                    else
+                        list.addElement(merge(new ImageIcon(ble.getImage().getScaledInstance(950/x, 600/y, Image.SCALE_DEFAULT)), new ImageIcon(img.getImage().getScaledInstance(Math.min(950/x/2, 600/y/2), Math.min(950/x/2, 600/y/2), Image.SCALE_DEFAULT)))); //ajout à la liste
                 }
             }
         }
