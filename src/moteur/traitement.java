@@ -4,17 +4,24 @@ import data.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.XMLEncoder;
+import java.io.ByteArrayOutputStream;
 
 public class traitement extends Thread {
     private int nbOtage, nbAssaillant, nbTotal, intrusion, feu, maladie, inconnue, x, y;
     private Carte carte;
     private Scenario scenario;
-    private JLabel total, text, types;
+    private JLabel total;
+	private JLabel text;
+	private JLabel types;
+	private String word;
     private boolean otage;
-    private DefaultListModel list;
+    private DefaultListModel<ImageIcon> list;
     private JList content;
     private ImageIcon cercle = new ImageIcon(ClassLoader.getSystemResource("cercle.png"));
-    public traitement(boolean otage, int x, int y, int nbOtage, JLabel total, JLabel text, JLabel types, DefaultListModel list, JList content){
+    private String Newligne=System.getProperty("line.separator");
+    
+    public traitement(boolean otage, int x, int y, int nbOtage, JLabel total, JLabel text, JLabel types, DefaultListModel list, JList content, String word){
         if(otage){
             scenario = new Otage(x, y, nbOtage);
         }
@@ -31,6 +38,7 @@ public class traitement extends Thread {
         this.types = types;
         this.list = list;
         this.content = content;
+        this.word = word;
     }
     public void run(){
         try {
@@ -84,10 +92,10 @@ public class traitement extends Thread {
         else{
             total.setText("   Total : " + (inconnue+feu+maladie+intrusion));
             //text.setText();
-            types.setText("<html>Nombre de feux : " + feu + "<br/>" +
-                    "Nombre d'intrusions : " + intrusion + "<br/>" +
-                    "Nombre de maladies : " + maladie + "<br/>" +
-                    "Nombre d'anomalies inconnues : " + inconnue + "</html>");
+            types.setText("<html> &nbsp &#160 Nombre de feux : " + feu + "<br/>" +
+                    " &nbsp &#160 Nombre d'intrusions : " + intrusion + "<br/>" +
+                    " &nbsp &#160 Nombre de maladies : " + maladie + "<br/>" +
+                    " &nbsp &#160 Nombre d'anomalies inconnues : " + inconnue + "</html>");
         }
     }
 
@@ -102,29 +110,32 @@ public class traitement extends Thread {
         String type = null;
         switch(carte.getTab()[c2][c1].getDesc()){
             case ".":
-                type = "rien";
+                type = "Aucune";
                 break;
             case "p":
-                type = "personne";
+                type = "Individu";
                 break;
             case "i":
-                type = "intrusion";
+                type = "Intrusion";
                 break;
             case "m":
-                type = "maladie";
+                type = "Maladie";
                 break;
             case "f":
-                type = "feu";
+                type = "Feu";
                 break;
             case "x":
-                type = "inconnue";
+                type = "Inconnue";
                 break;
             default:
                 break;
         }
-        text.setText("<html>\tType d'anomalie : " + type + "<br/>" +
-                "\tCoordonnées : x=" + c1 + ", y=" + c2 + "</html>");
+        text.setText("<html> &nbsp &#160 Type d'anomalie : " + type + "<br/>" +
+                " &nbsp &#160 Coordonnées : x=" + c1 + ", y=" + c2 + "</html>");
+        
+        word = "   " + type  + " en : " + c1 + "," + c2 ;        
     }
+    
     public void next(){
         int selected = content.getSelectedIndex();
         int c1 = selected%x;
@@ -190,5 +201,16 @@ public class traitement extends Thread {
 
     public Carte getCarte() {
         return carte;
+    }
+    public String getWord() {
+    	return this.word;
+    }
+    
+    String makeString (JLabel jl) {//This is the method which converts the Jlabel into a String
+		   ByteArrayOutputStream baos = new ByteArrayOutputStream ();
+		   XMLEncoder e = new XMLEncoder (baos);
+		   e.writeObject (jl);
+		   e.close ();
+		   return new String (baos.toByteArray ());
     }
 }
