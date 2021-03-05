@@ -206,7 +206,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 		this.y = y;
 		this.nbOtage = nbOtage;
 
-		traitement t = new traitement(true, x, y, nbOtage, total, text, null, list, content);
+		traitement t = new traitement(true, x, y, nbOtage, total, text, null, list, content, null);
 		build b = new build(t); //construit la carte dans le gui
 		b.build_map();
 		//t.start();

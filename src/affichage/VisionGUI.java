@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 public class VisionGUI extends JFrame implements ActionListener {
 
@@ -82,6 +84,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		fin.setBorder(null);
 		
 		choix = new JTextField();
+		choix.setHorizontalAlignment(SwingConstants.CENTER);
 		choix.setBounds(400, 68, 130, 30);
 		contentPane.add(choix);
 		choix.setColumns(10);

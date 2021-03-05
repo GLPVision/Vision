@@ -8,7 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -25,9 +29,15 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JLabel repere, nombre, total, text, types;
+	private JLabel repere, nombre, total, text, types, Anomalies;
+	private JList<?> liste;
+	private JScrollPane scrollPane;
 	private JButton prec, next;
+	private String word;
 	private traitement t;
+	private DefaultListModel model;
+	private DefaultListCellRenderer cellRenderer;
+	private ArrayList ano;
 	/**
 	 * JList contient une liste
 	 */
@@ -112,10 +122,12 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		list = new DefaultListModel(); //initialisation
 		content = new JList(list); //list dans JList AJOUTER ACTIONLISTENER
 		content.setLayoutOrientation(JList.HORIZONTAL_WRAP); //liste horizontale
+		
 		//centre text de chaque case
-		DefaultListCellRenderer cellRenderer = new DefaultListCellRenderer();
+		cellRenderer = new DefaultListCellRenderer();
 		cellRenderer.setHorizontalAlignment(JLabel.CENTER);
 		content.setCellRenderer(cellRenderer);
+		
 		//taille de case en fonction du nombre de cases
 		content.setFixedCellWidth(carte.getWidth()/x);
 		content.setFixedCellHeight(carte.getHeight()/y);
@@ -125,10 +137,18 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		carte.add(content, BorderLayout.CENTER);
 		contentPane.add(carte);
 
+		model = new DefaultListModel();
+		
+		ano = new ArrayList();
+		
 		content.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				t.current();
+				if (! ano.contains(t.getWord())) {
+					model.addElement(t.getWord());
+					ano.add(t.getWord());
+				}
 			}
 		});
 
@@ -154,25 +174,25 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		info.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
 		
 		grille = new JPanel();
-		grille.setBorder(new LineBorder(Color.BLACK, 3));
+		grille.setBorder(new MatteBorder(1, 3, 1, 3, (Color) Color.BLACK));
 		grille.setBounds(10, 50, 255, 600);
 		contentPane.add(grille);
 		grille.setLayout(null);
 		grille.setBackground(new Color(204, 190, 121));
 		
-		repere = new JLabel("   Anomalies repérées");
+		repere = new JLabel("    Anomalie sélectionnée");
 		repere.setHorizontalAlignment(SwingConstants.LEFT);
 		repere.setBounds(0, 0, 255, 30);
-		repere.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
+		repere.setBorder(new MatteBorder(3, 0, 3, 0, (Color) new Color(0, 0, 0)));
 		grille.add(repere);
 		
-		nombre = new JLabel("   Nombre d'anomalies");
+		nombre = new JLabel("    Nombre d'anomalies");
 		nombre.setHorizontalAlignment(SwingConstants.LEFT);
-		nombre.setBorder(new MatteBorder(3, 0, 3, 0, (Color) Color.BLACK));
-		nombre.setBounds(0, 300, 255, 30);
+		nombre.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
+		nombre.setBounds(0, 340, 255, 30);
 		grille.add(nombre);
 		
-		total = new JLabel("   Total : "); //
+		total = new JLabel("    Total : "); //
 		total.setHorizontalAlignment(SwingConstants.LEFT);
 		total.setBorder(new MatteBorder(3, 0, 3, 0, (Color) Color.BLACK));
 		total.setBounds(0, 450, 255, 30);
@@ -205,28 +225,46 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		});
 		
 		text = new JLabel(""); //lister les coordonnées
-		text.setVerticalAlignment(SwingConstants.TOP);
+		text.setVerticalAlignment(SwingConstants.CENTER);
 		text.setHorizontalAlignment(SwingConstants.LEFT);
-		text.setBounds(0, 30, 255, 270);
+		text.setBounds(0, 30, 255, 50);
 		text.setBorder(null);
 		grille.add(text);
 
-
 		types = new JLabel(); //
-		types.setVerticalAlignment(SwingConstants.TOP);
+		types.setVerticalAlignment(SwingConstants.CENTER);
 		types.setHorizontalAlignment(SwingConstants.LEFT);
 		types.setBorder(null);
-		types.setBounds(0, 330, 255, 120);
+		types.setBounds(0, 370, 255, 80);
 		grille.add(types);		
-
+		
+		Anomalies = new JLabel("    Liste des anomalies présentes");
+		Anomalies.setHorizontalAlignment(SwingConstants.LEFT);
+		Anomalies.setBorder(new MatteBorder(3, 0, 0, 0, (Color) new Color(0, 0, 0)));
+		Anomalies.setBounds(0, 80, 255, 30);
+		grille.add(Anomalies);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 0)));
+		scrollPane.setBounds(0, 108, 255, 235);
+		grille.add(scrollPane);
+		
+		liste = new JList(model);
+		scrollPane.setViewportView(liste);
+		liste.setBorder(null);
+		liste.setBackground(new Color(204, 190, 121));
+		
 		this.x = x;
 		this.y = y;
 
-		traitement t = new traitement(false, x, y, 0, total, text, types, list, content);
+		word = new String("");
+		
+		traitement t = new traitement(false, x, y, 0, total, text, types, list, content, word);
 		build b = new build(t); //construit la carte dans le gui
 		b.build_map();
 		t.start();
 		this.t = t;
+		
 	}
 
 
@@ -248,14 +286,6 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(this, "Bienvenue sur Vision Détection ! \nL'application qui vous permet d'identifier une anomalie dans un espace défini ou d'identifier le nombre de personnes présentes lors d'une prise d'otage.", "Aide", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
-		if(e.getSource()==prec) {
-			
-		}
-		
-		if(e.getSource()==next) {
-			
-		}
-		
 		if(e.getSource()==recherche) {
 			JFrame fen = new VisionGUI();
 			fen.getContentPane().setBackground(Color.DARK_GRAY);
@@ -268,6 +298,5 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 			fen.setVisible(true);
 			this.setVisible(false);
 		}
-
 	}
 }
