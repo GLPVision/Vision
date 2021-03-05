@@ -10,14 +10,7 @@ import java.io.IOException;
  * @author QIU Antoine
  */
 public class Carte {
-    /**
-     * Coordonnées x
-     */
-    private int x;
-    /**
-     * Coordonnées y
-     */
-    private int y;
+    private Coordonnees taille;
     /**
      * Matrice de dimension2 / carte
      */
@@ -45,17 +38,15 @@ public class Carte {
 
     /**
      * Constructeur, initialise les variables
-     * @param x Coordonnées x
-     * @param y Coordonnées y
+     * @param taille Taille de la carte
      * @param mode Otage ou agricole
      * @param nb_otage Nombre d'otages
      */
-    public Carte(int x, int y, boolean mode, int nb_otage){
-        this.x = x;
-        this.y = y;
+    public Carte(Coordonnees taille, boolean mode, int nb_otage){
+        this.taille = taille;
         this.otage = mode;
         this.nb_otage = nb_otage;
-        tab = new Element[y][x];
+        tab = new Element[taille.getY()][taille.getX()];
         init();
     }
 
@@ -89,8 +80,8 @@ public class Carte {
      * Fonction pour générer la carte aléatoirement
      */
     public void generer(){
-        for (int i=0 ; i<y ; i++){ //parcours x
-            for (int j=0 ; j<x ; j++){ //parcours y
+        for (int i=0 ; i< taille.getY() ; i++){ //parcours x
+            for (int j=0 ; j< taille.getX() ; j++){ //parcours y
                 @SuppressWarnings("unused")
 				String desc; //initilisation de la variable
                 if(otage){
@@ -105,7 +96,7 @@ public class Carte {
                     }
                 }
                 else{ //agricole
-                    int random = (int) (Math.random()*(x*y)); //aléatoire
+                    int random = (int) (Math.random()*(taille.getX()* taille.getY())); //aléatoire
                     switch (random) {
                         case 1:
                             tab[i][j] = new Maladie(new Coordonnees(i, j)); //maladie
@@ -132,8 +123,8 @@ public class Carte {
      * Fonction pour afficher la carte dans le terminal (pour tester)
      */
     public void afficher(){
-        for (int  i=0 ; i<x ; i++){
-            for (int j=0 ; j<y ; j++){
+        for (int  i=0 ; i< taille.getX() ; i++){
+            for (int j=0 ; j< taille.getY() ; j++){
                 System.out.print(tab[i][j].getDesc() + "\t");
             }
             System.out.print("\n");
@@ -147,16 +138,16 @@ public class Carte {
     public void export() throws IOException {
         StringBuffer out = new StringBuffer(); //initialisation de la variable
         out.append(date.getJour() + ";" + date.getMois() + ";" + date.getAnnee() + ";" + date.getHeure().getHeure() + ";" + date.getHeure().getMinute() + ";" + date.getHeure().getSeconde() + "\n"); //date et heure
-        out.append(x + ";" + y + ";\n"); //taille de la carte
+        out.append(taille.getX() + ";" + taille.getY() + ";\n"); //taille de la carte
         if (otage){
             out.append(nb_assaillant + ";" + nb_otage + ";\n"); //nombre asaillants et otages
         }
         else{
             out.append(nb_anomalie + ";\n"); //nombre anomalies
         }
-        for (int i=0 ; i<x ; i++){ //boucle ecrit la carte dans out
+        for (int i=0 ; i< taille.getX() ; i++){ //boucle ecrit la carte dans out
             String line = "";
-            for (int j=0 ; j<y ; j++){
+            for (int j=0 ; j< taille.getY() ; j++){
                 line = line + tab[i][j].getDesc() +  ";";
             }
             line = line + "\n";
@@ -178,8 +169,8 @@ public class Carte {
      */
     public void scan(){
         int nb =0;
-        for (int i=0 ; i<y ; i++){ //parcours x
-            for (int j=0 ; j<x ; j++){ //parcours y
+        for (int i=0 ; i< taille.getY() ; i++){ //parcours x
+            for (int j=0 ; j< taille.getX() ; j++){ //parcours y
                 if (tab[i][j].getDesc() != "."){ //si pas rien
                     nb++;
                 }
@@ -199,14 +190,6 @@ public class Carte {
      */
     public Element[][] getTab(){
         return tab;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 }
 

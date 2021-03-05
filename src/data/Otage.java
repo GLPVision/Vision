@@ -7,11 +7,10 @@ package data;
 public class Otage extends Scenario{
     /**
      * Constructeur, initialise les variables
-     * @param x Coordonnées x
-     * @param y Coordonnées y
+     * @param taille Taille de la carte
      * @param nbOtage Nombre d'otages
      */
-    public Otage(int x, int y, int nbOtage){
-        carte = new Carte(x, y, true, nbOtage); //otage + otage/4 < x*y/2
+    public Otage(Coordonnees taille, int nbOtage){
+        carte = new Carte(taille, true, nbOtage); //otage + otage/4 < x*y/2
     }
 }

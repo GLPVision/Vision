@@ -1,8 +1,10 @@
 package moteur;
 
-import data.Carte; 
+import data.Carte;
+import data.Coordonnees;
 import data.Element;
 import data.Scenario;
+import kotlin.reflect.jvm.internal.impl.metadata.ProtoBuf;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +12,7 @@ import java.awt.image.BufferedImage;
 
 public class build{
     private Scenario scenario;
-    private int x, y;
+    private Coordonnees taille;
 	private DefaultListModel list;
     private ImageIcon personne = new ImageIcon(ClassLoader.getSystemResource("personne.png"));
     private ImageIcon intrusion = new ImageIcon(ClassLoader.getSystemResource("intrusion.png"));
@@ -18,29 +20,26 @@ public class build{
     private ImageIcon feu = new ImageIcon(ClassLoader.getSystemResource("feu.png"));
     private ImageIcon inconnue = new ImageIcon(ClassLoader.getSystemResource("inconnue.png"));
     private ImageIcon ble = new ImageIcon(ClassLoader.getSystemResource("champ.jpg"));
+    private ImageIcon bat = new ImageIcon(ClassLoader.getSystemResource("fondotage.png"));
     private boolean otage;
-    private JLabel text;
-    private traitement t;
 
     public build(traitement t){
         this.scenario = t.getScenario();
-        this.x = t.getX();
-        this.y = t.getY();
+        this.taille = t.getTaille();
         this.list = t.getList();
         this.otage = t.getOtage();
-        this.t = t;
     }
 
 	public void build_map(){
         Carte carte = scenario.getCarte(); //récupère la carte
         Element[][] tab = carte.getTab(); //récupère la matrice
-        for (int i=0 ; i<y ; i++){ //parcours x
-            for (int j=0 ; j<x ; j++){ //parcours y
+        for (int i=0 ; i< taille.getY() ; i++){ //parcours x
+            for (int j=0 ; j<taille.getX() ; j++){ //parcours y
                 ImageIcon img = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
                 switch(tab[i][j].getDesc()){
                     case ".":
                         if(otage)
-                            img = inconnue;
+                            img = bat;
                         else
                             img = ble;
                         break;
@@ -60,14 +59,14 @@ public class build{
                         img = inconnue;
                         break;
                 }
-                if(img == ble || img == inconnue){
-                    list.addElement(new ImageIcon(img.getImage().getScaledInstance(950/x, 600/y, Image.SCALE_DEFAULT))); //ajout à la liste
+                if(img == ble || img == bat){
+                    list.addElement(new ImageIcon(img.getImage().getScaledInstance(950/taille.getX(), 600/taille.getY(), Image.SCALE_DEFAULT))); //ajout à la liste
                 }
                 else{
                     if(otage)
-                        list.addElement(merge(new ImageIcon(inconnue.getImage().getScaledInstance(950/x, 600/y, Image.SCALE_DEFAULT)), new ImageIcon(img.getImage().getScaledInstance(Math.min(950/x/2, 600/y/2), Math.min(950/x/2, 600/y/2), Image.SCALE_DEFAULT)))); //ajout à la liste
+                        list.addElement(merge(new ImageIcon(bat.getImage().getScaledInstance(950/taille.getX(), 600/taille.getY(), Image.SCALE_DEFAULT)), new ImageIcon(img.getImage().getScaledInstance(Math.min(950/taille.getX()/2, 600/taille.getY()/2), Math.min(950/taille.getX()/2, 600/taille.getY()/2), Image.SCALE_DEFAULT)))); //ajout à la liste
                     else
-                        list.addElement(merge(new ImageIcon(ble.getImage().getScaledInstance(950/x, 600/y, Image.SCALE_DEFAULT)), new ImageIcon(img.getImage().getScaledInstance(Math.min(950/x/2, 600/y/2), Math.min(950/x/2, 600/y/2), Image.SCALE_DEFAULT)))); //ajout à la liste
+                        list.addElement(merge(new ImageIcon(ble.getImage().getScaledInstance(950/taille.getX(), 600/taille.getY(), Image.SCALE_DEFAULT)), new ImageIcon(img.getImage().getScaledInstance(Math.min(950/taille.getX()/2, 600/taille.getY()/2), Math.min(950/taille.getX()/2, 600/taille.getY()/2), Image.SCALE_DEFAULT)))); //ajout à la liste
                 }
             }
         }

@@ -9,11 +9,10 @@ import java.io.IOException;
 public class Agriculture extends Scenario {
     /**
      * Constructeur, initialise les variables
-     * @param x Coordonnées x
-     * @param y Coordonnées y
+     * @param taille Taille de la carte
      * @throws IOException Erreur d'écriture lors de l'exportation
      */
-    public Agriculture(int x, int y){
-        carte = new Carte(x, y, false, 0); //nouvelle carte
+    public Agriculture(Coordonnees taille){
+        carte = new Carte(taille, false, 0); //nouvelle carte
     }
 }

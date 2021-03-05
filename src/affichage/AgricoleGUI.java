@@ -1,5 +1,6 @@
 package affichage;
 
+import data.Coordonnees;
 import data.Element;
 import moteur.build;
 import moteur.traitement;
@@ -46,20 +47,15 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	 * Liste contient la carte
 	 */
 	private DefaultListModel<?> list;
-	/**
-	 * taille x de la matrice
-	 */
-	@SuppressWarnings("unused")
-	private int x;
-	/**
-	 * taille y de la matrice
-	 */
-	@SuppressWarnings("unused")
-	private int y;
+	private Coordonnees debut;
+	private Coordonnees taille;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public AgricoleGUI(int x, int y) throws IOException {
+	public AgricoleGUI(Coordonnees debut, Coordonnees taille) throws IOException {
 		super("Vision Détection : Agricole");
+
+		this.debut = debut;
+		this.taille = taille;
 		
 		setMinimumSize(new Dimension(1250, 720));//Taille minimum de notre fen�tre
 		setPreferredSize(new Dimension(2000, 800));//Dimension de notre fen�tre 
@@ -129,9 +125,9 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		content.setCellRenderer(cellRenderer);
 		
 		//taille de case en fonction du nombre de cases
-		content.setFixedCellWidth(carte.getWidth()/x);
-		content.setFixedCellHeight(carte.getHeight()/y);
-		content.setVisibleRowCount(y); //largeur de x cases
+		content.setFixedCellWidth(carte.getWidth()/taille.getX());
+		content.setFixedCellHeight(carte.getHeight()/taille.getY());
+		content.setVisibleRowCount(taille.getY()); //largeur de x cases
 		content.setBackground(new Color(0, 102, 51));
 		content.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		carte.add(content, BorderLayout.CENTER);
@@ -254,12 +250,11 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		liste.setBorder(null);
 		liste.setBackground(new Color(204, 190, 121));
 		
-		this.x = x;
-		this.y = y;
+
 
 		word = new String("");
 		
-		traitement t = new traitement(false, x, y, 0, total, text, types, list, content, word);
+		traitement t = new traitement(false, taille, debut, 0, total, text, types, list, content, word);
 		build b = new build(t); //construit la carte dans le gui
 		b.build_map();
 		t.start();

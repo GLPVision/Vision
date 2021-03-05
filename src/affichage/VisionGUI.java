@@ -1,6 +1,8 @@
 package affichage;
 
-import java.awt.Color; 
+import data.Coordonnees;
+
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -132,13 +134,14 @@ public class VisionGUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
 			}
 			else{
-				int x = Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText());
-				int y = Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText());
-				x = Math.abs(x);
-				y = Math.abs(y);
+
+
+				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
+				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
+
 				JFrame fen = null;
 				try {
-					fen = new AgricoleGUI(x, y);
+					fen = new AgricoleGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y));
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}
@@ -159,10 +162,12 @@ public class VisionGUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);//Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
 			}
 			else {
-				int x = Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText());
-				int y = Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText());
-				x = Math.abs(x);
-				y = Math.abs(y);
+
+
+				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
+				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
+
+
 				String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 				while (txt.isEmpty() || Integer.parseInt(txt) > (x*y)/4){
 					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si le nombre d'otage saisie n'est pas valide
@@ -170,7 +175,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 				}
 				JFrame fen = null;
 				try {
-					fen = new OtageGUI(x, y, Integer.parseInt(txt));
+					fen = new OtageGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y), Integer.parseInt(txt));
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}

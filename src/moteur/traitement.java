@@ -8,34 +8,34 @@ import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
 
 public class traitement extends Thread {
-    private int nbOtage, nbAssaillant, nbTotal, intrusion, feu, maladie, inconnue, x, y;
+    private int nbOtage, nbAssaillant, nbTotal, intrusion, feu, maladie, inconnue;
     private Carte carte;
     private Scenario scenario;
-    private JLabel total;
-	private JLabel text;
-	private JLabel types;
+    private JLabel jl1, jl2, jl3;
 	private String word;
     private boolean otage;
     private DefaultListModel<ImageIcon> list;
     private JList content;
     private ImageIcon cercle = new ImageIcon(ClassLoader.getSystemResource("cercle.png"));
     private String Newligne=System.getProperty("line.separator");
+    private Coordonnees taille;
+    private Coordonnees debut;
     
-    public traitement(boolean otage, int x, int y, int nbOtage, JLabel total, JLabel text, JLabel types, DefaultListModel list, JList content, String word){
+    public traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage, JLabel jl1, JLabel jl2, JLabel jl3, DefaultListModel list, JList content, String word){
         if(otage){
-            scenario = new Otage(x, y, nbOtage);
+            scenario = new Otage(taille, nbOtage);
         }
         else {
-            scenario = new Agriculture(x, y);
+            scenario = new Agriculture(taille);
         }
         carte = scenario.getCarte();
         this.otage = otage;
-        this.x = x;
-        this.y = y;
+        this.taille = taille;
+        this.debut = debut;
         this.nbOtage = nbOtage;
-        this.total = total;
-        this.text = text;
-        this.types = types;
+        this.jl1 = jl1;
+        this.jl2 = jl2;
+        this.jl3 = jl3;
         this.list = list;
         this.content = content;
         this.word = word;
@@ -50,8 +50,8 @@ public class traitement extends Thread {
 
     public void scan() throws InterruptedException {
         Element[][] tab = carte.getTab();
-        for(int i = 0 ; i<carte.getY() ; i++){
-            for(int j = 0 ; j<carte.getX() ; j++){
+        for(int i = 0 ; i<taille.getY() ; i++){
+            for(int j = 0 ; j<taille.getX() ; j++){
                 if(tab[i][j].getDesc() == "p")
                     nbTotal++;
                 else if(tab[i][j].getDesc() == "i")
@@ -64,11 +64,15 @@ public class traitement extends Thread {
                     inconnue++;
                 if(tab[i][j].getDesc() != "."){
                     entourer(i, j);
-                    content.setSelectedIndex(i*x+j);
+                    content.setSelectedIndex(i*taille.getX()+j);
                 }
                 majGUI();
                 sleep(30);
             }
+        }
+        if(otage) { //si derniere iteration otage
+            nbAssaillant = nbTotal - nbOtage;
+            majGUI();
         }
     }
 
@@ -87,12 +91,15 @@ public class traitement extends Thread {
 
     public void majGUI(){ //fonction a appeler avec un action listener lié a la selection d'un element
         if(otage){
+            jl1.setText("   Nombre total d'individus : " + nbTotal);
+            jl2.setText("   Nombre total d'assaillants : " + nbAssaillant);
+            jl3.setText("   Nombre d'otages : " + nbOtage);
+
 
         }
         else{
-            total.setText("   Total : " + (inconnue+feu+maladie+intrusion));
-            //text.setText();
-            types.setText("<html> &nbsp &#160 Nombre de feux : " + feu + "<br/>" +
+            jl1.setText("   Total : " + (inconnue+feu+maladie+intrusion));
+            jl3.setText("<html> &nbsp &#160 Nombre de feux : " + feu + "<br/>" +
                     " &nbsp &#160 Nombre d'intrusions : " + intrusion + "<br/>" +
                     " &nbsp &#160 Nombre de maladies : " + maladie + "<br/>" +
                     " &nbsp &#160 Nombre d'anomalies inconnues : " + inconnue + "</html>");
@@ -100,13 +107,13 @@ public class traitement extends Thread {
     }
 
     public void entourer(int x, int y){
-        list.set(x*carte.getX()+y, build.merge((ImageIcon) list.getElementAt(x*carte.getX()+y), new ImageIcon(cercle.getImage().getScaledInstance(Math.min(950/carte.getX(), 600/carte.getY()), Math.min(950/carte.getX(), 600/carte.getY()), Image.SCALE_DEFAULT)))); //entourer
+        list.set(x*taille.getX()+y, build.merge((ImageIcon) list.getElementAt(x*taille.getX()+y), new ImageIcon(cercle.getImage().getScaledInstance(Math.min(950/taille.getX(), 600/taille.getY()), Math.min(950/taille.getX(), 600/taille.getY()), Image.SCALE_DEFAULT)))); //entourer
     }
 
     public void current(){
         int selected = content.getSelectedIndex();
-        int c1 = selected%x;
-        int c2 = selected/x;
+        int c1 = selected%taille.getX();
+        int c2 = selected/taille.getX();
         String type = null;
         switch(carte.getTab()[c2][c1].getDesc()){
             case ".":
@@ -130,27 +137,36 @@ public class traitement extends Thread {
             default:
                 break;
         }
-        text.setText("<html> &nbsp &#160 Type d'anomalie : " + type + "<br/>" +
-                " &nbsp &#160 Coordonnées : x=" + c1 + ", y=" + c2 + "</html>");
+        if(otage){
+            System.out.println(c1 + " " + c2);
+        }
+
+        else {
+            int x = debut.getX()+c1;
+            int y = debut.getY()+c2;
+            jl2.setText("<html> &nbsp &#160 Type d'anomalie : " + type + "<br/>" +
+                    " &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "</html>");
+            word = "   " + type  + " en : " + x + "," + y ;
+        }
         
-        word = "   " + type  + " en : " + c1 + "," + c2 ;        
+
     }
     
     public void next(){
         int selected = content.getSelectedIndex();
-        int c1 = selected%x;
-        int c2 = selected/x;
+        int c1 = selected%taille.getX();
+        int c2 = selected/taille.getX();
         Element[][] elt = carte.getTab();
         int j;
-        for(int i = c2 ; i<y ; i++) {
+        for(int i = c2 ; i<taille.getY() ; i++) {
             if(i == c2)
                 j = c1;
             else
                 j=0;
-            for (; j<x; j++) {
-                if(elt[i][j].getDesc()!="." && i*y+j>c2*y+c1){
-                    content.setSelectedIndex(i*y+j);
-                    i = x;
+            for (; j<taille.getX(); j++) {
+                if(elt[i][j].getDesc()!="." && i* taille.getY()+j>c2* taille.getY()+c1){
+                    content.setSelectedIndex(i*taille.getY()+j);
+                    i = taille.getX();
                     break;
                 }
             }
@@ -159,18 +175,18 @@ public class traitement extends Thread {
 
     public void previous(){
         int selected = content.getSelectedIndex();
-        int c1 = selected%x;
-        int c2 = selected/x;
+        int c1 = selected%taille.getX();
+        int c2 = selected/taille.getX();
         Element[][] elt = carte.getTab();
         int j;
         for(int i = c2 ; i>=0 ; i--) {
             if(i == c2)
                 j = c1;
             else
-                j = x-1;
+                j = taille.getX()-1;
             for (; j>=0 ; j--) {
-                if(elt[i][j].getDesc()!="." && i*y+j<c2*y+c1){
-                    content.setSelectedIndex(i*y+j);
+                if(elt[i][j].getDesc()!="." && i* taille.getY()+j<c2* taille.getY()+c1){
+                    content.setSelectedIndex(i*taille.getY()+j);
                     content.revalidate();
                     content.repaint();
                     i = -1;
@@ -183,13 +199,7 @@ public class traitement extends Thread {
         return scenario;
     }
 
-    public int getX() {
-        return x;
-    }
 
-    public int getY() {
-        return y;
-    }
 
     public boolean getOtage() {
         return otage;
@@ -212,5 +222,9 @@ public class traitement extends Thread {
 		   e.writeObject (jl);
 		   e.close ();
 		   return new String (baos.toByteArray ());
+    }
+
+    public Coordonnees getTaille() {
+        return taille;
     }
 }

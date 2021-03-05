@@ -1,5 +1,6 @@
 package affichage;
 
+import data.Coordonnees;
 import moteur.build;
 import moteur.traitement;
 
@@ -11,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class OtageGUI extends JFrame implements ActionListener {
 	
@@ -42,20 +45,16 @@ public class OtageGUI extends JFrame implements ActionListener {
 	 */
 	@SuppressWarnings("unused")
 	private int nbOtage;
-	/**
-	 * taille x de la matrice
-	 */
-	@SuppressWarnings("unused")
-	private int x;
-	/**
-	 * taille y de la matrice
-	 */
-	@SuppressWarnings("unused")
-	private int y;
+	private Coordonnees debut;
+	private Coordonnees taille;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public OtageGUI(int x, int y, int nbOtage) throws IOException{
+	public OtageGUI(Coordonnees debut, Coordonnees taille, int nbOtage) throws IOException{
 		super("Vision Détection : Prise d'otages");
+
+		this.debut = debut;
+		this.taille = taille;
+		this.nbOtage = nbOtage;
 		
 		setMinimumSize(new Dimension(1250, 720));
 		setPreferredSize(new Dimension(2000, 800));
@@ -123,13 +122,20 @@ public class OtageGUI extends JFrame implements ActionListener {
 		cellRenderer.setHorizontalAlignment(JLabel.CENTER);
 		content.setCellRenderer(cellRenderer);
 		//taille des cases en fonction du nombre de cases
-		content.setFixedCellWidth(carte.getWidth()/x);
-		content.setFixedCellHeight(carte.getHeight()/y);
-		content.setVisibleRowCount(y); //largeur de x cases
+		content.setFixedCellWidth(carte.getWidth()/taille.getX());
+		content.setFixedCellHeight(carte.getHeight()/taille.getY());
+		content.setVisibleRowCount(taille.getY()); //largeur de x cases
 		content.setBackground(new Color(0, 128, 128));
 		content.setBorder(new LineBorder(Color.BLACK, 3));
 		carte.add(content, BorderLayout.CENTER);
 		contentPane.add(carte);
+
+		content.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				t.current();
+			}
+		});
 		
 		nomcarte = new JTextField();
 		nomcarte.setHorizontalAlignment(SwingConstants.CENTER);
@@ -188,12 +194,26 @@ public class OtageGUI extends JFrame implements ActionListener {
 		prec.setBackground(SystemColor.activeCaption);
 		prec.setBounds(10, 491, 235, 42);
 		grille.add(prec);
+
+		prec.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				t.previous();
+			}
+		});
 		
 		next = new JButton("Individu suivant");
 		next.setBorder(null);
 		next.setBackground(SystemColor.activeCaption);
 		next.setBounds(10, 547, 235, 42);
 		grille.add(next);
+
+		next.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				t.next();
+			}
+		});
 		
 		text = new JLabel("    texte");
 		text.setVerticalAlignment(SwingConstants.TOP);
@@ -202,14 +222,12 @@ public class OtageGUI extends JFrame implements ActionListener {
 		text.setBorder(null);
 		grille.add(text);
 		
-		this.x = x;
-		this.y = y;
-		this.nbOtage = nbOtage;
 
-		traitement t = new traitement(true, x, y, nbOtage, total, text, null, list, content, null);
+
+		traitement t = new traitement(true, taille, debut, nbOtage, nombre, total, otage, list, content, null);
 		build b = new build(t); //construit la carte dans le gui
 		b.build_map();
-		//t.start();
+		t.start();
 		this.t = t;
 	}
 
