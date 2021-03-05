@@ -1,0 +1,8 @@
+à faire (à compléter si élément manquant):
+-utiliser les classes Date et Heure
+-terminer le panneau de gauche de AgricoleGUI et OtageGUI
+-éventuellement scanner la JList au lieu de la matrice (traitement d'image)
+-correction de bugs
+-nettoyer code
+-commentaires
+-documentation (javadoc + readme)
