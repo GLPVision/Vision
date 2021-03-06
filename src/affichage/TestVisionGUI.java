@@ -1,7 +1,10 @@
 package affichage;
 
 import javax.swing.*;
+
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 public class TestVisionGUI {
 
@@ -14,6 +17,8 @@ public class TestVisionGUI {
 		fen.setSize(560, 260);
 		fen.setBounds(550, 350, 560, 260);
 		fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        fen.setLocation(dim.width/2-fen.getSize().width/2, dim.height/2-fen.getSize().height/2);
 		fen.setVisible(true);
 	}
 }

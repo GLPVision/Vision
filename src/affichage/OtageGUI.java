@@ -266,6 +266,8 @@ public class OtageGUI extends JFrame implements ActionListener {
 			fen.setSize(560, 260);
 			fen.setBounds(550, 350, 560, 260);
 			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	        fen.setLocation(dim.width/2-fen.getSize().width/2, dim.height/2-fen.getSize().height/2);
 			fen.setVisible(true);
 			this.setVisible(false);
 		}

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -152,6 +153,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 				fen.setSize(1250, 720);
 				fen.setBounds(300, 200, 1250, 720);
 				fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		        fen.setLocation(dim.width/2-fen.getSize().width/2, dim.height/2-fen.getSize().height/2);
 				fen.setVisible(true);
 				this.setVisible(false);
 			}
@@ -186,6 +189,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 				fen.setSize(1000, 500);
 				fen.setBounds(300, 200, 1000, 500);
 				fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		        fen.setLocation(dim.width/2-fen.getSize().width/2, dim.height/2-fen.getSize().height/2);
 				fen.setVisible(true);
 				this.setVisible(false);
 			}
