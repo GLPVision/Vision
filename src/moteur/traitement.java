@@ -138,15 +138,30 @@ public class traitement extends Thread {
                 break;
         }
         if(otage){
-            System.out.println(c1 + " " + c2);
+        	if(type != "Aucune") {
+        		int x = debut.getX()+c1;
+        		int y = debut.getY()+c2;
+        		word = "  Individu en : x =" + x + ", y =" + y;
+        	}
+        	else {
+        		
+        	}
         }
 
         else {
-            int x = debut.getX()+c1;
-            int y = debut.getY()+c2;
-            jl2.setText("<html> &nbsp &#160 Type d'anomalie : " + type + "<br/>" +
-                    " &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "</html>");
-            word = "   " + type  + " en : " + x + "," + y ;
+        	if(type != "Aucune") {
+        		int x = debut.getX()+c1;
+        		int y = debut.getY()+c2;
+        		jl2.setText("<html> &nbsp &#160 Type d'anomalie : " + type + "<br/>" +
+        				" &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "</html>");
+        		word = "   " + type  + " en : " + x + "," + y ;
+        	}
+        	else {
+        		int x = debut.getX()+c1;
+        		int y = debut.getY()+c2;
+        		jl2.setText("<html> &nbsp &#160 Type d'anomalie : " + type + "<br/>" +
+        				" &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "</html>");
+        	}
         }
         
 

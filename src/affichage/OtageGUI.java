@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.border.MatteBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -26,9 +28,15 @@ public class OtageGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JLabel text, otage, repere, nombre, total;
+	private JLabel otage, repere, nombre, total, Individus;
 	private JButton prec, next;
 	private traitement t;
+	private DefaultListCellRenderer cellRenderer;
+	private JScrollPane scrollPane;
+	private JList liste;
+	private DefaultListModel model;
+	private String word;
+	private ArrayList people;
 	
 	/**
 	 * JList contient une liste
@@ -45,7 +53,9 @@ public class OtageGUI extends JFrame implements ActionListener {
 	 */
 	@SuppressWarnings("unused")
 	private int nbOtage;
+	@SuppressWarnings("unused")
 	private Coordonnees debut;
+	@SuppressWarnings("unused")
 	private Coordonnees taille;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -117,10 +127,12 @@ public class OtageGUI extends JFrame implements ActionListener {
 		list = new DefaultListModel(); //initialisation
 		content = new JList(list); //list dans JList
 		content.setLayoutOrientation(JList.HORIZONTAL_WRAP); //liste horizontale
+		
 		//centre text de chaque cas
-		DefaultListCellRenderer cellRenderer = new DefaultListCellRenderer();
+		cellRenderer = new DefaultListCellRenderer();
 		cellRenderer.setHorizontalAlignment(JLabel.CENTER);
 		content.setCellRenderer(cellRenderer);
+		
 		//taille des cases en fonction du nombre de cases
 		content.setFixedCellWidth(carte.getWidth()/taille.getX());
 		content.setFixedCellHeight(carte.getHeight()/taille.getY());
@@ -134,6 +146,21 @@ public class OtageGUI extends JFrame implements ActionListener {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				t.current();
+			}
+		});
+		
+		model = new DefaultListModel();
+		
+		people = new ArrayList();
+		
+		content.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				t.current();
+				if (! people.contains(t.getWord())) {
+					model.addElement(t.getWord());
+					people.add(t.getWord());
+				}
 			}
 		});
 		
@@ -170,7 +197,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 		otage.setBounds(0, 0, 255, 30);
 		grille.add(otage);
 		
-		repere = new JLabel("   Individus repérés");
+		repere = new JLabel("   Coordonnées de l'individu actuel :");
 		repere.setBackground(SystemColor.activeCaption);
 		repere.setHorizontalAlignment(SwingConstants.LEFT);
 		repere.setBounds(0, 30, 255, 30);
@@ -179,7 +206,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 		
 		nombre = new JLabel("   Nombre total d'individus :");
 		nombre.setHorizontalAlignment(SwingConstants.LEFT);
-		nombre.setBorder(new MatteBorder(3, 0, 3, 0, (Color) new Color(0, 0, 0)));
+		nombre.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
 		nombre.setBounds(0, 420, 255, 30);
 		grille.add(nombre);
 		
@@ -215,16 +242,27 @@ public class OtageGUI extends JFrame implements ActionListener {
 			}
 		});
 		
-		text = new JLabel("    texte");
-		text.setVerticalAlignment(SwingConstants.TOP);
-		text.setHorizontalAlignment(SwingConstants.LEFT);
-		text.setBounds(0, 60, 255, 362);
-		text.setBorder(null);
-		grille.add(text);
-		
 
 
 		traitement t = new traitement(true, taille, debut, nbOtage, nombre, total, otage, list, content, null);
+		
+		Individus = new JLabel("   Coordonnées des individus repérés");
+		Individus.setHorizontalAlignment(SwingConstants.LEFT);
+		Individus.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
+		Individus.setBackground(SystemColor.activeCaption);
+		Individus.setBounds(0, 60, 255, 30);
+		grille.add(Individus);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 0)));
+		scrollPane.setBounds(0, 90, 255, 330);
+		grille.add(scrollPane);
+		
+		liste = new JList(model);
+		scrollPane.setViewportView(liste);
+		liste.setBorder(null);
+		liste.setBackground(new Color(204, 190, 121));
+		
 		build b = new build(t); //construit la carte dans le gui
 		b.build_map();
 		t.start();
@@ -247,14 +285,6 @@ public class OtageGUI extends JFrame implements ActionListener {
 		
 		if(e.getSource()==Aide) {
 			JOptionPane.showMessageDialog(this, "Bienvenue sur Vision Détection ! \nL'application qui vous permet d'identifier une anomalie dans un espace défini ou d'identifier le nombre de personnes présentes lors d'une prise d'otage.", "Aide", JOptionPane.INFORMATION_MESSAGE);
-		}
-		
-		if(e.getSource()==prec) {
-			
-		}
-		
-		if(e.getSource()==next) {
-			
 		}
 		
 		if(e.getSource()==recherche) {
