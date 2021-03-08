@@ -1,7 +1,6 @@
 package affichage;
 
 import data.Coordonnees;
-import data.Element;
 import moteur.build;
 import moteur.traitement;
 
@@ -9,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.XMLEncoder;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -22,7 +19,7 @@ import javax.swing.event.ListSelectionListener;
 public class AgricoleGUI extends JFrame implements ActionListener {
 
 	/**
-	 * 
+	 * Liste des arguments
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane, carte, grille;
@@ -52,6 +49,9 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public AgricoleGUI(Coordonnees debut, Coordonnees taille) throws IOException {
+		/*
+		 * titre de la fenetre
+		 */
 		super("Vision Détection : Agricole");
 
 		this.debut = debut;
@@ -254,7 +254,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 
 		word = new String("");
 		
-		traitement t = new traitement(false, taille, debut, 0, total, text, types, list, content, word);
+		traitement t = new traitement(false, taille, debut, 0, total, text, types, null, list, content, word);
 		build b = new build(t); //construit la carte dans le gui
 		b.build_map();
 		t.start();

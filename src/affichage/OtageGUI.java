@@ -28,7 +28,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JLabel otage, repere, nombre, total, Individus;
+	private JLabel otage, repere, nombre, total, Individus, text;
 	private JButton prec, next;
 	private traitement t;
 	private DefaultListCellRenderer cellRenderer;
@@ -191,26 +191,26 @@ public class OtageGUI extends JFrame implements ActionListener {
 		grille.setLayout(null);
 		grille.setBackground(new Color(204, 190, 121));
 		
-		otage = new JLabel("   Nombre d'otages :");
+		otage = new JLabel("    Nombre d'otages :");
 		otage.setHorizontalAlignment(SwingConstants.LEFT);
 		otage.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
 		otage.setBounds(0, 0, 255, 30);
 		grille.add(otage);
 		
-		repere = new JLabel("   Coordonnées de l'individu actuel :");
+		repere = new JLabel("    Coordonnées de l'individu actuel");
 		repere.setBackground(SystemColor.activeCaption);
 		repere.setHorizontalAlignment(SwingConstants.LEFT);
 		repere.setBounds(0, 30, 255, 30);
 		repere.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
 		grille.add(repere);
 		
-		nombre = new JLabel("   Nombre total d'individus :");
+		nombre = new JLabel("    Nombre total d'individus :");
 		nombre.setHorizontalAlignment(SwingConstants.LEFT);
 		nombre.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
 		nombre.setBounds(0, 420, 255, 30);
 		grille.add(nombre);
 		
-		total = new JLabel("   Nombre total d'assaillants : ");
+		total = new JLabel("    Nombre total d'assaillants : ");
 		total.setHorizontalAlignment(SwingConstants.LEFT);
 		total.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
 		total.setBounds(0, 450, 255, 30);
@@ -242,20 +242,23 @@ public class OtageGUI extends JFrame implements ActionListener {
 			}
 		});
 		
-
-
-		traitement t = new traitement(true, taille, debut, nbOtage, nombre, total, otage, list, content, null);
-		
-		Individus = new JLabel("   Coordonnées des individus repérés");
+		Individus = new JLabel("    Coordonnées des individus repérés");
 		Individus.setHorizontalAlignment(SwingConstants.LEFT);
-		Individus.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
+		Individus.setBorder(new MatteBorder(3, 0, 0, 0, (Color) new Color(0, 0, 0)));
 		Individus.setBackground(SystemColor.activeCaption);
-		Individus.setBounds(0, 60, 255, 30);
+		Individus.setBounds(0, 110, 255, 30);
 		grille.add(Individus);
+		
+		text = new JLabel("");
+		text.setBounds(0, 60, 255, 50);
+		grille.add(text);
+		text.setVerticalAlignment(SwingConstants.CENTER);
+		text.setHorizontalAlignment(SwingConstants.LEFT);
+		text.setBorder(null);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 0)));
-		scrollPane.setBounds(0, 90, 255, 330);
+		scrollPane.setBounds(0, 140, 255, 280);
 		grille.add(scrollPane);
 		
 		liste = new JList(model);
@@ -263,6 +266,9 @@ public class OtageGUI extends JFrame implements ActionListener {
 		liste.setBorder(null);
 		liste.setBackground(new Color(204, 190, 121));
 		
+		word = new String("");
+
+		traitement t = new traitement(true, taille, debut, nbOtage, nombre, text, otage, total, list, content, word);
 		build b = new build(t); //construit la carte dans le gui
 		b.build_map();
 		t.start();

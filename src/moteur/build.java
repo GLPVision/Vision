@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 public class build{
     private Scenario scenario;
     private Coordonnees taille;
-	private DefaultListModel list;
+	private DefaultListModel<ImageIcon> list;
     private ImageIcon personne = new ImageIcon(ClassLoader.getSystemResource("personne.png"));
     private ImageIcon intrusion = new ImageIcon(ClassLoader.getSystemResource("intrusion.png"));
     private ImageIcon maladie = new ImageIcon(ClassLoader.getSystemResource("virus.png"));
@@ -22,7 +22,8 @@ public class build{
     private ImageIcon bat = new ImageIcon(ClassLoader.getSystemResource("fondotage.png"));
     private boolean otage;
 
-    public build(traitement t){
+    @SuppressWarnings("unchecked")
+	public build(traitement t){
         this.scenario = t.getScenario();
         this.taille = t.getTaille();
         this.list = t.getList();

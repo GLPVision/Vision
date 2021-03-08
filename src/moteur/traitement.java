@@ -11,7 +11,7 @@ public class traitement extends Thread {
     private int nbOtage, nbAssaillant, nbTotal, intrusion, feu, maladie, inconnue;
     private Carte carte;
     private Scenario scenario;
-    private JLabel jl1, jl2, jl3;
+    private JLabel jl1, jl2, jl3, jl4;
 	private String word;
     private boolean otage;
     private DefaultListModel<ImageIcon> list;
@@ -21,7 +21,7 @@ public class traitement extends Thread {
     private Coordonnees taille;
     private Coordonnees debut;
     
-    public traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage, JLabel jl1, JLabel jl2, JLabel jl3, DefaultListModel list, JList content, String word){
+    public traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage, JLabel jl1, JLabel jl2, JLabel jl3, JLabel jl4, DefaultListModel list, JList content, String word){
         if(otage){
             scenario = new Otage(taille, nbOtage);
         }
@@ -36,6 +36,7 @@ public class traitement extends Thread {
         this.jl1 = jl1;
         this.jl2 = jl2;
         this.jl3 = jl3;
+        this.jl4 = jl4;
         this.list = list;
         this.content = content;
         this.word = word;
@@ -91,9 +92,9 @@ public class traitement extends Thread {
 
     public void majGUI(){ //fonction a appeler avec un action listener lié a la selection d'un element
         if(otage){
-            jl1.setText("   Nombre total d'individus : " + nbTotal);
-            jl2.setText("   Nombre total d'assaillants : " + nbAssaillant);
-            jl3.setText("   Nombre d'otages : " + nbOtage);
+            jl1.setText("    Nombre total d'individus : " + nbTotal);
+            jl3.setText("    Nombre d'otages : " + nbOtage);
+            jl4.setText("    Nombre total d'assaillants : " + nbAssaillant);
 
 
         }
@@ -137,14 +138,20 @@ public class traitement extends Thread {
             default:
                 break;
         }
+        
         if(otage){
         	if(type != "Aucune") {
         		int x = debut.getX()+c1;
         		int y = debut.getY()+c2;
-        		word = "  Individu en : x =" + x + ", y =" + y;
+        		jl2.setText("<html> &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "<br/>" + 
+        		"&nbsp &#160 Individu : OUI </html>");
+        		word = "   Individu en : x =" + x + ", y =" + y;
         	}
         	else {
-        		
+        		int x = debut.getX()+c1;
+        		int y = debut.getY()+c2;
+        		jl2.setText("<html> &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "<br/>" + 
+                		"&nbsp &#160 Individu : NON </html>");
         	}
         }
 
