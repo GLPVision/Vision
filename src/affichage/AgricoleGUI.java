@@ -1,8 +1,8 @@
 package affichage;
 
 import data.Coordonnees;
-import moteur.build;
-import moteur.traitement;
+import moteur.Build;
+import moteur.Traitement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +32,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	private JScrollPane scrollPane;
 	private JButton prec, next;
 	private String word;
-	private traitement t;
+	private Traitement t;
 	private DefaultListModel model;
 	private DefaultListCellRenderer cellRenderer;
 	private ArrayList ano;
@@ -254,8 +254,8 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 
 		word = new String("");
 		
-		traitement t = new traitement(false, taille, debut, 0, total, text, types, null, list, content, word);
-		build b = new build(t); //construit la carte dans le gui
+		Traitement t = new Traitement(false, taille, debut, 0, total, text, types, null, list, content, word);
+		Build b = new Build(t); //construit la carte dans le gui
 		b.build_map();
 		t.start();
 		this.t = t;

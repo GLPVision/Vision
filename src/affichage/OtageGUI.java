@@ -1,8 +1,8 @@
 package affichage;
 
 import data.Coordonnees;
-import moteur.build;
-import moteur.traitement;
+import moteur.Build;
+import moteur.Traitement;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -30,7 +30,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 	private JTextField nomcarte, info;
 	private JLabel otage, repere, nombre, total, Individus, text;
 	private JButton prec, next;
-	private traitement t;
+	private Traitement t;
 	private DefaultListCellRenderer cellRenderer;
 	private JScrollPane scrollPane;
 	private JList liste;
@@ -268,8 +268,8 @@ public class OtageGUI extends JFrame implements ActionListener {
 		
 		word = new String("");
 
-		traitement t = new traitement(true, taille, debut, nbOtage, nombre, text, otage, total, list, content, word);
-		build b = new build(t); //construit la carte dans le gui
+		Traitement t = new Traitement(true, taille, debut, nbOtage, nombre, text, otage, total, list, content, word);
+		Build b = new Build(t); //construit la carte dans le gui
 		b.build_map();
 		t.start();
 		this.t = t;
