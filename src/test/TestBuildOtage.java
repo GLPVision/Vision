@@ -16,16 +16,33 @@ import org.junit.Assert;
 
 import javax.swing.*;
 
+/**
+ * Classe test build otage
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 1
+ */
 public class TestBuildOtage {
+    /**
+     * Build
+     */
     private Build build;
+    /**
+     * Traitement
+     */
     private Traitement traitement;
 
+    /**
+     * preparation
+     */
     @Before
     public void prepareBuild(){
         traitement = new Traitement(true, new Coordonnees(10, 10), new Coordonnees(0, 0), 5, null, null, null, null, new DefaultListModel(), null, null);
         build = new Build(traitement);
     }
 
+    /**
+     * test des images
+     */
     @Test
     public void testImageIcon(){
         assertNotNull(build.getPersonne());
@@ -35,6 +52,9 @@ public class TestBuildOtage {
         assertTrue(build.getBat() instanceof ImageIcon);
     }
 
+    /**
+     * test build
+     */
     @Test
     public void testBuild(){
         assertNotNull(build);
@@ -52,6 +72,9 @@ public class TestBuildOtage {
         assertEquals(build.isOtage(), true);
     }
 
+    /**
+     * test build_map
+     */
     @Test
     public void testBuild_map(){
         build.build_map();

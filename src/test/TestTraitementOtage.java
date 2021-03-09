@@ -12,21 +12,39 @@ import javax.swing.*;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Classe test traitement otage
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 1
+ */
 public class TestTraitementOtage {
+    /**
+     * Traitement
+     */
     private Traitement traitement;
 
+    /**
+     * preparation
+     */
     @Before
     public void prepareTraitement(){
         traitement = new Traitement(true, new Coordonnees(10, 10), new Coordonnees(0, 0), 5, null, null, null, null, null, null, null);
     }
 
+    /**
+     * test des images
+     */
     @Test
     public void testImageIcon(){
         assertNotNull(traitement.getCercle());
         assertTrue(traitement.getCercle() instanceof ImageIcon);
     }
+
+    /**
+     * test traitement
+     */
     @Test
-    public void testBuild(){
+    public void testTraitement(){
         assertNotNull(traitement.isOtage());
         assertEquals(traitement.isOtage(), true);
         assertNotNull(traitement.getTaille());
@@ -40,8 +58,11 @@ public class TestTraitementOtage {
         assertEquals(traitement.getNbOtage(), 5);
     }
 
+    /**
+     * test supp
+     */
     @Test
-    public void testSupp() throws InterruptedException {
+    public void testSupp(){
         traitement.supp();
         assertNotNull(traitement.getNbOtage());
         assertEquals(traitement.getNbOtage(), 0);

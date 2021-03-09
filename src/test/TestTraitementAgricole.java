@@ -11,22 +11,39 @@ import javax.swing.*;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-
+/**
+ * Classe test traitement agricole
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 1
+ */
 public class TestTraitementAgricole {
+    /**
+     * Traitement
+     */
     private Traitement traitement;
 
+    /**
+     * prepartaion
+     */
     @Before
     public void prepareTraitement(){
         traitement = new Traitement(false, new Coordonnees(10, 10), new Coordonnees(0, 0), 0, null, null, null, null, null, null, null);
     }
 
+    /**
+     * test des images
+     */
     @Test
     public void testImageIcon(){
         assertNotNull(traitement.getCercle());
         assertTrue(traitement.getCercle() instanceof ImageIcon);
     }
+
+    /**
+     * test traitement
+     */
     @Test
-    public void testBuild(){
+    public void testTraitement(){
         assertNotNull(traitement.isOtage());
         assertEquals(traitement.isOtage(), false);
         assertNotNull(traitement.getTaille());
@@ -39,8 +56,11 @@ public class TestTraitementAgricole {
         assertEquals(traitement.getDebut().getY(), 0);
     }
 
+    /**
+     * test supp
+     */
     @Test
-    public void testSupp() throws InterruptedException {
+    public void testSupp(){
         traitement.supp();
         assertNotNull(traitement.getInconnue());
         assertEquals(traitement.getInconnue(), 0);

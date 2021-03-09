@@ -2,7 +2,8 @@ package data;
 
 /**
  * Classe anomalie
- * @author QIU Antoine
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 2
  */
 public class Anomalie extends Element{
     /**
@@ -17,7 +18,6 @@ public class Anomalie extends Element{
         super(c);
         anomalie = "x";
     }
-
     /**
      * Fonction qui retourne la description
      * @return Description

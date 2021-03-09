@@ -1,8 +1,9 @@
 package data;
 
 /**
- * Classe maladie
- * @author QIU Antoine
+ * Classe Maladie
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 2
  */
 public class Maladie extends Anomalie {
     /**
@@ -17,7 +18,6 @@ public class Maladie extends Anomalie {
         super(c);
         maladie = "m";
     }
-
     /**
      * Fonction qui retourne la description
      * @return Description

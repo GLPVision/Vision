@@ -2,6 +2,8 @@ package data;
 
 /**
  * Classe date
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 2
  */
 public class Date {
     /**

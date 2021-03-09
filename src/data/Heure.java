@@ -1,8 +1,9 @@
 package data;
 
 /**
- * Classe heure
- * @author QIU Antoine
+ * Classe Heure
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 2
  */
 public class Heure {
     /**
@@ -17,7 +18,6 @@ public class Heure {
      * Seconde
      */
     private String seconde;
-
     /**
      * Constructeur, initialise les variables
      * @param heure Heure
@@ -29,7 +29,6 @@ public class Heure {
         this.minute = minute;
         this.seconde = seconde;
     }
-
     /**
      * Fonction qui retourne l'heure
      * @return Heure
@@ -37,7 +36,6 @@ public class Heure {
     public String getHeure(){
         return heure;
     }
-
     /**
      * Fonction qui retourne les minutes
      * @return Minute
@@ -45,9 +43,8 @@ public class Heure {
     public String getMinute(){
         return minute;
     }
-
     /**
-     * Focntion qui retourne les secondes
+     * Fonction qui retourne les secondes
      * @return Seconde
      */
     public String getSeconde(){

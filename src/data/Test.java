@@ -2,9 +2,18 @@ package data;
 
 import java.io.IOException;
 
+/**
+ * Classe test
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 2
+ */
 public class Test {
-    public static void main(String args []) throws IOException {
-        new Otage(new Coordonnees(10, 10), 10).getCarte().afficher();
+    /**
+     * Fonction main
+     * @param args Non utilisé
+     */
+    public static void main(String args []){
+        new Otage(new Coordonnees(10, 10), 5).getCarte().afficher();
         System.out.println("\n");
         new Agriculture(new Coordonnees(10, 10)).getCarte().afficher();
     }

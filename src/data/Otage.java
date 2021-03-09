@@ -2,7 +2,8 @@ package data;
 
 /**
  * Classe scénario otage
- * @author QIU Antoine
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 2
  */
 public class Otage extends Scenario{
     /**

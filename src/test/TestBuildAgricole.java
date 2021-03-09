@@ -15,16 +15,33 @@ import org.junit.Test;
 import org.junit.Assert;
 
 import javax.swing.*;
-
+/**
+ * Classe test build agricole
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 1
+ */
 public class TestBuildAgricole {
+    /**
+     * Build
+     */
     private Build build;
+    /**
+     * Traitement
+     */
     private Traitement traitement;
 
+    /**
+     * preparation au test
+     */
     @Before
     public void prepareBuild(){
         traitement = new Traitement(false, new Coordonnees(10, 10), new Coordonnees(0, 0), 5, null, null, null, null, new DefaultListModel(), null, null);
         build = new Build(traitement);
     }
+
+    /**
+     * test des images
+     */
     @Test
     public void testImageIcon(){
         assertNotNull(build.getPersonne());
@@ -42,6 +59,9 @@ public class TestBuildAgricole {
         assertTrue(build.getBle() instanceof ImageIcon);
     }
 
+    /**
+     * test de build
+     */
     @Test
     public void testBuild(){
         assertNotNull(build);
@@ -59,6 +79,9 @@ public class TestBuildAgricole {
         assertEquals(build.isOtage(), false);
     }
 
+    /**
+     * test de build_map
+     */
     @Test
     public void testBuild_map(){
         build.build_map();

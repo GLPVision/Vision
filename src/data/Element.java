@@ -1,7 +1,9 @@
 package data;
 
 /**
- * Classe element / case de la matrice
+ * Classe Element / case de la matrice
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 2
  */
 public class Element {
     /**
@@ -12,7 +14,6 @@ public class Element {
      * Description
      */
     private String desc;
-
     /**
      * Constructeur, initialise les variables
      * @param c Coordonnées
@@ -21,7 +22,6 @@ public class Element {
         coordonnees = c;
         this.desc = ".";
     }
-
     /**
      * Fonction qui retourne la description
      * @return Description
@@ -29,7 +29,6 @@ public class Element {
     public String getDesc(){
         return desc;
     }
-
     /**
      * Fonction qui retourne les coordonnées
      * @return Coordonnées

@@ -7,12 +7,13 @@ import java.io.IOException;
 
 /**
  * Classe carte
- * @author QIU Antoine
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * @version 4
  */
 public class Carte {
     private Coordonnees taille;
     /**
-     * Matrice de dimension2 / carte
+     * Matrice de dimension 2 / carte
      */
     private Element[][] tab;
     /**
@@ -35,7 +36,6 @@ public class Carte {
      * Nombre d'asaillants
      */
     private int nb_assaillant;
-
     /**
      * Constructeur, initialise les variables
      * @param taille Taille de la carte
@@ -49,10 +49,8 @@ public class Carte {
         tab = new Element[taille.getY()][taille.getX()];
         init();
     }
-
     /**
      * Fonction initialisation
-     * @throws IOException Erreur d'écriture lors de l'exportation
      */
     public void init(){
         setDate();
@@ -66,7 +64,6 @@ public class Carte {
         }
         //export();
     }
-
     /**
      * Fonction pour régler la date
      */
@@ -75,15 +72,12 @@ public class Carte {
         String heure = java.time.LocalTime.now().toString();
         this.date = new Date(date.substring(8, 10), date.substring(5, 7), date.substring(0, 4), new Heure(heure.substring(0, 2), heure.substring(3, 5), heure.substring(6, 8)));
     }
-
     /**
      * Fonction pour générer la carte aléatoirement
      */
     public void generer(){
         for (int i=0 ; i< taille.getY() ; i++){ //parcours x
             for (int j=0 ; j< taille.getX() ; j++){ //parcours y
-                @SuppressWarnings("unused")
-				String desc; //initilisation de la variable
                 if(otage){
                     int random = (int) (Math.random()*(5*nb_otage)); //aléatoire
                     switch(random){
@@ -118,7 +112,6 @@ public class Carte {
             }
         }
     }
-
     /**
      * Fonction pour afficher la carte dans le terminal (pour tester)
      */
@@ -130,7 +123,6 @@ public class Carte {
             System.out.print("\n");
         }
     }
-
     /**
      * Fonctione pour exporter la carte dans un fichier csv
      * @throws IOException Erreur d'écriture lors de l'exportation
@@ -163,9 +155,8 @@ public class Carte {
         bw.write(out.toString()); //ecriture du fichier
         bw.close(); //fermer le fichier
     }
-
     /**
-     * Foonction pour détecter le nombre de personnes/anomalies
+     * Fonction pour détecter le nombre de personnes/anomalies
      */
     public void scan(){
         int nb =0;
@@ -180,10 +171,9 @@ public class Carte {
             nb_assaillant = nb - nb_otage; //calcul nombre d'otages
         }
         else {
-            nb_anomalie = nb;
+            nb_anomalie = nb; //calcul nombre d'anomalies
         }
     }
-
     /**
      * Fonction qui retourne la matrice
      * @return Matrice
