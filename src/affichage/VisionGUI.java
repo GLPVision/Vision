@@ -20,11 +20,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+/**
+ * Mise en place de l'interface graphique de la fenêtre d'ouverture de l'application
+ * 
+ * @author Christian BERANGER
+ *
+ * @version 5
+ */
 public class VisionGUI extends JFrame implements ActionListener {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton agricole, otage;

@@ -7,6 +7,12 @@ import java.awt.*;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
 
+/**
+ * 
+ * @author Antoine QIU
+ * 
+ * @version
+ */
 public class Traitement extends Thread {
     private int nbOtage, nbAssaillant, nbTotal, intrusion, feu, maladie, inconnue;
     private Carte carte;
@@ -21,6 +27,20 @@ public class Traitement extends Thread {
     private Coordonnees taille;
     private Coordonnees debut;
     
+    /**
+     * 
+     * @param otage
+     * @param taille
+     * @param debut
+     * @param nbOtage
+     * @param jl1
+     * @param jl2
+     * @param jl3
+     * @param jl4
+     * @param list
+     * @param content
+     * @param word
+     */
     public Traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage, JLabel jl1, JLabel jl2, JLabel jl3, JLabel jl4, DefaultListModel list, JList content, String word){
         if(otage){
             scenario = new Otage(taille, nbOtage);
