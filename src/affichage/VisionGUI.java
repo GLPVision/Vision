@@ -165,6 +165,17 @@ public class VisionGUI extends JFrame implements ActionListener {
 		yfin.setColumns(10);
 		yfin.setBackground(new Color(204, 190, 121));
 		yfin.setBorder(null);
+
+		this.getContentPane().setBackground(Color.DARK_GRAY);
+		ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
+		this.setIconImage(icon.getImage());
+		this.setResizable(false);
+		this.setSize(560, 260);
+		this.setBounds(550, 350, 560, 260);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+		this.setVisible(true);
 	}
 	/**
 	 * permet d'interagir avec les boutons
@@ -192,16 +203,6 @@ public class VisionGUI extends JFrame implements ActionListener {
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}
-				fen.getContentPane().setBackground(Color.DARK_GRAY);
-				ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
-				fen.setIconImage(icon.getImage());
-				fen.setResizable(false);
-				fen.setSize(1250, 720);
-				fen.setBounds(300, 200, 1250, 720);
-				fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		        fen.setLocation(dim.width/2-fen.getSize().width/2, dim.height/2-fen.getSize().height/2);
-				fen.setVisible(true);
 				this.setVisible(false);
 			}
 		}
@@ -231,16 +232,6 @@ public class VisionGUI extends JFrame implements ActionListener {
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}
-				fen.getContentPane().setBackground(Color.DARK_GRAY);
-				ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
-				fen.setIconImage(icon.getImage());
-				fen.setResizable(false);
-				fen.setSize(1000, 500);
-				fen.setBounds(300, 200, 1000, 500);
-				fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		        fen.setLocation(dim.width/2-fen.getSize().width/2, dim.height/2-fen.getSize().height/2);
-				fen.setVisible(true);
 				this.setVisible(false);
 			}
 		}

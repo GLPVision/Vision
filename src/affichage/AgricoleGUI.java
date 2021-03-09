@@ -347,6 +347,17 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		scrollPane.setViewportView(liste);
 		liste.setBorder(null);
 		liste.setBackground(new Color(204, 190, 121));
+
+		this.getContentPane().setBackground(Color.DARK_GRAY);
+		ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
+		this.setIconImage(icon.getImage());
+		this.setResizable(false);
+		this.setSize(1250, 720);
+		this.setBounds(300, 200, 1250, 720);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+		this.setVisible(true);
 		
 		/**
 		 * Définition de l'affichage d'informations dans la liste
@@ -401,16 +412,6 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		 */
 		if(e.getSource()==recherche) {
 			JFrame fen = new VisionGUI();
-			fen.getContentPane().setBackground(Color.DARK_GRAY);
-			ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png")); //Affiche le logo du projet vision en haut à gauche de notre fenêtre
-	        fen.setIconImage(icon.getImage());
-	        fen.setResizable(false);
-			fen.setSize(560, 260);
-			fen.setBounds(550, 350, 560, 260);
-			fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-	        fen.setLocation(dim.width/2-fen.getSize().width/2, dim.height/2-fen.getSize().height/2);
-			fen.setVisible(true);
 			this.setVisible(false);
 		}
 	}
