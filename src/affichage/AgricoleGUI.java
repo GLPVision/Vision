@@ -19,7 +19,7 @@ import javax.swing.event.ListSelectionListener;
 /**
  * Mise en place de l'interface graphique du scénario Agricole
  * 
- * @author Christian BERANGER
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
  * 
  * @version 16
  */

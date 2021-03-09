@@ -23,7 +23,7 @@ import javax.swing.SwingConstants;
 /**
  * Mise en place de l'interface graphique de la fenêtre d'ouverture de l'application
  * 
- * @author Christian BERANGER
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
  *
  * @version 5
  */
@@ -37,57 +37,85 @@ public class VisionGUI extends JFrame implements ActionListener {
 	private Image drone;
 	
 	public VisionGUI(){
+		/**
+		 * Définition du nom de la fenêtre
+		 */
 		super("Vision Détection");
 		
+		/**
+		 * Définitioon des paramètres de la carte
+		 */
 		setMinimumSize(new Dimension(560, 260));
 		setPreferredSize(new Dimension(2000, 800));
 		
+		/**
+		 * Définition de la fenêtre		
+		 */
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		contentPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		/**
+		 * Affichage du logo de l'application
+		 */
 		droneimg = new JLabel("");
 		droneimg.setBounds(440, 11, 50, 50);
-		String pwd = System.getProperty("user.dir");//Permet d'afficher le logo de vision
+		String pwd = System.getProperty("user.dir");
 		img = new ImageIcon(pwd + "/src/affichage/drone.png");
 		drone = img.getImage();
 		drone = drone.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		droneimg.setIcon(new ImageIcon(drone));
 		contentPane.add(droneimg);
 		
+		/**
+		 * Mise en place du boutton pour accéder au scénario d'agriculture
+		 */
 		agricole = new JButton("Agriculture");
 		agricole.setBackground(new Color(204, 190, 121));
 		getContentPane().add(agricole);
 		agricole.addActionListener(this);
 		agricole.setBounds(400, 109, 130, 30);
 		
+		/**
+		 * Mise en place du boutton pour accéder au scénario d'otage
+		 */
 		otage = new JButton("Prise d'otage");
 		otage.setBackground(new Color(204, 190, 121));
 		getContentPane().add(otage);
 		otage.addActionListener(this);
 		otage.setBounds(400, 150, 130, 30);
 		
+		/**
+		 * Mise en place du renseignement des coordonnées de départ du drone
+		 */
 		depart = new JTextField();
 		depart.setBounds(47, 27, 283, 30);
 		contentPane.add(depart);
 		depart.setColumns(10);
-		depart.setText("Coordonées de départ : ");//Permet de rentr� les coordonn�es de d�part
+		depart.setText("Coordonées de départ : ");
 		depart.setEditable(false);
 		depart.setBackground(new Color(204, 190, 121));
 		depart.setBorder(null);
 		
+		
+		/**
+		 * Mise en place du renseignement des coordonnées d'arrivée du drone
+		 */
 		fin = new JTextField();
 		fin.setBounds(47, 109, 283, 30);
 		contentPane.add(fin);
 		fin.setColumns(10);
-		fin.setText("Coordonées d'arrivée : ");//Permet de rentr� les coordonn�es de d�part
+		fin.setText("Coordonées d'arrivée : ");
 		depart.setEditable(false);
 		fin.setEditable(false);
 		fin.setBackground(new Color(204, 190, 121));
 		fin.setBorder(null);
 		
+		/**
+		 * Mise en place de l'affichage du texte demandant de choisir le scénario
+		 */
 		choix = new JTextField();
 		choix.setHorizontalAlignment(SwingConstants.CENTER);
 		choix.setBounds(400, 68, 130, 30);
@@ -98,20 +126,29 @@ public class VisionGUI extends JFrame implements ActionListener {
 		choix.setBackground(new Color(204, 190, 121));
 		choix.setBorder(null);
 		
-		xinit = new JTextField(); //x d�but
+		/**
+		 * Définition des coordonnées de départ en x
+		 */
+		xinit = new JTextField();
 		xinit.setBounds(47, 68, 130, 30);
 		contentPane.add(xinit);
 		xinit.setColumns(10);
 		xinit.setBackground(new Color(204, 190, 121));
 		xinit.setBorder(null);
 		
-		yinit = new JTextField();//y d�but
+		/**
+		 * Définition des coordonnées de départ en y
+		 */
+		yinit = new JTextField();
 		yinit.setBounds(200, 68, 130, 30);
 		contentPane.add(yinit);
 		yinit.setColumns(10);
 		yinit.setBackground(new Color(204, 190, 121));
 		yinit.setBorder(null);
 		
+		/**
+		 * Définition des coordonnées d'arrivée en x
+		 */
 		xfin = new JTextField();//x d'arriver
 		xfin.setBounds(47, 150, 130, 30);
 		contentPane.add(xfin);
@@ -119,6 +156,9 @@ public class VisionGUI extends JFrame implements ActionListener {
 		xfin.setBackground(new Color(204, 190, 121));
 		xfin.setBorder(null);
 		
+		/**
+		 * Définition des coordonnées d'arrivée en y
+		 */
 		yfin = new JTextField();//y d'arriver
 		yfin.setBounds(200, 150, 130, 30);
 		contentPane.add(yfin);
@@ -132,6 +172,10 @@ public class VisionGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+		/**
+		 * Appellation du scénario agricole et mise en place de la fenêtre
+		 */
 		if(e.getSource()==agricole) {
 			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
 				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
@@ -162,6 +206,9 @@ public class VisionGUI extends JFrame implements ActionListener {
 			}
 		}
 		
+		/**
+		 * Appellation du scénario otage et mise en place de la fenêtre
+		 */
 		if(e.getSource()==otage) {
 			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
 				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);//Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
