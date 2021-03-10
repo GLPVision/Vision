@@ -1,0 +1,2 @@
+Pensez bien a marquer le dossier "res" en tant que ressource sur eclipse
+https://stackoverflow.com/questions/27934796/how-do-i-add-a-resources-folder-to-my-java-project-in-eclipse/46950488
