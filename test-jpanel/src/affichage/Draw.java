@@ -1,8 +1,6 @@
 package affichage;
 
 import data.*;
-import javafx.scene.shape.Circle;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

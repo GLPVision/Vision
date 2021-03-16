@@ -55,6 +55,7 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 	private DefaultListModel<?> list;
 	private Coordonnees debut;
 	private Coordonnees taille;
+	private JPanel panel;
 	
 	/**
 	 * 
@@ -276,32 +277,10 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 		/**
 		 * Mise en place du bouton permettant de sélectionner l'anomalie précédente sur la carte
 		 */
-		prec = new JButton("Anomalie précédente");
-		prec.setBorder(null);
-		prec.setBackground(SystemColor.activeCaption);
-		prec.setBounds(10, 491, 235, 42);
-		grille.add(prec);
-		prec.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				t.previous();
-			}
-		});
 		
 		/**
 		 * Mise en place du bouton permettant de sélectionner l'anomalie suivante sur la carte
 		 */
-		next = new JButton("Anomalie suivante");
-		next.setBorder(null);
-		next.setBackground(SystemColor.activeCaption);
-		next.setBounds(10, 547, 235, 42);
-		grille.add(next);
-		next.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				t.next();
-			}
-		});
 		
 		/**
 		 * Mise en place des informations de coordonnées affichées en fonction de la case sélectionnée
@@ -376,6 +355,42 @@ public class AgricoleGUI extends JFrame implements ActionListener {
 
 		 */
 		t = new Traitement(false, taille, debut, 0, total, text, types, null, list, content, word);
+		
+		panel = new JPanel();
+		panel.setBorder(new MatteBorder(1, 3, 3, 3, (Color) new Color(0, 0, 0)));
+		panel.setBounds(0, 480, 255, 120);
+		grille.add(panel);
+		SpringLayout sl_panel = new SpringLayout();
+		panel.setLayout(sl_panel);
+		prec = new JButton("Anomalie précédente");
+		sl_panel.putConstraint(SpringLayout.NORTH, prec, 10, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, prec, 10, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, prec, 52, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, prec, -10, SpringLayout.EAST, panel);
+		panel.add(prec);
+		prec.setBorder(null);
+		prec.setBackground(SystemColor.activeCaption);
+		next = new JButton("Anomalie suivante");
+		sl_panel.putConstraint(SpringLayout.EAST, next, 0, SpringLayout.EAST, prec);
+		sl_panel.putConstraint(SpringLayout.NORTH, next, 64, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, next, 10, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, next, 106, SpringLayout.NORTH, panel);
+		panel.setBackground(new Color (204, 190, 121));
+		panel.add(next);
+		next.setBorder(null);
+		next.setBackground(SystemColor.activeCaption);
+		next.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				t.next();
+			}
+		});
+		prec.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				t.previous();
+			}
+		});
 		t.run();
 		for(int i=0 ; i<t.getEntoure().size() ; i++){
 			Element e = t.getEntoure().get(i);
