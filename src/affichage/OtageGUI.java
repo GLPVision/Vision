@@ -1,6 +1,7 @@
 package affichage;
 
 import data.Coordonnees;
+import data.Element;
 import moteur.Build;
 import moteur.Traitement;
 
@@ -62,6 +63,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 	private Coordonnees debut;
 	@SuppressWarnings("unused")
 	private Coordonnees taille;
+	private JPanel panel;
 	
 	/**
 	 * 
@@ -168,35 +170,31 @@ public class OtageGUI extends JFrame implements ActionListener {
 		clair.addActionListener(this);
 		contentPane.setLayout(null);
 		
-		/**
-		 * Mise en place du cadre contenant la carte
-		 */
-		carte = new JPanel();
-		
-		/**
-		 * layout pour remplir le panel
-		 */
-		carte.setLayout(new BorderLayout());
-		carte.setBackground(new Color(0, 128, 128));
-		carte.setBounds(274, 50, 950, 600);
+
 		
 		/**
 		 * initialisation
 		 */
-		list = new DefaultListModel();
+		/*list = new DefaultListModel();
 		content = new JList(list);
 		content.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+
+		 */
 		
 		/**
 		 * centre text de chaque cas
 		 */
+		/*
 		cellRenderer = new DefaultListCellRenderer();
 		cellRenderer.setHorizontalAlignment(JLabel.CENTER);
 		content.setCellRenderer(cellRenderer);
+
+		 */
 		
 		/**
 		 * Définition de la taille des cases en fonction du nombre de cases
 		 */
+		/*
 		content.setFixedCellWidth(carte.getWidth()/taille.getX());
 		content.setFixedCellHeight(carte.getHeight()/taille.getY());
 		content.setVisibleRowCount(taille.getY());
@@ -205,18 +203,20 @@ public class OtageGUI extends JFrame implements ActionListener {
 		carte.add(content, BorderLayout.CENTER);
 		contentPane.add(carte);
 
+
 		content.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				t.current();
 			}
 		});
+		*/
 		
 		/**
 		 * Mise en place du model et de la liste pour énumérer les individu présent sur la map
 		 */
 		model = new DefaultListModel();
-		people = new ArrayList();
+		/*people = new ArrayList();
 		content.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -227,6 +227,8 @@ public class OtageGUI extends JFrame implements ActionListener {
 				}
 			}
 		});
+
+		 */
 		
 		/**
 		 * Mise en place du nom au dessus de la carte
@@ -304,32 +306,10 @@ public class OtageGUI extends JFrame implements ActionListener {
 		/**
 		 * Mise en place du bouton permettant de sélectionner l'individu précédent sur la carte
 		 */
-		prec = new JButton("Individu précédent");
-		prec.setBorder(null);
-		prec.setBackground(SystemColor.activeCaption);
-		prec.setBounds(10, 491, 235, 42);
-		grille.add(prec);
-		prec.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				t.previous();
-			}
-		});
 		
 		/**
 		 * Mise en place du bouton permettant de sélectionner l'individu suivant sur la carte
 		 */
-		next = new JButton("Individu suivant");
-		next.setBorder(null);
-		next.setBackground(SystemColor.activeCaption);
-		next.setBounds(10, 547, 235, 42);
-		grille.add(next);
-		next.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				t.next();
-			}
-		});
 		
 		/**
 		 * Mise en place du texte au dessus de la liste
@@ -386,11 +366,70 @@ public class OtageGUI extends JFrame implements ActionListener {
 		/**
 		 * Appel de la fonction permettant la création de la carte
 		 */
+		/*
 		Traitement t = new Traitement(true, taille, debut, nbOtage, nombre, text, otage, total, list, content, word);
 		Build b = new Build(t);
 		b.build_map();
 		t.start();
 		this.t = t;
+
+		 */
+		t = new Traitement(true, taille, debut, nbOtage, nombre, text, otage, total, list, content, word);
+		
+		panel = new JPanel();
+		panel.setBorder(new MatteBorder(1, 3, 3, 3, (Color) new Color(0, 0, 0)));
+		panel.setBounds(0, 480, 255, 120);
+		grille.add(panel);
+		SpringLayout sl_panel = new SpringLayout();
+		panel.setLayout(sl_panel);
+		prec = new JButton("Individu précédent");
+		sl_panel.putConstraint(SpringLayout.NORTH, prec, 10, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, prec, 10, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, prec, 50, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, prec, -10, SpringLayout.EAST, panel);
+		panel.add(prec);
+		prec.setBorder(null);
+		prec.setBackground(SystemColor.activeCaption);
+		next = new JButton("Individu suivant");
+		sl_panel.putConstraint(SpringLayout.NORTH, next, -50, SpringLayout.SOUTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, next, 0, SpringLayout.WEST, prec);
+		sl_panel.putConstraint(SpringLayout.SOUTH, next, -10, SpringLayout.SOUTH, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, next, 0, SpringLayout.EAST, prec);
+		panel.add(next);
+		panel.setBackground(new Color(204, 190, 121));
+		next.setBorder(null);
+		next.setBackground(SystemColor.activeCaption);
+		next.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				t.next();
+			}
+		});
+		prec.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				t.previous();
+			}
+		});
+		t.run();
+		for(int i=0 ; i<t.getEntoure().size() ; i++){
+			Element e = t.getEntoure().get(i);
+			model.addElement("   " + e.getDesc() + " en : " + e.getCoordonnees().getX() + ", " + e.getCoordonnees().getY());
+		}
+		Draw draw = new Draw();
+		/**
+		 * Mise en place du cadre contenant la carte
+		 */
+		carte = new Display(t, draw);
+
+		/**
+		 * layout pour remplir le panel
+		 */
+		carte.setLayout(new BorderLayout());
+		carte.setBackground(new Color(0, 128, 128));
+		carte.setBounds(274, 50, 950, 600);
+		carte.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+		contentPane.add(carte);
 	}
 	
 	@Override

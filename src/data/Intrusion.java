@@ -16,7 +16,7 @@ public class Intrusion extends Anomalie{
      */
     public Intrusion(Coordonnees c) {
         super(c);
-        intrusion = "i";
+        intrusion = "Intrusion";
     }
     /**
      * Fonction qui retourne la description

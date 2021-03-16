@@ -181,5 +181,13 @@ public class Carte {
     public Element[][] getTab(){
         return tab;
     }
+
+    public Coordonnees getTaille() {
+        return taille;
+    }
+
+    public boolean isOtage() {
+        return otage;
+    }
 }
 

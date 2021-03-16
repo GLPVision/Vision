@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 /**
  * Classe Traitement
@@ -16,7 +17,13 @@ public class Traitement extends Thread {
     /**
      * Nombre d'otages, nombre d'assaillants, nombre total de personnes, nombre d'intrusions, nombre de feux, nombre de maladies, nombre d'inconnues
      */
-    private int nbOtage, nbAssaillant, nbTotal, intrusion, feu, maladie, inconnue;
+    private int nbOtage, nbAssaillant;
+    private ArrayList <Personne> nbTotal = new ArrayList<>();
+    private ArrayList <Intrusion> intrusion = new ArrayList<>();
+    private ArrayList <Feu> feu = new ArrayList<>();
+    private ArrayList <Maladie> maladie = new ArrayList<>();
+    private ArrayList <Anomalie> inconnue = new ArrayList<>();
+    private ArrayList <Element> entoure = new ArrayList<>();
     /**
      * Carte
      */
@@ -116,33 +123,49 @@ public class Traitement extends Thread {
         Element[][] tab = carte.getTab(); //recup la carte
         for(int i = 0 ; i<taille.getY() ; i++){ //parcours y
             for(int j = 0 ; j<taille.getX() ; j++){ //parcours x
-                if(tab[i][j].getDesc() == "p") //si personne
-                    nbTotal++;
-                else if(tab[i][j].getDesc() == "i") //si intrusion
-                    intrusion++;
-                else if(tab[i][j].getDesc() == "f") //si feu
-                    feu++;
-                else if(tab[i][j].getDesc() == "m") //si maladie
-                    maladie++;
-                else if(tab[i][j].getDesc() == "x") //si inconnue
-                    inconnue++;
+                Coordonnees c = new Coordonnees(j, i);
+                if(tab[i][j].getDesc() == "Personne") //si personne
+                    nbTotal.add(new Personne(c));
+                else if(tab[i][j].getDesc() == "Intrusion") //si intrusion
+                    intrusion.add(new Intrusion(c));
+                else if(tab[i][j].getDesc() == "Feu") //si feu
+                    feu.add(new Feu(c));
+                else if(tab[i][j].getDesc() == "Maladie") //si maladie
+                    maladie.add(new Maladie(c));
+                else if(tab[i][j].getDesc() == "Inconnue") //si inconnue
+                    inconnue.add(new Anomalie(c));
                 if(tab[i][j].getDesc() != "."){ //si pas rien, entourer
-                    entourer(i, j); //entourer
-                    content.setSelectedIndex(i*taille.getX()+j); //selectionner la case
+                    //entourer(i, j); //entourer
+                    //content.setSelectedIndex(i*taille.getX()+j); //selectionner la case
                 }
-                majGUI(); //mise à jour progressive du GUI
-                sleep(30); //latence
+                //majGUI(); //mise à jour progressive du GUI
+                //sleep(30); //latence
             }
         }
+        entoure = new ArrayList<>();
+        entoure.addAll(inconnue);
+        entoure.addAll(feu);
+        entoure.addAll(intrusion);
+        entoure.addAll(maladie);
         if(otage) { //si derniere iteration otage
-            nbAssaillant = nbTotal - nbOtage;
-            majGUI();
+            nbAssaillant = nbTotal.size() - nbOtage;
+            entoure = new ArrayList<>();
+            entoure.addAll(nbTotal);
         }
+        else{
+            entoure = new ArrayList<>();
+            entoure.addAll(inconnue);
+            entoure.addAll(feu);
+            entoure.addAll(intrusion);
+            entoure.addAll(maladie);
+        }
+        majGUI();
     }
 
     /**
      * Fonction qui remet tout à zéro
      */
+        /*
     public void supp() {
         this.nbOtage = 0;
         this.nbAssaillant = 0;
@@ -155,24 +178,25 @@ public class Traitement extends Thread {
         this.scenario = null;
         this.interrupt();
     }
+    */
 
     /**
      * Fonction qui modifie le GUI
      */
     public void majGUI(){ //fonction a appeler avec un action listener lié a la selection d'un element
         if(otage){
-            jl1.setText("    Nombre total d'individus : " + nbTotal);
+            jl1.setText("    Nombre total d'individus : " + nbTotal.size());
             jl3.setText("    Nombre d'otages : " + nbOtage);
             jl4.setText("    Nombre total d'assaillants : " + nbAssaillant);
 
 
         }
         else{
-            jl1.setText("   Total : " + (inconnue+feu+maladie+intrusion));
-            jl3.setText("<html> &nbsp &#160 Nombre de feux : " + feu + "<br/>" +
-                    " &nbsp &#160 Nombre d'intrusions : " + intrusion + "<br/>" +
-                    " &nbsp &#160 Nombre de maladies : " + maladie + "<br/>" +
-                    " &nbsp &#160 Nombre d'anomalies inconnues : " + inconnue + "</html>");
+            jl1.setText("   Total : " + (inconnue.size()+feu.size()+maladie.size()+intrusion.size()));
+            jl3.setText("<html> &nbsp &#160 Nombre de feux : " + feu.size() + "<br/>" +
+                    " &nbsp &#160 Nombre d'intrusions : " + intrusion.size() + "<br/>" +
+                    " &nbsp &#160 Nombre de maladies : " + maladie.size() + "<br/>" +
+                    " &nbsp &#160 Nombre d'anomalies inconnues : " + inconnue.size() + "</html>");
         }
     }
 
@@ -366,33 +390,7 @@ public class Traitement extends Thread {
      * Fonction qui retourne le nombre d'intrusions
      * @return Intrusion
      */
-    public int getIntrusion() {
-        return intrusion;
-    }
 
-    /**
-     * Fonction qui retourne le nombre de feux
-     * @return Feu
-     */
-    public int getFeu() {
-        return feu;
-    }
-
-    /**
-     * Fonction qui retourne le nombre de maladies
-     * @return Maladie
-     */
-    public int getMaladie() {
-        return maladie;
-    }
-
-    /**
-     * Fonction qui retourne le nombre d'inconnues
-     * @return Inconnue
-     */
-    public int getInconnue() {
-        return inconnue;
-    }
 
     /**
      * Fonction qui retourne si Otage ou Agricole
@@ -442,11 +440,27 @@ public class Traitement extends Thread {
         return nbAssaillant;
     }
 
-    /**
-     * Fonction qui retourne le total de personnes
-     * @return Personnes
-     */
-    public int getNbTotal() {
+    public ArrayList getNbTotal() {
         return nbTotal;
+    }
+
+    public ArrayList getIntrusion() {
+        return intrusion;
+    }
+
+    public ArrayList getFeu() {
+        return feu;
+    }
+
+    public ArrayList getMaladie() {
+        return maladie;
+    }
+
+    public ArrayList getInconnue() {
+        return inconnue;
+    }
+
+    public ArrayList<Element> getEntoure() {
+        return entoure;
     }
 }

@@ -16,7 +16,7 @@ public class Maladie extends Anomalie {
      */
     public Maladie(Coordonnees c) {
         super(c);
-        maladie = "m";
+        maladie = "Maladie";
     }
     /**
      * Fonction qui retourne la description

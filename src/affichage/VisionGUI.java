@@ -62,8 +62,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		 */
 		droneimg = new JLabel("");
 		droneimg.setBounds(440, 11, 50, 50);
-		String pwd = System.getProperty("user.dir");
-		img = new ImageIcon(pwd + "/src/affichage/drone.png");
+		img = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
 		drone = img.getImage();
 		drone = drone.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		droneimg.setIcon(new ImageIcon(drone));

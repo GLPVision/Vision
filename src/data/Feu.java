@@ -16,7 +16,7 @@ public class Feu extends Anomalie{
      */
     public Feu(Coordonnees c) {
         super(c);
-        feu = "f";
+        feu = "Feu";
     }
     /**
      * Fonction qui retourne la description

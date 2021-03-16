@@ -16,7 +16,7 @@ public class Anomalie extends Element{
      */
     public Anomalie(Coordonnees c) {
         super(c);
-        anomalie = "x";
+        anomalie = "Inconnue";
     }
     /**
      * Fonction qui retourne la description

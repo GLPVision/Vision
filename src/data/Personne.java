@@ -16,7 +16,7 @@ public class Personne extends Element {
      */
     public Personne(Coordonnees c) {
         super(c);
-        this.personne = "p";
+        this.personne = "Personne";
     }
     /**
      * Fonction qui retourne la description
