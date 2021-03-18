@@ -1,8 +1,8 @@
 package affichage;
 
-import data.Coordonnees;
+import data.Coordonnees; 
 import data.Element;
-import moteur.Build;
+//import moteur.Build;
 import moteur.Traitement;
 
 import javax.swing.*;
@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+//import javax.swing.event.ListSelectionEvent;
+//import javax.swing.event.ListSelectionListener;
 
 /**
  * Mise en place de l'interface graphique du scénario Otage
@@ -37,11 +37,15 @@ public class OtageGUI extends JFrame implements ActionListener {
 	private JLabel otage, repere, nombre, total, Individus, text;
 	private JButton prec, next;
 	private Traitement t;
+	@SuppressWarnings("unused")
 	private DefaultListCellRenderer cellRenderer;
 	private JScrollPane scrollPane;
+	@SuppressWarnings("rawtypes")
 	private JList liste;
+	@SuppressWarnings("rawtypes")
 	private DefaultListModel model;
 	private String word;
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private ArrayList people;
 	
 	/**
@@ -467,6 +471,7 @@ public class OtageGUI extends JFrame implements ActionListener {
 		 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 		 */
 		if(e.getSource()==recherche) {
+			@SuppressWarnings("unused")
 			JFrame fen = new VisionGUI();
 			this.setVisible(false);
 		}

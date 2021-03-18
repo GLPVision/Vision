@@ -51,7 +51,8 @@ public class Traitement extends Thread {
     /**
      * JList du GUI
      */
-    private JList content;
+    @SuppressWarnings("rawtypes")
+	private JList content;
     /**
      * Image de cercle
      */
@@ -59,7 +60,8 @@ public class Traitement extends Thread {
     /**
      * Nouvelle ligne
      */
-    private String Newligne=System.getProperty("line.separator");
+    @SuppressWarnings("unused")
+	private String Newligne=System.getProperty("line.separator");
     /**
      * Taille
      */
@@ -83,7 +85,8 @@ public class Traitement extends Thread {
      * @param content JList
      * @param word Contenu d'un JLabel
      */
-    public Traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage, JLabel jl1, JLabel jl2, JLabel jl3, JLabel jl4, DefaultListModel list, JList content, String word){
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public Traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage, JLabel jl1, JLabel jl2, JLabel jl3, JLabel jl4, DefaultListModel list, JList content, String word){
         if(otage){
             scenario = new Otage(taille, nbOtage);
         }
@@ -345,7 +348,8 @@ public class Traitement extends Thread {
      * Fonction qui retourne la liste lié à la JList du GUI
      * @return Liste
      */
-    public DefaultListModel getList() {
+    @SuppressWarnings("rawtypes")
+	public DefaultListModel getList() {
         return list;
     }
 
@@ -404,7 +408,8 @@ public class Traitement extends Thread {
      * Fonction qui retourne la JList
      * @return JList
      */
-    public JList getContent() {
+    @SuppressWarnings("rawtypes")
+	public JList getContent() {
         return content;
     }
 
@@ -440,23 +445,28 @@ public class Traitement extends Thread {
         return nbAssaillant;
     }
 
-    public ArrayList getNbTotal() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getNbTotal() {
         return nbTotal;
     }
 
-    public ArrayList getIntrusion() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getIntrusion() {
         return intrusion;
     }
 
-    public ArrayList getFeu() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getFeu() {
         return feu;
     }
 
-    public ArrayList getMaladie() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getMaladie() {
         return maladie;
     }
 
-    public ArrayList getInconnue() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getInconnue() {
         return inconnue;
     }
 

@@ -2,8 +2,8 @@ package affichage;
 
 import data.Coordonnees;
 import data.Element;
-import data.Intrusion;
-import moteur.Build;
+//import data.Intrusion;
+//import moteur.Build;
 import moteur.Traitement;
 
 import javax.swing.*;
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+//import javax.swing.event.ListSelectionEvent;
+//import javax.swing.event.ListSelectionListener;
 
 /**
  * Mise en place de l'interface graphique du scénario Agricole
@@ -40,8 +40,11 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	private JButton prec, next;
 	private String word;
 	private Traitement t;
+	@SuppressWarnings("rawtypes")
 	private DefaultListModel model;
+	@SuppressWarnings("unused")
 	private DefaultListCellRenderer cellRenderer;
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private ArrayList ano;
 	
 	/**
@@ -53,7 +56,9 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	 * Liste contient la carte
 	 */
 	private DefaultListModel<?> list;
+	@SuppressWarnings("unused")
 	private Coordonnees debut;
+	@SuppressWarnings("unused")
 	private Coordonnees taille;
 	private int diffx, diffy;
 
@@ -63,7 +68,6 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	 * @param taille
 	 * @throws IOException
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public AgricoleGUI(Coordonnees debut, Coordonnees taille) throws IOException {
 		/**
 		 * Définition du nom de la fenêtre
@@ -74,6 +78,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	}
 
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void init(Coordonnees debut, Coordonnees taille) throws IOException {
 		/**
 		 * Définitioon des paramètres de la carte
@@ -459,6 +464,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 			 */
 			if(e.getSource()==recherche) {
+				@SuppressWarnings("unused")
 				JFrame fen = new VisionGUI();
 				AgricoleGUI.this.setVisible(false);
 			}

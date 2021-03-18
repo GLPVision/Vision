@@ -7,10 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+//import java.util.Iterator;
 
 public class Display extends JPanel{
-    private Carte carte;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Carte carte;
     private Traitement traitement;
     private Draw draw;
 
@@ -29,7 +33,8 @@ public class Display extends JPanel{
             e.printStackTrace();
         }
         if(traitement.getOtage()){
-            ArrayList <Personne> personne = traitement.getNbTotal();
+            @SuppressWarnings("unchecked")
+			ArrayList <Personne> personne = traitement.getNbTotal();
             for(int i=0 ; i<personne.size() ; i++){
                 draw.draw(personne.get(i), g);
             }
@@ -39,19 +44,23 @@ public class Display extends JPanel{
             }
         }
         else{
-            ArrayList anomalie = traitement.getInconnue();
+            @SuppressWarnings("rawtypes")
+			ArrayList anomalie = traitement.getInconnue();
             for(int i=0 ; i<anomalie.size() ; i++){
                 draw.draw((Anomalie) anomalie.get(i), g);
             }
-            ArrayList feu = traitement.getFeu();
+            @SuppressWarnings("rawtypes")
+			ArrayList feu = traitement.getFeu();
             for(int i=0 ; i<feu.size() ; i++){
                 draw.draw((Feu) feu.get(i), g);
             }
-            ArrayList intrusion = traitement.getIntrusion();
+            @SuppressWarnings("rawtypes")
+			ArrayList intrusion = traitement.getIntrusion();
             for(int i=0 ; i<intrusion.size() ; i++){
                 draw.draw((Intrusion) intrusion.get(i), g);
             }
-            ArrayList maladie = traitement.getMaladie();
+            @SuppressWarnings("rawtypes")
+			ArrayList maladie = traitement.getMaladie();
             for(int i=0 ; i<maladie.size() ; i++){
                 draw.draw((Maladie) maladie.get(i), g);
             }

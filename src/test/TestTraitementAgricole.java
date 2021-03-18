@@ -1,8 +1,8 @@
 package test;
 
-import data.Agriculture;
+//import data.Agriculture;
 import data.Coordonnees;
-import data.Otage;
+//import data.Otage;
 import moteur.Traitement;
 import org.junit.Before;
 import org.junit.Test;
