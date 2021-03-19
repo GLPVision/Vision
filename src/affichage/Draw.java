@@ -2,14 +2,8 @@ package affichage;
 
 import data.*;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Draw {
     private int width, height;
@@ -27,7 +21,8 @@ public class Draw {
     }
     public void draw(Carte carte, Graphics graphics) throws IOException {
         Graphics2D g = (Graphics2D) graphics;
-        Element[][] elements = carte.getTab();
+        @SuppressWarnings("unused")
+		Element[][] elements = carte.getTab();
         Coordonnees taille = carte.getTaille();
         height = 600/taille.getY();
         width = 950/taille.getX();

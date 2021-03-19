@@ -1,7 +1,5 @@
 package data;
 
-import java.io.IOException;
-
 /**
  * Classe test
  * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU

@@ -1,8 +1,6 @@
 package affichage;
 
 import data.Coordonnees;
-import data.Element;
-import moteur.Build;
 import moteur.Traitement;
 
 import javax.swing.*;
@@ -12,11 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  * Mise en place de l'interface graphique du scénario Otage
@@ -29,31 +24,14 @@ import javax.swing.event.ListSelectionListener;
 public class OtageGUI extends JFrame implements Runnable {
 	
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane, carte, grille;
+	private JPanel contentPane, carte;
 	private JMenuBar menu;
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JLabel otage, repere, nombre, total, Individus, text;
 	private JButton prec, next;
 	private Traitement t;
-	private DefaultListCellRenderer cellRenderer;
-	private JScrollPane scrollPane;
-	private JList liste;
-	private DefaultListModel model;
-	private String word;
-	private ArrayList people;
 	
-	/**
-	 * JList contient une liste
-	 */
-	@SuppressWarnings("rawtypes")
-	private JList content;
-	/**
-	 * Liste contient la carte
-	 */
-	@SuppressWarnings("rawtypes")
-	private DefaultListModel list;
 	/**
 	 * Nombre d'otages
 	 */
@@ -63,7 +41,7 @@ public class OtageGUI extends JFrame implements Runnable {
 	private Coordonnees debut;
 	@SuppressWarnings("unused")
 	private Coordonnees taille;
-	private JPanel buttonPanel;
+
 	
 	/**
 	 * 
@@ -72,7 +50,7 @@ public class OtageGUI extends JFrame implements Runnable {
 	 * @param nbOtage
 	 * @throws IOException
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+
 	public OtageGUI(Coordonnees debut, Coordonnees taille, int nbOtage) throws IOException {
 		/**
 		 * Définition du nom de la fenêtre
@@ -299,6 +277,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 			 */
 			if(e.getSource()==recherche) {
+				@SuppressWarnings("unused")
 				JFrame fen = new VisionGUI();
 				OtageGUI.this.setVisible(false);
 			}

@@ -9,9 +9,13 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 
 public class Info extends JPanel {
-    private JLabel repere, nombre, total, text, types, Anomalies, otage, Individus;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JLabel repere, nombre, total, text, types, Anomalies, otage, Individus;
     private JTextArea liste;
-    private DefaultListModel model;
+    private DefaultListModel<?> model;
     private JScrollPane scrollPane;
     private JPanel buttonPanel;
     private JButton next, prec;
@@ -307,7 +311,7 @@ public class Info extends JPanel {
         return liste;
     }
 
-    public DefaultListModel getModel() {
+    public DefaultListModel<?> getModel() {
         return model;
     }
 

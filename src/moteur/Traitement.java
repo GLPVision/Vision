@@ -1,9 +1,8 @@
 package moteur;
 
-import data.*;
+import data.*; 
 
 import javax.swing.*;
-import java.awt.*;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -43,7 +42,8 @@ public class Traitement extends Thread {
     /**
      * Nouvelle ligne
      */
-    private String Newligne=System.getProperty("line.separator");
+    @SuppressWarnings("unused")
+	private String Newligne=System.getProperty("line.separator");
     /**
      * Taille
      */
@@ -55,17 +55,10 @@ public class Traitement extends Thread {
     
     /**
      * Constructeur, initialise les variables
-     * @param otage Otage ou Agricole
-     * @param taille Taille de la carte/matrice
-     * @param debut Coordonnées de début
-     * @param nbOtage Nombre d'otages
-     * @param jl1 JLabel
-     * @param jl2 JLabel
-     * @param jl3 JLabel
-     * @param jl4 JLabel
-     * @param list Liste lié à la JList du GUI
-     * @param content JList
-     * @param word Contenu d'un JLabel
+     * @param otage
+     * @param taille
+     * @param debut
+     * @param nbOtage
      */
     public Traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage){
         if(otage){
@@ -371,12 +364,6 @@ public class Traitement extends Thread {
     }
 
     /**
-     * Fonction qui retourne le nombre d'intrusions
-     * @return Intrusion
-     */
-
-
-    /**
      * Fonction qui retourne si Otage ou Agricole
      * @return Otage ou Agricole
      */
@@ -408,23 +395,28 @@ public class Traitement extends Thread {
         return nbAssaillant;
     }
 
-    public ArrayList getNbTotal() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getNbTotal() {
         return nbTotal;
     }
 
-    public ArrayList getIntrusion() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getIntrusion() {
         return intrusion;
     }
 
-    public ArrayList getFeu() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getFeu() {
         return feu;
     }
 
-    public ArrayList getMaladie() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getMaladie() {
         return maladie;
     }
 
-    public ArrayList getInconnue() {
+    @SuppressWarnings("rawtypes")
+	public ArrayList getInconnue() {
         return inconnue;
     }
 

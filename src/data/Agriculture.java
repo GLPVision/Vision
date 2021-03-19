@@ -1,7 +1,5 @@
 package data;
 
-import java.io.IOException;
-
 /**
  * Classe scénario agriculture
  * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU

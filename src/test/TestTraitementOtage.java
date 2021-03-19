@@ -1,13 +1,9 @@
 package test;
 
-import data.Agriculture;
 import data.Coordonnees;
-import data.Otage;
 import moteur.Traitement;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.swing.*;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;

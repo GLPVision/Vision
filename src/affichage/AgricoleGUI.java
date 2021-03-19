@@ -1,9 +1,6 @@
 package affichage;
 
 import data.Coordonnees;
-import data.Element;
-import data.Intrusion;
-import moteur.Build;
 import moteur.Traitement;
 
 import javax.swing.*;
@@ -11,12 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  * Mise en place de l'interface graphique du scénario Agricole
@@ -29,31 +23,20 @@ import javax.swing.event.ListSelectionListener;
 public class AgricoleGUI extends JFrame implements Runnable{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane, carte, grille, buttonPanel;
+	private JPanel contentPane, carte;
 	private JMenuBar menu;
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JLabel repere, nombre, total, text, types, Anomalies;
-	private JList<?> liste;
-	private JScrollPane scrollPane;
 	private JButton prec, next;
-	private String word;
 	private Traitement t;
-	private DefaultListModel model;
-	private DefaultListCellRenderer cellRenderer;
-	private ArrayList ano;
-	
-	/**
-	 * JList contient une liste
-	 */
-	private JList<?> content;
 	
 	/**
 	 * Liste contient la carte
 	 */
-	private DefaultListModel<?> list;
+	@SuppressWarnings("unused")
 	private Coordonnees debut;
+	@SuppressWarnings("unused")
 	private Coordonnees taille;
 	private int diffx, diffy;
 
@@ -63,7 +46,6 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	 * @param taille
 	 * @throws IOException
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public AgricoleGUI(Coordonnees debut, Coordonnees taille) throws IOException {
 		/**
 		 * Définition du nom de la fenêtre
@@ -290,6 +272,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 			 */
 			if(e.getSource()==recherche) {
+				@SuppressWarnings("unused")
 				JFrame fen = new VisionGUI();
 				AgricoleGUI.this.setVisible(false);
 			}
