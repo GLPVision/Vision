@@ -33,10 +33,6 @@ public class Traitement extends Thread {
      */
     private Scenario scenario;
     /**
-     * Les différentes zones de textes du GUI
-     */
-    private JLabel jl1, jl2, jl3, jl4;
-    /**
      * Contenu d'une JLabel
      */
 	private String word;
@@ -45,23 +41,9 @@ public class Traitement extends Thread {
      */
     private boolean otage;
     /**
-     * Liste contenant des ImageIcon lié à la JList du GUI
-     */
-    private DefaultListModel<ImageIcon> list;
-    /**
-     * JList du GUI
-     */
-    @SuppressWarnings("rawtypes")
-	private JList content;
-    /**
-     * Image de cercle
-     */
-    private ImageIcon cercle = new ImageIcon(ClassLoader.getSystemResource("cercle.png"));
-    /**
      * Nouvelle ligne
      */
-    @SuppressWarnings("unused")
-	private String Newligne=System.getProperty("line.separator");
+    private String Newligne=System.getProperty("line.separator");
     /**
      * Taille
      */
@@ -85,8 +67,7 @@ public class Traitement extends Thread {
      * @param content JList
      * @param word Contenu d'un JLabel
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	public Traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage, JLabel jl1, JLabel jl2, JLabel jl3, JLabel jl4, DefaultListModel list, JList content, String word){
+    public Traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage){
         if(otage){
             scenario = new Otage(taille, nbOtage);
         }
@@ -98,13 +79,6 @@ public class Traitement extends Thread {
         this.taille = taille;
         this.debut = debut;
         this.nbOtage = nbOtage;
-        this.jl1 = jl1;
-        this.jl2 = jl2;
-        this.jl3 = jl3;
-        this.jl4 = jl4;
-        this.list = list;
-        this.content = content;
-        this.word = word;
     }
 
     /**
@@ -162,7 +136,7 @@ public class Traitement extends Thread {
             entoure.addAll(intrusion);
             entoure.addAll(maladie);
         }
-        majGUI();
+        //majGUI();
     }
 
     /**
@@ -186,6 +160,7 @@ public class Traitement extends Thread {
     /**
      * Fonction qui modifie le GUI
      */
+    /*
     public void majGUI(){ //fonction a appeler avec un action listener lié a la selection d'un element
         if(otage){
             jl1.setText("    Nombre total d'individus : " + nbTotal.size());
@@ -203,18 +178,24 @@ public class Traitement extends Thread {
         }
     }
 
+     */
+
     /**
      * Fonction qui entoure une image
      * @param x Coordonnées X
      * @param y Coordonnées Y
      */
+    /*
     public void entourer(int x, int y){
         list.set(x*taille.getX()+y, Build.merge((ImageIcon) list.getElementAt(x*taille.getX()+y), new ImageIcon(cercle.getImage().getScaledInstance(Math.min(950/taille.getX(), 600/taille.getY()), Math.min(950/taille.getX(), 600/taille.getY()), Image.SCALE_DEFAULT)))); //entourer
     }
 
+     */
+
     /**
      * Fonction qui analyse la case séléctionnée dans le GUI
      */
+    /*
     public void current(){
         int selected = content.getSelectedIndex();
         int c1 = selected%taille.getX(); //X
@@ -278,9 +259,12 @@ public class Traitement extends Thread {
 
     }
 
+     */
+
     /**
      * Fonction qui cherche la prochaine personne/anomalie dans le GUI
      */
+    /*
     public void next(){
         int selected = content.getSelectedIndex();
         int c1 = selected%taille.getX(); //X
@@ -302,9 +286,12 @@ public class Traitement extends Thread {
         }
     }
 
+     */
+
     /**
      * Fonction qui cherche la personne/anomalie précédente dans le GUI
      */
+    /*
     public void previous(){
         int selected = content.getSelectedIndex();
         int c1 = selected%taille.getX(); //X
@@ -328,6 +315,8 @@ public class Traitement extends Thread {
         }
     }
 
+     */
+
     /**
      * Fonction qui retourne le Scénario
      * @return Scénario
@@ -342,15 +331,6 @@ public class Traitement extends Thread {
      */
     public boolean getOtage() {
         return otage;
-    }
-
-    /**
-     * Fonction qui retourne la liste lié à la JList du GUI
-     * @return Liste
-     */
-    @SuppressWarnings("rawtypes")
-	public DefaultListModel getList() {
-        return list;
     }
 
     /**
@@ -405,23 +385,6 @@ public class Traitement extends Thread {
     }
 
     /**
-     * Fonction qui retourne la JList
-     * @return JList
-     */
-    @SuppressWarnings("rawtypes")
-	public JList getContent() {
-        return content;
-    }
-
-    /**
-     * Fonction qui retourne l'iamge de cercle
-     * @return Cercle
-     */
-    public ImageIcon getCercle() {
-        return cercle;
-    }
-
-    /**
      * Fonction qui retourne les coordonnées de début
      * @return Début
      */
@@ -445,28 +408,23 @@ public class Traitement extends Thread {
         return nbAssaillant;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getNbTotal() {
+    public ArrayList getNbTotal() {
         return nbTotal;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getIntrusion() {
+    public ArrayList getIntrusion() {
         return intrusion;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getFeu() {
+    public ArrayList getFeu() {
         return feu;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getMaladie() {
+    public ArrayList getMaladie() {
         return maladie;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getInconnue() {
+    public ArrayList getInconnue() {
         return inconnue;
     }
 

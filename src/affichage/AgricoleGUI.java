@@ -2,8 +2,8 @@ package affichage;
 
 import data.Coordonnees;
 import data.Element;
-//import data.Intrusion;
-//import moteur.Build;
+import data.Intrusion;
+import moteur.Build;
 import moteur.Traitement;
 
 import javax.swing.*;
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
-//import javax.swing.event.ListSelectionEvent;
-//import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * Mise en place de l'interface graphique du scénario Agricole
@@ -40,11 +40,8 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	private JButton prec, next;
 	private String word;
 	private Traitement t;
-	@SuppressWarnings("rawtypes")
 	private DefaultListModel model;
-	@SuppressWarnings("unused")
 	private DefaultListCellRenderer cellRenderer;
-	@SuppressWarnings({ "rawtypes", "unused" })
 	private ArrayList ano;
 	
 	/**
@@ -56,9 +53,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	 * Liste contient la carte
 	 */
 	private DefaultListModel<?> list;
-	@SuppressWarnings("unused")
 	private Coordonnees debut;
-	@SuppressWarnings("unused")
 	private Coordonnees taille;
 	private int diffx, diffy;
 
@@ -68,6 +63,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	 * @param taille
 	 * @throws IOException
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public AgricoleGUI(Coordonnees debut, Coordonnees taille) throws IOException {
 		/**
 		 * Définition du nom de la fenêtre
@@ -78,7 +74,6 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	}
 
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void init(Coordonnees debut, Coordonnees taille) throws IOException {
 		/**
 		 * Définitioon des paramètres de la carte
@@ -89,8 +84,8 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		/**
 		 * Dimensions de la fenêtre		
 		 */
-		//setMinimumSize(new Dimension(1250, 720));//Taille minimum de notre fen�tre
-		setPreferredSize(new Dimension(2000, 800));//Dimension de notre fen�tre 
+		//setMinimumSize(new Dimension(1250, 720));
+		//setPreferredSize(new Dimension(2000, 800));//Dimension de notre fen�tre
 		
 		/**
 		 * Définition de la fenêtre		
@@ -170,55 +165,6 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		clair.addActionListener(actionListener);
 		contentPane.setLayout(null);
 
-
-		
-		/**
-		 * initialisation
-		 */
-		//list = new DefaultListModel();
-		//content = new JList(list);
-		//content.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		/**
-		 * centre text de chaque cas
-		 */
-		//cellRenderer = new DefaultListCellRenderer();
-		//cellRenderer.setHorizontalAlignment(JLabel.CENTER);
-		//content.setCellRenderer(cellRenderer);
-		
-		/**
-		 * Définition de la taille des cases en fonction du nombre de cases
-		 */
-		/*
-		content.setFixedCellWidth(carte.getWidth()/taille.getX());
-		content.setFixedCellHeight(carte.getHeight()/taille.getY());
-		content.setVisibleRowCount(taille.getY());
-		content.setBackground(new Color(0, 102, 51));
-		content.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-
-		 */
-		//carte.add(content, BorderLayout.CENTER);
-
-		/**
-		 * Mise en place du model et de la liste pour énumérer les anomalies présentes sur la map
-		 */
-
-		model = new DefaultListModel();
-		/*
-		ano = new ArrayList();
-		content.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				t.current();
-				if (! ano.contains(t.getWord())) {
-					model.addElement(t.getWord());
-					ano.add(t.getWord());
-				}
-			}
-		});
-
-		 */
-
-
 		/**
 		 * Mise en place du nom au dessus de la carte
 		 */
@@ -244,110 +190,13 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		info.setEditable(false);
 		info.setBackground(SystemColor.activeCaption);
 		info.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
-		
-		/**
-		 * Mise en place de la grille affichant toutes les informations nécessaires et attendues de la carte
-		 */
-		grille = new JPanel();
-		grille.setBorder(new MatteBorder(1, 3, 3, 3, (Color) Color.BLACK));
-		grille.setBounds(10, 50, 255, 600);
-		contentPane.add(grille);
-		grille.setLayout(null);
-		grille.setBackground(new Color(204, 190, 121));
-		
-		/**
-		 * Mise en place de l'encadré de texte affichant l'anomalie sélectionnée sur la carte
-		 */
-		repere = new JLabel("    Anomalie sélectionnée");
-		repere.setHorizontalAlignment(SwingConstants.LEFT);
-		repere.setBounds(0, 0, 255, 30);
-		repere.setBorder(new MatteBorder(3, 0, 3, 0, (Color) new Color(0, 0, 0)));
-		grille.add(repere);
-		
-		/**
-		 * Mise en place de l'encadré de texte affichant le nombre d'anomalies de chaque catégorie présentes sur la carte
-		 */
-		nombre = new JLabel("    Nombre d'anomalies");
-		nombre.setHorizontalAlignment(SwingConstants.LEFT);
-		nombre.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
-		nombre.setBounds(0, 340, 255, 30);
-		grille.add(nombre);
-		
-		/**
-		 * Mise en place de l'encadré de texte affichant le nombre total d'anomalies présentes sur la carte
-		 */
-		total = new JLabel("    Total : "); //
-		total.setHorizontalAlignment(SwingConstants.LEFT);
-		total.setBorder(new MatteBorder(3, 0, 3, 0, (Color) Color.BLACK));
-		total.setBounds(0, 450, 255, 30);
-		grille.add(total);
-		
-		/**
-		 * Mise en place du bouton permettant de sélectionner l'anomalie précédente sur la carte
-		 */
-		
-		/**
-		 * Mise en place du bouton permettant de sélectionner l'anomalie suivante sur la carte
-		 */
-		
-		/**
-		 * Mise en place des informations de coordonnées affichées en fonction de la case sélectionnée
-		 */
-		text = new JLabel(""); //lister les coordonnées
-		text.setVerticalAlignment(SwingConstants.CENTER);
-		text.setHorizontalAlignment(SwingConstants.LEFT);
-		text.setBounds(0, 30, 255, 50);
-		text.setBorder(null);
-		grille.add(text);
-
-		/**
-		 * Mise en place des informations de types d'anomalie affichées en fonction de la case sélectionnée
-		 */
-		types = new JLabel(); //
-		types.setVerticalAlignment(SwingConstants.CENTER);
-		types.setHorizontalAlignment(SwingConstants.LEFT);
-		types.setBorder(null);
-		types.setBounds(0, 370, 255, 80);
-		grille.add(types);		
-		
-		/**
-		 * Mise en place du texte au dessus de la liste
-		 */
-		Anomalies = new JLabel("    Liste des anomalies présentes");
-		Anomalies.setHorizontalAlignment(SwingConstants.LEFT);
-		Anomalies.setBorder(new MatteBorder(3, 0, 0, 0, (Color) new Color(0, 0, 0)));
-		Anomalies.setBounds(0, 80, 255, 30);
-		grille.add(Anomalies);
-		
-		/**
-		 * Mise en place d'un système pour parcourir la liste facilement si celle ci est trop longue
-		 */
-		scrollPane = new JScrollPane();
-		scrollPane.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(0, 0, 0)));
-		scrollPane.setBounds(0, 108, 255, 235);
-		grille.add(scrollPane);
-		
-		/**
-		 * Mise en place de la liste contenant les informations sur les anomalies de la carte
-		 */
-		liste = new JList(model);
-		scrollPane.setViewportView(liste);
-		liste.setBorder(null);
-		liste.setBackground(new Color(204, 190, 121));
 
 
-		
 		/**
 		 * Définition de l'affichage d'informations dans la liste
 		 */
-		word = new String("");
-		
-		/**
-		 * Appel de la fonction permettant la création de la carte
-		 */
-
-
-		t = new Traitement(false, taille, debut, 0, total, text, types, null, list, content, word);
+		//word = new String("");
+		t = new Traitement(false, taille, debut, 0);
 
 		int taillex = 950/t.getTaille().getX();
 		int tailley = 600/t.getTaille().getY();
@@ -355,44 +204,21 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		tailley = tailley*t.getTaille().getY();
 		diffy = 600-tailley;
 		diffx = 950-taillex;
-
-
-		buttonPanel = new JPanel();
-		buttonPanel.setBorder(new MatteBorder(0, 3, 3, 3, (Color) new Color(0, 0, 0)));
-		buttonPanel.setBounds(0, 480, 255, 120-diffy);
-		buttonPanel.setBackground(new Color (204, 190, 121));
-		SpringLayout sl_panel = new SpringLayout();
-		buttonPanel.setLayout(sl_panel);
-		prec = new JButton("Anomalie précédente");
-		prec.setBorder(null);
-		prec.setBackground(SystemColor.activeCaption);
-		next = new JButton("Anomalie suivante");
-		next.setBorder(null);
-		next.setBackground(SystemColor.activeCaption);
-		sl_panel.putConstraint(SpringLayout.SOUTH, next, -10, SpringLayout.SOUTH, buttonPanel);
-		sl_panel.putConstraint(SpringLayout.NORTH, next, 5, SpringLayout.VERTICAL_CENTER, buttonPanel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, prec, -5, SpringLayout.VERTICAL_CENTER, buttonPanel);
-		sl_panel.putConstraint(SpringLayout.NORTH, prec, 10, SpringLayout.NORTH, buttonPanel);
-		sl_panel.putConstraint(SpringLayout.WEST, prec, 10, SpringLayout.WEST, buttonPanel);
-		sl_panel.putConstraint(SpringLayout.EAST, prec, -10, SpringLayout.EAST, buttonPanel);
-		sl_panel.putConstraint(SpringLayout.WEST, next, 10, SpringLayout.WEST, buttonPanel);
-		sl_panel.putConstraint(SpringLayout.EAST, next, -10, SpringLayout.EAST, buttonPanel);
-		buttonPanel.add(next);
-		buttonPanel.add(prec);
-		grille.add(buttonPanel);
-
-		grille.setBounds(10, 50, 255, 600-diffy);
+		
+		/**
+		 * Appel de la fonction permettant la création de la carte
+		 */
+		Info info = new Info(t, diffy);
+		contentPane.add(info);
 
 		t.run();
-		for(int i=0 ; i<t.getEntoure().size() ; i++){
-			Element e = t.getEntoure().get(i);
-			model.addElement("   " + e.getDesc() + " en : " + e.getCoordonnees().getX() + ", " + e.getCoordonnees().getY());
-		}
 
-		Draw draw = new Draw();
+		info.majGUI();
+
 		/**
 		 * Mise en place du cadre contenant la carte
 		 */
+		Draw draw = new Draw();
 		carte = new Display(t, draw);
 
 
@@ -464,15 +290,14 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 			 */
 			if(e.getSource()==recherche) {
-				@SuppressWarnings("unused")
 				JFrame fen = new VisionGUI();
 				AgricoleGUI.this.setVisible(false);
 			}
 			if(e.getSource()==next) {
-				t.next();
+				//t.next();
 			}
 			if(e.getSource()==prec) {
-				t.previous();
+				//t.previous();
 			}
 		}
 	};

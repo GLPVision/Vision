@@ -2,8 +2,8 @@ package test;
 
 import data.Agriculture;
 import data.Coordonnees;
-//import data.Otage;
-//import data.Scenario;
+import data.Otage;
+import data.Scenario;
 import moteur.Build;
 import moteur.Traitement;
 
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-//import org.junit.Assert;
+import org.junit.Assert;
 
 import javax.swing.*;
 /**
@@ -33,10 +33,9 @@ public class TestBuildAgricole {
     /**
      * preparation au test
      */
-    @SuppressWarnings("rawtypes")
-	@Before
+    @Before
     public void prepareBuild(){
-        traitement = new Traitement(false, new Coordonnees(10, 10), new Coordonnees(0, 0), 5, null, null, null, null, new DefaultListModel(), null, null);
+        traitement = new Traitement(false, new Coordonnees(10, 10), new Coordonnees(0, 0), 5);
         build = new Build(traitement);
     }
 

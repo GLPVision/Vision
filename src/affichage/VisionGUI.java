@@ -196,7 +196,6 @@ public class VisionGUI extends JFrame implements ActionListener {
 				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
 				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
 
-				@SuppressWarnings("unused")
 				JFrame fen = null;
 				try {
 					fen = new AgricoleGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y));
@@ -226,7 +225,6 @@ public class VisionGUI extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si le nombre d'otage saisie n'est pas valide
 					txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 				}
-				@SuppressWarnings("unused")
 				JFrame fen = null;
 				try {
 					fen = new OtageGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y), Integer.parseInt(txt));

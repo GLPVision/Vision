@@ -2,14 +2,14 @@ package affichage;
 
 import data.*;
 import javax.imageio.ImageIO;
-//import javax.swing.*;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-//import java.awt.geom.Line2D;
-//import java.awt.image.BufferedImage;
-//import java.io.File;
+import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class Draw {
     private int width, height;
@@ -27,8 +27,7 @@ public class Draw {
     }
     public void draw(Carte carte, Graphics graphics) throws IOException {
         Graphics2D g = (Graphics2D) graphics;
-        @SuppressWarnings("unused")
-		Element[][] elements = carte.getTab();
+        Element[][] elements = carte.getTab();
         Coordonnees taille = carte.getTaille();
         height = 600/taille.getY();
         width = 950/taille.getX();
@@ -38,16 +37,14 @@ public class Draw {
             size = width/2;
         //afficher les cases
         Image fond = null;
-        if(carte.isOtage()) {
+        if(carte.isOtage())
             fond = bat.getScaledInstance(width, height, Image.SCALE_DEFAULT);
-        }
-        else {
+        else
             fond = champ.getScaledInstance(width, height, Image.SCALE_DEFAULT);
-        	for(int i=0 ; i< taille.getY() ; i++){
-        		for(int j=0 ; j< taille.getX() ; j++){
-        			g.drawImage(fond, (int)(j*width), (int)(i*height), null, null);
-        		}
-        	}
+        for(int i=0 ; i< taille.getY() ; i++){
+            for(int j=0 ; j< taille.getX() ; j++){
+                g.drawImage(fond, (int)(j*width), (int)(i*height), null, null);
+            }
         }
 /*
         for(int i=0 ; i<taille.getY() ; i++){
@@ -100,7 +97,8 @@ public class Draw {
         Graphics2D g = (Graphics2D) graphics;
         Coordonnees pos = e.getCoordonnees();
         g.setColor(new Color(255, 0, 0));
-        g.draw(new Ellipse2D.Double(pos.getX()*width+(width/2-size), pos.getY()*height+(height/2-size), size*2, size*2));
+        g.setStroke(new BasicStroke(3));
+        g.drawOval(pos.getX()*width+(width/2-size), pos.getY()*height+(height/2-size), size*2, size*2);;
         g.setColor(Color.black);
     }
 }

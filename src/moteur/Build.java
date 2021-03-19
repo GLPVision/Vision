@@ -63,11 +63,10 @@ public class Build {
      * Constructeur, initialise les variables
      * @param t Toutes les données
      */
-	@SuppressWarnings("unchecked")
 	public Build(Traitement t){
         this.scenario = t.getScenario();
         this.taille = t.getTaille();
-        this.list = t.getList();
+        //this.list = t.getList();
         this.otage = t.getOtage();
     }
     /**

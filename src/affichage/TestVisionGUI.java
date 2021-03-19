@@ -2,6 +2,10 @@ package affichage;
 
 import javax.swing.*;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  * Mise en place du lancement de l'application
  * 
@@ -18,7 +22,6 @@ public class TestVisionGUI {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
 		JFrame fen = new VisionGUI();
 	}
 }
