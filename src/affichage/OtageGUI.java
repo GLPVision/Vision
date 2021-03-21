@@ -5,13 +5,11 @@ import moteur.Traitement;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-
+import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
-import javax.swing.border.MatteBorder;
 
 /**
  * Mise en place de l'interface graphique du scénario Otage
@@ -278,7 +276,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			 */
 			if(e.getSource()==recherche) {
 				@SuppressWarnings("unused")
-				JFrame fen = new VisionGUI();
+				VisionGUI fen = new VisionGUI();
 				OtageGUI.this.setVisible(false);
 			}
 			if(e.getSource()==next) {

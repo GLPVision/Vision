@@ -68,5 +68,7 @@ public class Display extends JPanel{
                 draw.draw((Element) entoure.get(i), g);
             }
         }
+        Element selected = traitement.getSelected();
+        draw.draw_selected(selected, g);
     }
 }

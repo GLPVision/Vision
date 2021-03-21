@@ -1,6 +1,7 @@
 package affichage;
 
 import data.*;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
@@ -50,37 +51,27 @@ public class Draw {
         }
         
  */
-
-
-
-
-
-
     }
 
     public void draw(Anomalie a, Graphics graphics){ //dessine liste
         inconnue = inconnue.getScaledInstance(size, size, Image.SCALE_DEFAULT);
         Coordonnees pos = a.getCoordonnees();
         graphics.drawImage(inconnue, pos.getX()*width+(width/2-size/2), pos.getY()*height+(height/2-size/2), null, null);
-
     }
     public void draw(Feu f, Graphics graphics){
         feu = feu.getScaledInstance(size, size, Image.SCALE_DEFAULT);
         Coordonnees pos = f.getCoordonnees();
         graphics.drawImage(feu, pos.getX()*width+(width/2-size/2), pos.getY()*height+(height/2-size/2), null, null);
-
     }
     public void draw(Intrusion i, Graphics graphics){
         intrusion = intrusion.getScaledInstance(size, size, Image.SCALE_DEFAULT);
         Coordonnees pos = i.getCoordonnees();
         graphics.drawImage(intrusion, pos.getX()*width+(width/2-size/2), pos.getY()*height+(height/2-size/2), null, null);
-
     }
     public void draw(Maladie m, Graphics graphics){
         maladie = maladie.getScaledInstance(size, size, Image.SCALE_DEFAULT);
         Coordonnees pos = m.getCoordonnees();
         graphics.drawImage(maladie, pos.getX()*width+(width/2-size/2), pos.getY()*height+(height/2-size/2), null, null);
-
     }
     public void draw(Personne p, Graphics graphics){
         personne = personne.getScaledInstance(size, size, Image.SCALE_DEFAULT);
@@ -94,6 +85,14 @@ public class Draw {
         g.setColor(new Color(255, 0, 0));
         g.setStroke(new BasicStroke(3));
         g.drawOval(pos.getX()*width+(width/2-size), pos.getY()*height+(height/2-size), size*2, size*2);;
-        g.setColor(Color.black);
+        g.setColor(new Color(0, 0, 0));
+        g.setStroke(new BasicStroke(1));
+    }
+
+    public void draw_selected(Element e, Graphics graphics){
+        Coordonnees pos = e.getCoordonnees();
+        graphics.setColor(Color.WHITE);
+        graphics.drawRect(pos.getX()*width, pos.getY()*height, width, height);
+        graphics.setColor(Color.BLACK);
     }
 }

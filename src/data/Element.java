@@ -36,4 +36,8 @@ public class Element {
     public Coordonnees getCoordonnees() {
         return coordonnees;
     }
+
+    public void setDesc(String desc){
+        this.desc = desc;
+    }
 }

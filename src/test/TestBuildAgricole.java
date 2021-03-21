@@ -4,14 +4,12 @@ import data.Agriculture;
 import data.Coordonnees;
 import moteur.Build;
 import moteur.Traitement;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.swing.*;
+
+import static org.junit.Assert.*;
 /**
  * Classe test build agricole
  * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU

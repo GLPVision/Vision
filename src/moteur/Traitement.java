@@ -1,6 +1,6 @@
 package moteur;
 
-import data.*; 
+import data.*;
 
 import javax.swing.*;
 import java.beans.XMLEncoder;
@@ -23,6 +23,7 @@ public class Traitement extends Thread {
     private ArrayList <Maladie> maladie = new ArrayList<>();
     private ArrayList <Anomalie> inconnue = new ArrayList<>();
     private ArrayList <Element> entoure = new ArrayList<>();
+    private Element selected;
     /**
      * Carte
      */
@@ -91,45 +92,46 @@ public class Traitement extends Thread {
      */
     public void scan() throws InterruptedException {
         Element[][] tab = carte.getTab(); //recup la carte
+        entoure = new ArrayList<>();
         for(int i = 0 ; i<taille.getY() ; i++){ //parcours y
             for(int j = 0 ; j<taille.getX() ; j++){ //parcours x
                 Coordonnees c = new Coordonnees(j, i);
-                if(tab[i][j].getDesc() == "Personne") //si personne
-                    nbTotal.add(new Personne(c));
-                else if(tab[i][j].getDesc() == "Intrusion") //si intrusion
-                    intrusion.add(new Intrusion(c));
-                else if(tab[i][j].getDesc() == "Feu") //si feu
-                    feu.add(new Feu(c));
-                else if(tab[i][j].getDesc() == "Maladie") //si maladie
-                    maladie.add(new Maladie(c));
-                else if(tab[i][j].getDesc() == "Inconnue") //si inconnue
-                    inconnue.add(new Anomalie(c));
                 if(tab[i][j].getDesc() != "."){ //si pas rien, entourer
-                    //entourer(i, j); //entourer
-                    //content.setSelectedIndex(i*taille.getX()+j); //selectionner la case
+                    selected = new Element(c);
                 }
+                if(tab[i][j].getDesc() == "Personne") { //si personne
+                    nbTotal.add(new Personne(c));
+                    entoure.add(new Personne(c));
+                    selected.setDesc(tab[i][j].getDesc());
+                }
+                else if(tab[i][j].getDesc() == "Intrusion") { //si intrusion
+                    intrusion.add(new Intrusion(c));
+                    entoure.add(new Intrusion(c));
+                    selected.setDesc(tab[i][j].getDesc());
+                }
+                else if(tab[i][j].getDesc() == "Feu") { //si feu
+                    feu.add(new Feu(c));
+                    entoure.add(new Feu(c));
+                    selected.setDesc(tab[i][j].getDesc());
+                }
+                else if(tab[i][j].getDesc() == "Maladie") { //si maladie
+                    maladie.add(new Maladie(c));
+                    entoure.add(new Maladie(c));
+                    selected.setDesc(tab[i][j].getDesc());
+                }
+                else if(tab[i][j].getDesc() == "Inconnue"){ //si inconnue
+                    inconnue.add(new Anomalie(c));
+                    entoure.add(new Anomalie(c));
+                    selected.setDesc(tab[i][j].getDesc());
+                }
+
                 //majGUI(); //mise à jour progressive du GUI
                 //sleep(30); //latence
             }
         }
-        entoure = new ArrayList<>();
-        entoure.addAll(inconnue);
-        entoure.addAll(feu);
-        entoure.addAll(intrusion);
-        entoure.addAll(maladie);
         if(otage) { //si derniere iteration otage
             nbAssaillant = nbTotal.size() - nbOtage;
-            entoure = new ArrayList<>();
-            entoure.addAll(nbTotal);
         }
-        else{
-            entoure = new ArrayList<>();
-            entoure.addAll(inconnue);
-            entoure.addAll(feu);
-            entoure.addAll(intrusion);
-            entoure.addAll(maladie);
-        }
-        //majGUI();
     }
 
     /**
@@ -422,5 +424,9 @@ public class Traitement extends Thread {
 
     public ArrayList<Element> getEntoure() {
         return entoure;
+    }
+
+    public Element getSelected() {
+        return selected;
     }
 }

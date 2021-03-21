@@ -1,24 +1,13 @@
 package affichage;
 
+import data.Agriculture;
 import data.Coordonnees;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Toolkit;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 /**
  * Mise en place de l'interface graphique de la fenêtre d'ouverture de l'application
@@ -196,8 +185,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
 				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
 
-				@SuppressWarnings("unused")
-				JFrame fen = null;
+				AgricoleGUI fen = null;
 				try {
 					fen = new AgricoleGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y));
 				} catch (IOException ioException) {
@@ -226,8 +214,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si le nombre d'otage saisie n'est pas valide
 					txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 				}
-				@SuppressWarnings("unused")
-				JFrame fen = null;
+
+				OtageGUI fen = null;
 				try {
 					fen = new OtageGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y), Integer.parseInt(txt));
 				} catch (IOException ioException) {

@@ -4,13 +4,12 @@ import data.Coordonnees;
 import moteur.Traitement;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 
 /**
  * Mise en place de l'interface graphique du scénario Agricole
@@ -62,13 +61,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		 */
 		this.debut = debut;
 		this.taille = taille;
-		
-		/**
-		 * Dimensions de la fenêtre		
-		 */
-		//setMinimumSize(new Dimension(1250, 720));
-		//setPreferredSize(new Dimension(2000, 800));//Dimension de notre fen�tre
-		
+
 		/**
 		 * Définition de la fenêtre		
 		 */
@@ -202,8 +195,6 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		 */
 		Draw draw = new Draw();
 		carte = new Display(t, draw);
-
-
 		carte.setLayout(new BorderLayout());
 		carte.setBackground(new Color(0, 128, 128));
 		//carte.setBounds(274, 50, 950, 600);
@@ -272,8 +263,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 			 */
 			if(e.getSource()==recherche) {
-				@SuppressWarnings("unused")
-				JFrame fen = new VisionGUI();
+				VisionGUI fen = new VisionGUI();
 				AgricoleGUI.this.setVisible(false);
 			}
 			if(e.getSource()==next) {

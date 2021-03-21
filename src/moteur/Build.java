@@ -1,6 +1,6 @@
 package moteur;
 
-import data.Carte; 
+import data.Carte;
 import data.Coordonnees;
 import data.Element;
 import data.Scenario;
