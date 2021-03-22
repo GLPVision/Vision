@@ -1,7 +1,9 @@
 package affichage;
 
 import data.Coordonnees;
+import logs.LoggerUtility;
 import moteur.Traitement;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -10,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
 
 /**
  * Mise en place de l'interface graphique du scénario Agricole
@@ -20,8 +23,8 @@ import java.io.IOException;
  */
 
 public class AgricoleGUI extends JFrame implements Runnable{
-
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
 	private JPanel contentPane, carte;
 	private JMenuBar menu;
 	private JMenu Fichier, Apparence;
@@ -50,6 +53,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		 * Définition du nom de la fenêtre
 		 */
 		super("Vision Détection : Agricole");
+
 		init(debut, taille);
 		//run();
 	}

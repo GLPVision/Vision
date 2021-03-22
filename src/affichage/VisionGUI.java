@@ -1,6 +1,8 @@
 package affichage;
 
 import data.Coordonnees;
+import logs.LoggerUtility;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +19,7 @@ import java.io.IOException;
  */
 public class VisionGUI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
 	private JPanel contentPane;
 	private JButton agricole, otage;
 	private JTextField depart, fin, choix, xinit, yinit, xfin, yfin;
@@ -29,6 +32,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		 * Définition du nom de la fenêtre
 		 */
 		super("Vision Détection");
+		logger.info("Construction de la fenêtre principale");
 		
 		/**
 		 * Définitioon des paramètres de la carte
@@ -163,6 +167,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		this.setVisible(true);
+		logger.info("Fenêtre principale construite");
 	}
 	/**
 	 * permet d'interagir avec les boutons
@@ -175,15 +180,15 @@ public class VisionGUI extends JFrame implements ActionListener {
 		 * Appellation du scénario agricole et mise en place de la fenêtre
 		 */
 		if(e.getSource()==agricole) {
+			logger.info("Scénario : agriculure");
 			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
 				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
+				logger.error("Coordonnées invalides");
 			}
 			else{
-
-
 				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
 				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
-
+				logger.info("Création d'une fenêtre Agricole");
 				AgricoleGUI fen = null;
 				try {
 					fen = new AgricoleGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y));
@@ -191,6 +196,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 					ioException.printStackTrace();
 				}
 				this.setVisible(false);
+				logger.info("Fin de création de la fenêtre Agricole");
 			}
 		}
 		
@@ -198,22 +204,21 @@ public class VisionGUI extends JFrame implements ActionListener {
 		 * Appellation du scénario otage et mise en place de la fenêtre
 		 */
 		if(e.getSource()==otage) {
+			logger.info("Scénario : otage");
 			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
 				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);//Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
+				logger.error("Coordonnées invalides");
 			}
 			else {
-
-
 				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
 				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
-
-
 				String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 				while (txt.isEmpty() || Integer.parseInt(txt) > (x*y)/4){
+					logger.error("Nombre d'otages invalide");
 					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si le nombre d'otage saisie n'est pas valide
 					txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 				}
-
+				logger.info("Création d'une fenêtre Otage");
 				OtageGUI fen = null;
 				try {
 					fen = new OtageGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y), Integer.parseInt(txt));
@@ -221,6 +226,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 					ioException.printStackTrace();
 				}
 				this.setVisible(false);
+				logger.info("Fin de création de la fenêtre Otage");
 			}
 		}
 	}
