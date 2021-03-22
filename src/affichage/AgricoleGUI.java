@@ -56,6 +56,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 
 		init(debut, taille);
 		//run();
+		logger.info("Affichage de la fenêtre d'agriculture");
 	}
 
 
@@ -240,6 +241,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 */
 			if(e.getSource()==quitter) {
 				System.exit(0);
+				logger.info("Fermeture de l'application");
 			}
 
 			/**
@@ -247,6 +249,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 */
 			if(e.getSource()==sombre) {
 				contentPane.setBackground(Color.DARK_GRAY);
+				logger.info("Passage au thème sombre");
 			}
 
 			/**
@@ -254,6 +257,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 */
 			if(e.getSource()==clair) {
 				contentPane.setBackground(Color.white);
+				logger.info("Passage au thème clair");
 			}
 
 			/**
@@ -261,6 +265,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 */
 			if(e.getSource()==Aide) {
 				JOptionPane.showMessageDialog(AgricoleGUI.this, "Bienvenue sur Vision Détection ! \nL'application qui vous permet d'identifier une anomalie dans un espace défini ou d'identifier le nombre de personnes présentes lors d'une prise d'otage.", "Aide", JOptionPane.INFORMATION_MESSAGE);
+				logger.info("Affichage de l'aide");
 			}
 
 			/**
@@ -269,12 +274,15 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			if(e.getSource()==recherche) {
 				VisionGUI fen = new VisionGUI();
 				AgricoleGUI.this.setVisible(false);
+				logger.info("Retour à la fenêtre principale");
 			}
 			if(e.getSource()==next) {
 				//t.next();
+				logger.info("Passage à l'anomalie suivante");
 			}
 			if(e.getSource()==prec) {
 				//t.previous();
+				logger.info("Passage à l'anomalie précédente");
 			}
 		}
 	};

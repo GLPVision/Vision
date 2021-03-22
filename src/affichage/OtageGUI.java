@@ -1,7 +1,9 @@
 package affichage;
 
 import data.Coordonnees;
+import logs.LoggerUtility;
 import moteur.Traitement;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -22,6 +24,7 @@ import java.io.IOException;
 public class OtageGUI extends JFrame implements Runnable {
 	
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = LoggerUtility.getLogger(OtageGUI.class);
 	private JPanel contentPane, carte;
 	private JMenuBar menu;
 	private JMenu Fichier, Apparence;
@@ -55,6 +58,7 @@ public class OtageGUI extends JFrame implements Runnable {
 		 */
 		super("Vision Détection : Prise d'otages");
 		init(debut, taille, nbOtage);
+		logger.info("Affichage de la fenêtre d'Otage");
 	}
 
 	public void init(Coordonnees debut, Coordonnees taille, int nbOtage) throws IOException {
@@ -248,6 +252,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			 */
 			if(e.getSource()==quitter) {
 				System.exit(0);
+				logger.info("Fermeture de l'application");
 			}
 
 			/**
@@ -255,6 +260,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			 */
 			if(e.getSource()==sombre) {
 				contentPane.setBackground(Color.DARK_GRAY);
+				logger.info("Passage au thème sombre");
 			}
 
 			/**
@@ -262,6 +268,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			 */
 			if(e.getSource()==clair) {
 				contentPane.setBackground(Color.white);
+				logger.info("Passage au thème clair");
 			}
 
 			/**
@@ -269,6 +276,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			 */
 			if(e.getSource()==Aide) {
 				JOptionPane.showMessageDialog(OtageGUI.this, "Bienvenue sur Vision Détection ! \nL'application qui vous permet d'identifier une anomalie dans un espace défini ou d'identifier le nombre de personnes présentes lors d'une prise d'otage.", "Aide", JOptionPane.INFORMATION_MESSAGE);
+				logger.info("Affichage de l'aide");
 			}
 
 			/**
@@ -278,12 +286,15 @@ public class OtageGUI extends JFrame implements Runnable {
 				@SuppressWarnings("unused")
 				VisionGUI fen = new VisionGUI();
 				OtageGUI.this.setVisible(false);
+				logger.info("Retour à la fenêtre principale");
 			}
 			if(e.getSource()==next) {
 				//t.next();
+				logger.info("Passage à l'anomalie suivante");
 			}
 			if(e.getSource()==prec) {
 				//t.previous();
+				logger.info("Passage à l'anomalie précédente");
 			}
 		}
 	};
