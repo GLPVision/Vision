@@ -1,6 +1,5 @@
 package affichage;
 
-import data.Agriculture;
 import data.Coordonnees;
 
 import javax.swing.*;

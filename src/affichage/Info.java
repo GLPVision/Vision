@@ -99,6 +99,10 @@ public class Info extends JPanel {
             total_assaillant.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
             total_assaillant.setBounds(0, 450, 255, 30);
             this.add(total_assaillant);
+            
+            prec = new JButton("Individu précédent");
+            next = new JButton("Individu suivant");
+            
         }
         else{
             /**
@@ -175,23 +179,29 @@ public class Info extends JPanel {
             total_anomalie.setBorder(new MatteBorder(3, 0, 3, 0, (Color) Color.BLACK));
             total_anomalie.setBounds(0, 450, 255, 30);
             this.add(total_anomalie);
+            
+            prec = new JButton("Anomalie précédente");
+            next = new JButton("Anomalie suivante");
         }
-        this.setBounds(10, 50, 255, 600-diffy);
-        this.setBorder(new MatteBorder(3, 3, 3, 3, (Color) Color.BLACK));
-        this.setLayout(null);
-        this.setBackground(new Color(204, 190, 121));
+        
         buttonPanel = new JPanel();
         buttonPanel.setBorder(new MatteBorder(0, 3, 3, 3, (Color) new Color(0, 0, 0)));
         buttonPanel.setBounds(0, 480, 255, 120-diffy);
         buttonPanel.setBackground(new Color(204, 190, 121));
-        SpringLayout sl_panel = new SpringLayout();
-        buttonPanel.setLayout(sl_panel);
-        prec = new JButton("Individu précédent");
+        
         prec.setBorder(null);
         prec.setBackground(SystemColor.activeCaption);
-        next = new JButton("Individu suivant");
+        
         next.setBorder(null);
         next.setBackground(SystemColor.activeCaption);
+        
+        this.setBounds(10, 50, 255, 600-diffy);
+        this.setBorder(new MatteBorder(3, 3, 3, 3, (Color) Color.BLACK));
+        this.setLayout(null);
+        this.setBackground(new Color(204, 190, 121));
+        
+        SpringLayout sl_panel = new SpringLayout();
+        buttonPanel.setLayout(sl_panel);
         sl_panel.putConstraint(SpringLayout.SOUTH, next, -10, SpringLayout.SOUTH, buttonPanel);
         sl_panel.putConstraint(SpringLayout.NORTH, next, 5, SpringLayout.VERTICAL_CENTER, buttonPanel);
         sl_panel.putConstraint(SpringLayout.SOUTH, prec, -5, SpringLayout.VERTICAL_CENTER, buttonPanel);
@@ -200,6 +210,7 @@ public class Info extends JPanel {
         sl_panel.putConstraint(SpringLayout.EAST, prec, -10, SpringLayout.EAST, buttonPanel);
         sl_panel.putConstraint(SpringLayout.WEST, next, 10, SpringLayout.WEST, buttonPanel);
         sl_panel.putConstraint(SpringLayout.EAST, next, -10, SpringLayout.EAST, buttonPanel);
+        
         buttonPanel.add(prec);
         buttonPanel.add(next);
         this.add(buttonPanel);

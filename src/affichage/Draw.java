@@ -84,9 +84,9 @@ public class Draw {
         Coordonnees pos = e.getCoordonnees();
         g.setColor(new Color(255, 0, 0));
         g.setStroke(new BasicStroke(3));
-        g.drawOval(pos.getX()*width+(width/2-size), pos.getY()*height+(height/2-size), size*2, size*2);;
+        g.drawOval(pos.getX()*width+(width/2-size)+1, pos.getY()*height+(height/2-size)+3, (size*2)-2, (size*2)-5);;
         g.setColor(new Color(0, 0, 0));
-        g.setStroke(new BasicStroke(1));
+        g.setStroke(new BasicStroke(3));
     }
 
     public void draw_selected(Element e, Graphics graphics){

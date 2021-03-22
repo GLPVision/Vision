@@ -43,7 +43,6 @@ public class Traitement extends Thread {
     /**
      * Nouvelle ligne
      */
-    @SuppressWarnings("unused")
 	private String Newligne=System.getProperty("line.separator");
     /**
      * Taille
