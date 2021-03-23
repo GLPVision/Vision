@@ -1,6 +1,7 @@
 à faire (à compléter si élément manquant):
 -tests JUnit
 -logger log4J
+-animations
 -sélection de cases sur la carte
 -bouton suivant précédent
 -utiliser les classes Date et Heure
