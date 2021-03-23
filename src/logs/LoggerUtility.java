@@ -11,6 +11,7 @@ import org.apache.log4j.PropertyConfigurator;
  */
 public class LoggerUtility {
 	
+	@SuppressWarnings("unused")
 	private static final String FILE_LOG_CONFIG = "src/logs/log4j-file.properties";
 	private static final String HTML_LOG_CONFIG = "src/logs/log4j-html.properties";
 

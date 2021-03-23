@@ -43,6 +43,7 @@ public class Traitement extends Thread {
     /**
      * Nouvelle ligne
      */
+	@SuppressWarnings("unused")
 	private String Newligne=System.getProperty("line.separator");
     /**
      * Taille
@@ -396,28 +397,23 @@ public class Traitement extends Thread {
         return nbAssaillant;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getNbTotal() {
+	public ArrayList<Personne> getNbTotal() {
         return nbTotal;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getIntrusion() {
+	public ArrayList<Intrusion> getIntrusion() {
         return intrusion;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getFeu() {
+	public ArrayList<Feu> getFeu() {
         return feu;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getMaladie() {
+	public ArrayList<Maladie> getMaladie() {
         return maladie;
     }
 
-    @SuppressWarnings("rawtypes")
-	public ArrayList getInconnue() {
+	public ArrayList<Anomalie> getInconnue() {
         return inconnue;
     }
 
