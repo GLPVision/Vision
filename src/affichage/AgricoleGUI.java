@@ -25,6 +25,7 @@ import java.io.IOException;
 public class AgricoleGUI extends JFrame implements Runnable{
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
+	private Info infoPanel;
 	private JPanel contentPane, carte;
 	private JMenuBar menu;
 	private JMenu Fichier, Apparence;
@@ -53,9 +54,8 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		 * Définition du nom de la fenêtre
 		 */
 		super("Vision Détection : Agricole");
-
-		init(debut, taille);
-		//run();
+		this.debut = debut;
+		this.taille = taille;
 		logger.info("Affichage de la fenêtre d'agriculture");
 	}
 
@@ -188,18 +188,17 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		/**
 		 * Appel de la fonction permettant la création de la carte
 		 */
-		Info info = new Info(t, diffy);
-		contentPane.add(info);
 
-		t.run();
+		//t.run();
+		infoPanel = new Info(t, diffy);
+		contentPane.add(infoPanel);
 
-		info.majGUI();
 
 		/**
 		 * Mise en place du cadre contenant la carte
 		 */
-		Draw draw = new Draw();
-		carte = new Display(t, draw);
+		PaintStrategy paintStrategy = new PaintStrategy();
+		carte = new Display(t, paintStrategy);
 		carte.setLayout(new BorderLayout());
 		carte.setBackground(new Color(0, 128, 128));
 		//carte.setBounds(274, 50, 950, 600);
@@ -221,14 +220,23 @@ public class AgricoleGUI extends JFrame implements Runnable{
 
 	@Override
 	public void run() {
-		while (true){
+		try {
+			init(debut, taille);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		t.run();
+		infoPanel.majGUI();
+		carte.repaint();
+		while (true) {
 			try {
 				Thread.sleep(100);
-				t.scan();
+				t.run();
+				//infoPanel.majGUI();
+				carte.repaint();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			carte.repaint();
 		}
 	}
 
@@ -275,14 +283,6 @@ public class AgricoleGUI extends JFrame implements Runnable{
 				VisionGUI fen = new VisionGUI();
 				AgricoleGUI.this.setVisible(false);
 				logger.info("Retour à la fenêtre principale");
-			}
-			if(e.getSource()==next) {
-				//t.next();
-				logger.info("Passage à l'anomalie suivante");
-			}
-			if(e.getSource()==prec) {
-				//t.previous();
-				logger.info("Passage à l'anomalie précédente");
 			}
 		}
 	};

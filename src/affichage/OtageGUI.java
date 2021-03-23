@@ -212,11 +212,11 @@ public class OtageGUI extends JFrame implements Runnable {
 		info.majGUI();
 
 
-		Draw draw = new Draw();
+		PaintStrategy paintStrategy = new PaintStrategy();
 		/**
 		 * Mise en place du cadre contenant la carte
 		 */
-		carte = new Display(t, draw);
+		carte = new Display(t, paintStrategy);
 
 		/**
 		 * layout pour remplir le panel

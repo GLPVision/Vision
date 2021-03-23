@@ -1,18 +1,23 @@
 package affichage;
 
 import data.Element;
+import logs.LoggerUtility;
 import moteur.Traitement;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Info extends JPanel {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel txt_anomalie, anomalie, txt_liste_anomalie, txt_nb_anomalie, nb_anomalie, total_anomalie;
+    private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
+    private JLabel txt_anomalie, anomalie, txt_liste_anomalie, txt_nb_anomalie, nb_anomalie, total_anomalie;
 	private JLabel nb_otage, txt_individu, individu, txt_liste_individu, total_individu, total_assaillant;
     private JTextArea liste;
     private JScrollPane scrollPane;
@@ -191,9 +196,11 @@ public class Info extends JPanel {
         
         prec.setBorder(null);
         prec.setBackground(SystemColor.activeCaption);
+        prec.addActionListener(actionListener);
         
         next.setBorder(null);
         next.setBackground(SystemColor.activeCaption);
+        next.addActionListener(actionListener);
         
         this.setBounds(10, 50, 255, 600-diffy);
         this.setBorder(new MatteBorder(3, 3, 3, 3, (Color) Color.BLACK));
@@ -221,6 +228,7 @@ public class Info extends JPanel {
             total_individu.setText("    Nombre total d'individus : " + traitement.getNbTotal().size());
             nb_otage.setText("    Nombre d'otages : " + traitement.getNbOtage());
             total_assaillant.setText("    Nombre total d'assaillants : " + traitement.getNbAssaillant());
+            liste.setText("");
             for(int i=0 ; i<traitement.getEntoure().size() ; i++){
                 Element e = traitement.getEntoure().get(i);
                 liste.setText(liste.getText() + "   Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY()) + "\n");
@@ -233,10 +241,24 @@ public class Info extends JPanel {
                     " &nbsp &#160 Nombre d'intrusions : " + traitement.getIntrusion().size() + "<br/>" +
                     " &nbsp &#160 Nombre de maladies : " + traitement.getMaladie().size() + "<br/>" +
                     " &nbsp &#160 Nombre d'anomalies inconnues : " + traitement.getInconnue().size() + "</html>");
+            liste.setText("");
             for(int i=0 ; i<traitement.getEntoure().size() ; i++){
                 Element e = traitement.getEntoure().get(i);
                 liste.setText(liste.getText() + "   " + e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX()) + "\n");
             }
         }
     }
+    ActionListener actionListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource()==next) {
+                //t.next();
+                logger.info("Passage à l'anomalie suivante");
+            }
+            if(e.getSource()==prec) {
+                //t.previous();
+                logger.info("Passage à l'anomalie précédente");
+            }
+        }
+    };
 }

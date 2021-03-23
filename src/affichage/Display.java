@@ -15,11 +15,11 @@ public class Display extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private Carte carte;
     private Traitement traitement;
-    private Draw draw;
+    private PaintStrategy paintStrategy;
 
-    Display(Traitement traitement, Draw draw){
+    Display(Traitement traitement, PaintStrategy paintStrategy){
         this.carte = traitement.getCarte();
-        this.draw = draw;
+        this.paintStrategy = paintStrategy;
         this.traitement = traitement;
     }
 
@@ -27,7 +27,7 @@ public class Display extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         try {
-            draw.draw(carte, g);
+            paintStrategy.draw(carte, g);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,40 +35,40 @@ public class Display extends JPanel{
 			@SuppressWarnings("unchecked")
 			ArrayList <Personne> personne = traitement.getNbTotal();
             for(int i=0 ; i<personne.size() ; i++){
-                draw.draw(personne.get(i), g);
+                paintStrategy.draw(personne.get(i), g);
             }
             ArrayList <Element> entoure = traitement.getEntoure();
             for(int i=0 ; i<entoure.size() ; i++){
-                draw.draw((Element) entoure.get(i), g);
+                paintStrategy.draw((Element) entoure.get(i), g);
             }
         }
         else{
             @SuppressWarnings("rawtypes")
 			ArrayList anomalie = traitement.getInconnue();
             for(int i=0 ; i<anomalie.size() ; i++){
-                draw.draw((Anomalie) anomalie.get(i), g);
+                paintStrategy.draw((Anomalie) anomalie.get(i), g);
             }
             @SuppressWarnings("rawtypes")
 			ArrayList feu = traitement.getFeu();
             for(int i=0 ; i<feu.size() ; i++){
-                draw.draw((Feu) feu.get(i), g);
+                paintStrategy.draw((Feu) feu.get(i), g);
             }
             @SuppressWarnings("rawtypes")
 			ArrayList intrusion = traitement.getIntrusion();
             for(int i=0 ; i<intrusion.size() ; i++){
-                draw.draw((Intrusion) intrusion.get(i), g);
+                paintStrategy.draw((Intrusion) intrusion.get(i), g);
             }
             @SuppressWarnings("rawtypes")
 			ArrayList maladie = traitement.getMaladie();
             for(int i=0 ; i<maladie.size() ; i++){
-                draw.draw((Maladie) maladie.get(i), g);
+                paintStrategy.draw((Maladie) maladie.get(i), g);
             }
             ArrayList <Element> entoure = traitement.getEntoure();
             for(int i=0 ; i<entoure.size() ; i++){
-                draw.draw((Element) entoure.get(i), g);
+                paintStrategy.draw((Element) entoure.get(i), g);
             }
         }
         Element selected = traitement.getSelected();
-        draw.draw_selected(selected, g);
+        paintStrategy.draw_selected(selected, g);
     }
 }

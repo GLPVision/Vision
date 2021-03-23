@@ -195,6 +195,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}
+				Thread thread = new Thread(fen);
+				thread.start();
 				this.setVisible(false);
 				logger.info("Fin de création de la fenêtre Agricole");
 			}
@@ -225,6 +227,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}
+				Thread thread = new Thread(fen);
+				thread.start();
 				this.setVisible(false);
 				logger.info("Fin de création de la fenêtre Otage");
 			}

@@ -43,8 +43,7 @@ public class Traitement extends Thread {
     /**
      * Nouvelle ligne
      */
-	@SuppressWarnings("unused")
-	private String Newligne=System.getProperty("line.separator");
+	//private String Newligne=System.getProperty("line.separator");
     /**
      * Taille
      */
@@ -93,6 +92,11 @@ public class Traitement extends Thread {
     public void scan() throws InterruptedException {
         Element[][] tab = carte.getTab(); //recup la carte
         entoure = new ArrayList<>();
+        nbTotal = new ArrayList<>();
+        intrusion = new ArrayList<>();
+        feu = new ArrayList<>();
+        maladie = new ArrayList<>();
+        inconnue = new ArrayList<>();
         for(int i = 0 ; i<taille.getY() ; i++){ //parcours y
             for(int j = 0 ; j<taille.getX() ; j++){ //parcours x
                 Coordonnees c = new Coordonnees(j, i);
@@ -401,18 +405,22 @@ public class Traitement extends Thread {
         return nbTotal;
     }
 
+    @SuppressWarnings("rawtypes")
 	public ArrayList<Intrusion> getIntrusion() {
         return intrusion;
     }
 
+    @SuppressWarnings("rawtypes")
 	public ArrayList<Feu> getFeu() {
         return feu;
     }
 
+    @SuppressWarnings("rawtypes")
 	public ArrayList<Maladie> getMaladie() {
         return maladie;
     }
 
+    @SuppressWarnings("rawtypes")
 	public ArrayList<Anomalie> getInconnue() {
         return inconnue;
     }

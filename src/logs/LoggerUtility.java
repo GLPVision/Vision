@@ -5,12 +5,12 @@ import org.apache.log4j.PropertyConfigurator;
 
 /**
  * Classe permettant de créer le journal récapitulatif du fonctionnement de l'application
- * 
+ *
  * @author Chri-
  *
  */
 public class LoggerUtility {
-	
+
 	@SuppressWarnings("unused")
 	private static final String FILE_LOG_CONFIG = "src/logs/log4j-file.properties";
 	private static final String HTML_LOG_CONFIG = "src/logs/log4j-html.properties";
