@@ -264,7 +264,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 * Action affichant l'aide
 			 */
 			if(e.getSource()==Aide) {
-				JOptionPane.showMessageDialog(AgricoleGUI.this, "Bienvenue sur Vision Détection ! \nNotre application vous permet de detecter une anomalie dans un champ agricole quelque soit l'origine de celui-ci.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivés pour que le drone puisse s'envoler et survoler l'endroit désiré.\nDe nombreuses informations sont disponible à gauche de la cartographie pour que vous puissiez anticiper d'éventuels dommages causés par les anomalies\nou bien il est aussi possible des les éradiquer un par un grâce à leur coordonnées GPS exact et les images renvoyer en temps réel de notre drone.\nAidez-nous à protéger notre champ agricole !", "Aide", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(AgricoleGUI.this, "Bienvenue sur Vision Détection ! \nNotre application vous permet de détecter une anomalie dans un champ agricole quelque soit l'origine de celui-ci.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivée pour que le drone puisse s'envoler et survoler l'endroit désiré.\nDe nombreuses informations sont disponibles à gauche de la cartographie pour que vous puissiez anticiper d'éventuels dommages causés par les anomalies,\nou bien, il est aussi possible des les éradiquer un par un grâce à leur coordonnées GPS exacte et les images renvoyées en temps réel de notre drone.\nAidez-nous à protéger notre champ agricole !", "Aide", JOptionPane.INFORMATION_MESSAGE);
 				logger.info("Affichage de l'aide");
 			}
 
