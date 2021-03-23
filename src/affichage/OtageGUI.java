@@ -275,7 +275,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			 * Action affichant l'aide
 			 */
 			if(e.getSource()==Aide) {
-				JOptionPane.showMessageDialog(OtageGUI.this, "Bienvenue sur Vision Détection ! \nNotre application vous permet de repérer le nombre d'aissaillant lors d'une prise d'otage.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivés pour que le drone puisse s'envoler et survoler l'endroit désiré. \nDe nombreuse informations sont disponible à gauche de la cartographie pour que vous puissiez localisez l'endroit précise de ces malfaiteurs\nou bien il est aussi possible de determiner leur nombre précis grâce aux images renvoyées en temps réel par notre drone.\nAidez-nous à sauvez les otages en collaborant avec les forces de l'orde !", "Aide", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(OtageGUI.this, "Bienvenue sur Vision Détection ! \nNotre application vous permet de repérer le nombre d'aissaillants lors d'une prise d'otage.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivées pour que le drone puisse s'envoler et survoler l'endroit désiré. \nDe nombreuse informations sont disponibles à gauche de la cartographie pour que vous puissiez localiser l'endroit précis de ces malfaiteurs,\nou bien, il est aussi possible de determiner leur nombre précis grâce aux images renvoyées en temps réel par notre drone.\nAidez-nous à sauvez les otages en collaborant avec les forces de l'orde !", "Aide", JOptionPane.INFORMATION_MESSAGE);
 				logger.info("Affichage de l'aide");
 			}
 
