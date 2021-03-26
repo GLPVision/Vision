@@ -23,7 +23,7 @@ public class TestTraitementOtage {
      */
     @Before
     public void prepareTraitement(){
-        traitement = new Traitement(true, new Coordonnees(10, 10), new Coordonnees(0, 0), 5);
+        traitement = new Traitement(new Coordonnees(10, 10), new Coordonnees(0, 0), 5);
     }
 
     /**

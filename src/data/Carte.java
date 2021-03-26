@@ -189,5 +189,9 @@ public class Carte {
     public boolean isOtage() {
         return otage;
     }
+
+    public Element getElement(int x, int y) {
+        return tab[x][y];
+    }
 }
 

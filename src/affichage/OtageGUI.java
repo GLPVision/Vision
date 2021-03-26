@@ -1,6 +1,7 @@
 package affichage;
 
 import data.Coordonnees;
+import data.Element;
 import logs.LoggerUtility;
 import moteur.Traitement;
 import org.apache.log4j.Logger;
@@ -11,6 +12,8 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 /**
@@ -25,25 +28,18 @@ public class OtageGUI extends JFrame implements Runnable {
 	
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = LoggerUtility.getLogger(OtageGUI.class);
-	private JPanel contentPane, carte;
+	private Info infoPanel;
+	private Display carte;
+	private JPanel contentPane;
 	private JMenuBar menu;
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JButton prec, next;
-	private Traitement t;
-	
-	/**
-	 * Nombre d'otages
-	 */
-	@SuppressWarnings("unused")
-	private int nbOtage, diffy, diffx;
-	@SuppressWarnings("unused")
-	private Coordonnees debut;
-	@SuppressWarnings("unused")
-	private Coordonnees taille;
+	private Traitement traitement;
+	private Coordonnees taille, debut;
+	private int nbOtage, diffy, diffx, casex, casey;
+	private boolean running = true;
 
-	
 	/**
 	 * 
 	 * @param debut
@@ -51,30 +47,18 @@ public class OtageGUI extends JFrame implements Runnable {
 	 * @param nbOtage
 	 * @throws IOException
 	 */
-
 	public OtageGUI(Coordonnees debut, Coordonnees taille, int nbOtage) throws IOException {
 		/**
 		 * Définition du nom de la fenêtre
 		 */
 		super("Vision Détection : Prise d'otages");
-		init(debut, taille, nbOtage);
-		logger.info("Affichage de la fenêtre d'Otage");
-	}
-
-	public void init(Coordonnees debut, Coordonnees taille, int nbOtage) throws IOException {
-		/**
-		 * Définitioon des paramètres de la carte
-		 */
 		this.debut = debut;
 		this.taille = taille;
 		this.nbOtage = nbOtage;
-		
-		/**
-		 * Dimensions de la fenêtre		
-		 */
-		//setMinimumSize(new Dimension(1250, 720));
-		//setPreferredSize(new Dimension(2000, 800));
-		
+		logger.info("Affichage de la fenêtre d'Otage");
+	}
+
+	public void init(Coordonnees debut, Coordonnees taille) throws IOException {
 		/**
 		 * Définition de la fenêtre		
 		 */
@@ -178,49 +162,26 @@ public class OtageGUI extends JFrame implements Runnable {
 		info.setEditable(false);
 		info.setBackground(SystemColor.activeCaption);
 		info.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
-		
-		/**
-		 * Mise en place de la grille affichant toutes les informations nécessaires et attendues de la carte
-		 */
 
+		traitement = new Traitement(taille, debut, nbOtage);
 
-
-		
-		/**
-		 * Définition de l'affichage d'informations dans la liste
-		 */
-		//word = new String("");
-		
-		/**
-		 * Appel de la fonction permettant la création de la carte
-		 */
-
-		t = new Traitement(true, taille, debut, nbOtage);
-
-		int taillex = 950/t.getTaille().getX();
-		int tailley = 600/t.getTaille().getY();
-		taillex = taillex*t.getTaille().getX();
-		tailley = tailley*t.getTaille().getY();
+		casex = 950/traitement.getTaille().getX();
+		casey = 600/traitement.getTaille().getY();
+		int taillex = casex*traitement.getTaille().getX();
+		int tailley = casey*traitement.getTaille().getY();
 		diffy = 600-tailley;
 		diffx = 950-taillex;
 
+		infoPanel = new Info(traitement, diffy);
+		contentPane.add(infoPanel);
 
-		Info info = new Info(t, diffy);
-		contentPane.add(info);
-
-		t.run();
-		info.majGUI();
-
-
-		PaintStrategy paintStrategy = new PaintStrategy();
 		/**
 		 * Mise en place du cadre contenant la carte
 		 */
-		carte = new Display(t, paintStrategy);
-
-		/**
-		 * layout pour remplir le panel
-		 */
+		PaintStrategy paintStrategy = new PaintStrategy();
+		carte = new Display(traitement, paintStrategy);
+		Click click = new Click();
+		carte.addMouseListener(click);
 		carte.setLayout(new BorderLayout());
 		carte.setBackground(new Color(0, 128, 128));
 		carte.setBounds(274, 50, taillex, tailley);
@@ -241,10 +202,29 @@ public class OtageGUI extends JFrame implements Runnable {
 
 	@Override
 	public void run(){
-
+		try {
+			init(debut, taille);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		while (running) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			traitement.scan();
+			infoPanel.majGUI();
+			carte.repaint();
+		}
+		traitement.supp();
 	}
 
-	ActionListener actionListener = new ActionListener() {
+	public void stop(){
+		running = false;
+	}
+
+	private ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			/**
@@ -283,19 +263,42 @@ public class OtageGUI extends JFrame implements Runnable {
 			 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 			 */
 			if(e.getSource()==recherche) {
-				@SuppressWarnings("unused")
 				VisionGUI fen = new VisionGUI();
 				OtageGUI.this.setVisible(false);
+				OtageGUI.this.stop();
 				logger.info("Retour à la fenêtre principale");
-			}
-			if(e.getSource()==next) {
-				//t.next();
-				logger.info("Passage à l'anomalie suivante");
-			}
-			if(e.getSource()==prec) {
-				//t.previous();
-				logger.info("Passage à l'anomalie précédente");
 			}
 		}
 	};
+
+	private class Click implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int x = e.getX()/casex;
+			int y = e.getY()/casey;
+			Element selected = traitement.getCarte().getElement(x, y);
+			traitement.setSelected(selected);
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+
+		}
+	}
 }

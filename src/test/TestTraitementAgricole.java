@@ -22,7 +22,7 @@ public class TestTraitementAgricole {
      */
     @Before
     public void prepareTraitement(){
-        traitement = new Traitement(false, new Coordonnees(10, 10), new Coordonnees(0, 0), 0);
+        traitement = new Traitement(new Coordonnees(10, 10), new Coordonnees(0, 0));
     }
 
     /**

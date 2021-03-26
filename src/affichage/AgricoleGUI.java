@@ -1,6 +1,7 @@
 package affichage;
 
 import data.Coordonnees;
+import data.Element;
 import logs.LoggerUtility;
 import moteur.Traitement;
 import org.apache.log4j.Logger;
@@ -11,6 +12,8 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 
@@ -26,22 +29,16 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
 	private Info infoPanel;
-	private JPanel contentPane, carte;
+	private Display carte;
+	private JPanel contentPane;
 	private JMenuBar menu;
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
 	private JTextField nomcarte, info;
-	private JButton prec, next;
-	private Traitement t;
-	
-	/**
-	 * Liste contient la carte
-	 */
-	@SuppressWarnings("unused")
-	private Coordonnees debut;
-	@SuppressWarnings("unused")
-	private Coordonnees taille;
-	private int diffx, diffy;
+	private Traitement traitement;
+	private Coordonnees taille, debut;
+	private int diffx, diffy, casex, casey;
+	private boolean running = true;
 
 	/**
 	 * 
@@ -61,12 +58,6 @@ public class AgricoleGUI extends JFrame implements Runnable{
 
 
 	public void init(Coordonnees debut, Coordonnees taille) throws IOException {
-		/**
-		 * Définitioon des paramètres de la carte
-		 */
-		this.debut = debut;
-		this.taille = taille;
-
 		/**
 		 * Définition de la fenêtre		
 		 */
@@ -171,37 +162,27 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		info.setBackground(SystemColor.activeCaption);
 		info.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
 
+		traitement = new Traitement(taille, debut);
 
-		/**
-		 * Définition de l'affichage d'informations dans la liste
-		 */
-		//word = new String("");
-		t = new Traitement(false, taille, debut, 0);
-
-		int taillex = 950/t.getTaille().getX();
-		int tailley = 600/t.getTaille().getY();
-		taillex = taillex*t.getTaille().getX();
-		tailley = tailley*t.getTaille().getY();
+		casex = 950/traitement.getTaille().getX();
+		casey = 600/traitement.getTaille().getY();
+		int taillex = casex*traitement.getTaille().getX();
+		int tailley = casey*traitement.getTaille().getY();
 		diffy = 600-tailley;
 		diffx = 950-taillex;
-		
-		/**
-		 * Appel de la fonction permettant la création de la carte
-		 */
 
-		//t.run();
-		infoPanel = new Info(t, diffy);
+		infoPanel = new Info(traitement, diffy);
 		contentPane.add(infoPanel);
-
 
 		/**
 		 * Mise en place du cadre contenant la carte
 		 */
 		PaintStrategy paintStrategy = new PaintStrategy();
-		carte = new Display(t, paintStrategy);
+		carte = new Display(traitement, paintStrategy);
+		Click click = new Click();
+		carte.addMouseListener(click);
 		carte.setLayout(new BorderLayout());
 		carte.setBackground(new Color(0, 128, 128));
-		//carte.setBounds(274, 50, 950, 600);
 		carte.setBounds(274, 50, taillex, tailley);
 		carte.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		contentPane.add(carte);
@@ -225,22 +206,24 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		t.run();
-		infoPanel.majGUI();
-		carte.repaint();
-		while (true) {
+		while (running) {
 			try {
-				Thread.sleep(100);
-				t.run();
-				//infoPanel.majGUI();
-				carte.repaint();
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			traitement.scan();
+			infoPanel.majGUI();
+			carte.repaint();
 		}
+		traitement.supp();
 	}
 
-	ActionListener actionListener = new ActionListener() {
+	public void stop(){
+		running = false;
+	}
+
+	private ActionListener actionListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -282,9 +265,41 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			if(e.getSource()==recherche) {
 				VisionGUI fen = new VisionGUI();
 				AgricoleGUI.this.setVisible(false);
+				AgricoleGUI.this.stop();
 				logger.info("Retour à la fenêtre principale");
 			}
 		}
 	};
+
+	private class Click implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int x = e.getX()/casex;
+			int y = e.getY()/casey;
+			Element selected = traitement.getCarte().getElement(x, y);
+			traitement.setSelected(selected);
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+
+		}
+	}
 
 }

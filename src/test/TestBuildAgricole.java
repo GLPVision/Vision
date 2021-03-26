@@ -30,7 +30,7 @@ public class TestBuildAgricole {
      */
     @Before
     public void prepareBuild(){
-        traitement = new Traitement(false, new Coordonnees(10, 10), new Coordonnees(0, 0), 5);
+        traitement = new Traitement(new Coordonnees(10, 10), new Coordonnees(0, 0));
         build = new Build(traitement);
     }
 

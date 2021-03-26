@@ -51,7 +51,7 @@ public class Info extends JPanel {
             /**
              * Mise en place des informations affichées en fonction de la case sélectionnée
              */
-            individu = new JLabel("");
+            individu = new JLabel("    Aucun individu sélectionné");
             individu.setBounds(0, 60, 255, 50);
             this.add(individu);
             individu.setVerticalAlignment(SwingConstants.CENTER);
@@ -122,7 +122,7 @@ public class Info extends JPanel {
             /**
              * Mise en place des informations de coordonnées affichées en fonction de la case sélectionnée
              */
-            anomalie = new JLabel(""); //lister les coordonnées
+            anomalie = new JLabel("    Aucune anomalie sélectionnée"); //lister les coordonnées
             anomalie.setVerticalAlignment(SwingConstants.CENTER);
             anomalie.setHorizontalAlignment(SwingConstants.LEFT);
             anomalie.setBounds(0, 30, 255, 50);
@@ -224,14 +224,30 @@ public class Info extends JPanel {
     }
     public void majGUI(){
         if (traitement.isOtage()){
-            individu.setText("    Individu en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+            try{
+                if(traitement.getSelected().getDesc().equals(".")){
+                    individu.setText("    " + "Rien en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+                    logger.info("Rien sélectionée en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+
+                }
+                else{
+                    individu.setText("    Individu en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+                    logger.info("Individu sélectionée en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+                }
+            }
+            catch (NullPointerException nullPointerException){
+                logger.warn("Pas d'élément sélectionnable");
+            }
             total_individu.setText("    Nombre total d'individus : " + traitement.getNbTotal().size());
             nb_otage.setText("    Nombre d'otages : " + traitement.getNbOtage());
             total_assaillant.setText("    Nombre total d'assaillants : " + traitement.getNbAssaillant());
             liste.setText("");
             for(int i=0 ; i<traitement.getEntoure().size() ; i++){
                 Element e = traitement.getEntoure().get(i);
-                liste.setText(liste.getText() + "   Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY()) + "\n");
+                String txt = "Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
+                if(!liste.getText().contains(txt)){
+                    liste.setText(liste.getText() + "   " + txt + "\n");
+                }
                 logger.info("Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY()));
             }
             logger.info("Nombre total d'individus : " + traitement.getNbTotal().size());
@@ -239,7 +255,19 @@ public class Info extends JPanel {
             logger.info("Nombre total d'assaillants : " + traitement.getNbAssaillant());
         }
         else {
-            anomalie.setText("    " + traitement.getSelected().getDesc() + " en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+            try{
+                if(traitement.getSelected().getDesc().equals(".")){
+                    anomalie.setText("    " + "Rien en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+                    logger.info("Rien sélectionée : " + traitement.getSelected().getDesc() + " en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+                }
+                else{
+                    anomalie.setText("    " + traitement.getSelected().getDesc() + " en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+                    logger.info("Anomalie sélectionée : " + traitement.getSelected().getDesc() + " en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+                }
+            }
+            catch (NullPointerException nullPointerException){
+                logger.warn("Pas d'élément sélectionnable");
+            }
             total_anomalie.setText("   Total : " + (traitement.getInconnue().size()+traitement.getFeu().size()+traitement.getMaladie().size()+traitement.getIntrusion().size()));
             nb_anomalie.setText("<html> &nbsp &#160 Nombre de feux : " + traitement.getFeu().size() + "<br/>" +
                     " &nbsp &#160 Nombre d'intrusions : " + traitement.getIntrusion().size() + "<br/>" +
@@ -247,10 +275,12 @@ public class Info extends JPanel {
                     " &nbsp &#160 Nombre d'anomalies inconnues : " + traitement.getInconnue().size() + "</html>");
             liste.setText("");
             logger.info("Total : " + (traitement.getInconnue().size()+traitement.getFeu().size()+traitement.getMaladie().size()+traitement.getIntrusion().size()));
-            logger.info("Anomalie sélectionée : " + traitement.getSelected().getDesc() + " en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
             for(int i=0 ; i<traitement.getEntoure().size() ; i++){
                 Element e = traitement.getEntoure().get(i);
-                liste.setText(liste.getText() + "   " + e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX()) + "\n");
+                String txt = e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX());
+                if(!liste.getText().contains(txt)){
+                    liste.setText(liste.getText() + "   " + txt + "\n");
+                }
                 logger.info(e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX()));
                 
             }
@@ -267,11 +297,11 @@ public class Info extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==next) {
-                //t.next();
+                traitement.next();
                 logger.info("Passage à l'anomalie suivante");
             }
             if(e.getSource()==prec) {
-                //t.previous();
+                traitement.previous();
                 logger.info("Passage à l'anomalie précédente");
             }
         }

@@ -1,6 +1,8 @@
 package affichage;
 
 import data.*;
+import logs.LoggerUtility;
+import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -90,9 +92,15 @@ public class PaintStrategy {
     }
 
     public void draw_selected(Element e, Graphics graphics){
-        Coordonnees pos = e.getCoordonnees();
-        graphics.setColor(Color.WHITE);
-        graphics.drawRect(pos.getX()*width, pos.getY()*height, width, height);
-        graphics.setColor(Color.BLACK);
+        try{
+            Coordonnees pos = e.getCoordonnees();
+            graphics.setColor(Color.WHITE);
+            graphics.drawRect(pos.getX()*width, pos.getY()*height, width, height);
+            graphics.setColor(Color.BLACK);
+        }
+        catch (NullPointerException nullPointerException){
+
+        }
+
     }
 }

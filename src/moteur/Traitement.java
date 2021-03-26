@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
  * @version 10
  */
-public class Traitement extends Thread {
+public class Traitement{
     /**
      * Nombre d'otages, nombre d'assaillants, nombre total de personnes, nombre d'intrusions, nombre de feux, nombre de maladies, nombre d'inconnues
      */
@@ -23,6 +23,7 @@ public class Traitement extends Thread {
     private ArrayList <Maladie> maladie = new ArrayList<>();
     private ArrayList <Anomalie> inconnue = new ArrayList<>();
     private ArrayList <Element> entoure = new ArrayList<>();
+    private int selectedIndex;
     private Element selected;
     /**
      * Carte
@@ -33,232 +34,163 @@ public class Traitement extends Thread {
      */
     private Scenario scenario;
     /**
-     * Contenu d'une JLabel
-     */
-	private String word;
-    /**
      * Otage ou Agricole
      */
     private boolean otage;
     /**
-     * Nouvelle ligne
-     */
-	//private String Newligne=System.getProperty("line.separator");
-    /**
      * Taille
      */
-    private Coordonnees taille;
-    /**
-     * Coordonnées de début
-     */
-    private Coordonnees debut;
-    
+    private Coordonnees taille, debut;
+    private int posX = 0;
+    private int posY = 0;
+    private boolean circle = false;
+
     /**
      * Constructeur, initialise les variables
-     * @param otage
      * @param taille
-     * @param debut
-     * @param nbOtage
      */
-    public Traitement(boolean otage, Coordonnees taille, Coordonnees debut, int nbOtage){
-        if(otage){
-            scenario = new Otage(taille, nbOtage);
-        }
-        else {
-            scenario = new Agriculture(taille);
-        }
-        carte = scenario.getCarte();
-        this.otage = otage;
+    public Traitement(Coordonnees taille, Coordonnees debut){ //agricole
+        this.scenario = new Agriculture(taille);
+        this.carte = scenario.getCarte();
+        this.otage = false;
+        this.taille = taille;
+        this.debut = debut;
+        init();
+    }
+
+    public Traitement(Coordonnees taille, Coordonnees debut, int nbOtage){ //otage
+        this.scenario = new Otage(taille, nbOtage);
+        this.carte = scenario.getCarte();
+        this.otage = true;
         this.taille = taille;
         this.debut = debut;
         this.nbOtage = nbOtage;
+        init();
     }
 
-    /**
-     * Fonction run pour démarrer le Thread
-     */
-    public void run(){
-        try {
-            scan();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Fonction qui scanne le nombre de personne/anomalies
-     * @throws InterruptedException Erreur de sleep
-     */
-    public void scan() throws InterruptedException {
-        Element[][] tab = carte.getTab(); //recup la carte
+    public void init(){
         entoure = new ArrayList<>();
         nbTotal = new ArrayList<>();
         intrusion = new ArrayList<>();
         feu = new ArrayList<>();
         maladie = new ArrayList<>();
         inconnue = new ArrayList<>();
-        for(int i = 0 ; i<taille.getY() ; i++){ //parcours y
-            for(int j = 0 ; j<taille.getX() ; j++){ //parcours x
-                Coordonnees c = new Coordonnees(j, i);
-                if(tab[i][j].getDesc() != "."){ //si pas rien, entourer
-                    selected = new Element(c);
-                }
-                if(tab[i][j].getDesc() == "Personne") { //si personne
-                    nbTotal.add(new Personne(c));
-                    entoure.add(new Personne(c));
-                    selected.setDesc(tab[i][j].getDesc());
-                }
-                else if(tab[i][j].getDesc() == "Intrusion") { //si intrusion
-                    intrusion.add(new Intrusion(c));
-                    entoure.add(new Intrusion(c));
-                    selected.setDesc(tab[i][j].getDesc());
-                }
-                else if(tab[i][j].getDesc() == "Feu") { //si feu
-                    feu.add(new Feu(c));
-                    entoure.add(new Feu(c));
-                    selected.setDesc(tab[i][j].getDesc());
-                }
-                else if(tab[i][j].getDesc() == "Maladie") { //si maladie
-                    maladie.add(new Maladie(c));
-                    entoure.add(new Maladie(c));
-                    selected.setDesc(tab[i][j].getDesc());
-                }
-                else if(tab[i][j].getDesc() == "Inconnue"){ //si inconnue
-                    inconnue.add(new Anomalie(c));
-                    entoure.add(new Anomalie(c));
-                    selected.setDesc(tab[i][j].getDesc());
-                }
+    }
 
-                //majGUI(); //mise à jour progressive du GUI
-                //sleep(30); //latence
+    /**
+     * Fonction qui scanne le nombre de personne/anomalies
+     * @throws InterruptedException Erreur de sleep
+     */
+    public void scan(){
+        Element[][] tab = carte.getTab(); //recup la carte
+        Element element = tab[posX][posY];
+        Coordonnees c = element.getCoordonnees();
+
+        if(!circle){
+            if(element.getDesc().equals("Personne")) { //si personne
+                nbTotal.add(new Personne(c));
+            }
+            else if(element.getDesc().equals("Intrusion")) { //si intrusion
+                intrusion.add(new Intrusion(c));
+            }
+            else if(element.getDesc().equals("Feu")) { //si feu
+                feu.add(new Feu(c));
+            }
+            else if(element.getDesc().equals("Maladie")) { //si maladie
+                maladie.add(new Maladie(c));
+            }
+            else if(element.getDesc().equals("Inconnue")){ //si inconnue
+                inconnue.add(new Anomalie(c));
+            }
+            posX++;
+            if(posX>=taille.getX()){
+                posX = 0;
+                posY++;
+                if(posY >= taille.getY()){
+                    posY = 0;
+                    circle = true;
+                }
             }
         }
-        if(otage) { //si derniere iteration otage
-            nbAssaillant = nbTotal.size() - nbOtage;
+        else{ //entourer
+            if(element.getDesc().equals("Personne")) { //si personne
+                entoure.add(new Personne(c));
+            }
+            else if(element.getDesc().equals("Intrusion")) { //si intrusion
+                entoure.add(new Intrusion(c));
+            }
+            else if(element.getDesc().equals("Feu")) { //si feu
+                entoure.add(new Feu(c));
+            }
+            else if(element.getDesc().equals("Maladie")) { //si maladie
+                entoure.add(new Maladie(c));
+            }
+            else if(element.getDesc().equals("Inconnue")){ //si inconnue
+                entoure.add(new Anomalie(c));
+            }
+
+            if(otage) { //si derniere iteration otage
+                nbAssaillant = nbTotal.size() - nbOtage;
+            }
+            posX++;
+            if(posX>=taille.getX()){
+                posX = 0;
+                posY++;
+                if(posY >= taille.getY()){
+                    posY = 0;
+                    //circle = false;
+                    //init();
+                }
+            }
         }
     }
+
+    public void next(){
+        if(selected == null){
+            selectedIndex = 0;
+        }
+        else{
+            selectedIndex++;
+            if(selectedIndex>entoure.size()){
+                selectedIndex = 0;
+            }
+        }
+        selected = entoure.get(selectedIndex);
+    }
+
+    public void previous(){
+        if(selected == null){
+            selectedIndex = entoure.size()-1;
+        }
+        else{
+            selectedIndex--;
+            if(selectedIndex<0){
+                selectedIndex = entoure.size()-1;
+            }
+        }
+        selected = entoure.get(selectedIndex);
+    }
+
+
+
+
+
+
 
     /**
      * Fonction qui remet tout à zéro
      */
-        /*
     public void supp() {
         this.nbOtage = 0;
         this.nbAssaillant = 0;
-        this.nbTotal = 0;
-        this.inconnue = 0;
-        this.feu = 0;
-        this.maladie = 0;
-        this. intrusion = 0;
+        this.nbTotal = null;
+        this.inconnue = null;
+        this.feu = null;
+        this.maladie = null;
+        this. intrusion = null;
         this.carte = null;
         this.scenario = null;
-        this.interrupt();
     }
-    */
-
-    /**
-     * Fonction qui modifie le GUI
-     */
-    /*
-    public void majGUI(){ //fonction a appeler avec un action listener lié a la selection d'un element
-        if(otage){
-            jl1.setText("    Nombre total d'individus : " + nbTotal.size());
-            jl3.setText("    Nombre d'otages : " + nbOtage);
-            jl4.setText("    Nombre total d'assaillants : " + nbAssaillant);
-
-
-        }
-        else{
-            jl1.setText("   Total : " + (inconnue.size()+feu.size()+maladie.size()+intrusion.size()));
-            jl3.setText("<html> &nbsp &#160 Nombre de feux : " + feu.size() + "<br/>" +
-                    " &nbsp &#160 Nombre d'intrusions : " + intrusion.size() + "<br/>" +
-                    " &nbsp &#160 Nombre de maladies : " + maladie.size() + "<br/>" +
-                    " &nbsp &#160 Nombre d'anomalies inconnues : " + inconnue.size() + "</html>");
-        }
-    }
-
-     */
-
-    /**
-     * Fonction qui entoure une image
-     * @param x Coordonnées X
-     * @param y Coordonnées Y
-     */
-    /*
-    public void entourer(int x, int y){
-        list.set(x*taille.getX()+y, Build.merge((ImageIcon) list.getElementAt(x*taille.getX()+y), new ImageIcon(cercle.getImage().getScaledInstance(Math.min(950/taille.getX(), 600/taille.getY()), Math.min(950/taille.getX(), 600/taille.getY()), Image.SCALE_DEFAULT)))); //entourer
-    }
-
-     */
-
-    /**
-     * Fonction qui analyse la case séléctionnée dans le GUI
-     */
-    /*
-    public void current(){
-        int selected = content.getSelectedIndex();
-        int c1 = selected%taille.getX(); //X
-        int c2 = selected/taille.getX(); //Y
-        String type = null; //initialisation
-        switch(carte.getTab()[c2][c1].getDesc()){
-            case ".":
-                type = "Aucune";
-                break;
-            case "p":
-                type = "Individu";
-                break;
-            case "i":
-                type = "Intrusion";
-                break;
-            case "m":
-                type = "Maladie";
-                break;
-            case "f":
-                type = "Feu";
-                break;
-            case "x":
-                type = "Inconnue";
-                break;
-            default:
-                break;
-        }
-        
-        if(otage){
-        	if(type != "Aucune") {
-        		int x = debut.getX()+c1;
-        		int y = debut.getY()+c2;
-        		jl2.setText("<html> &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "<br/>" + 
-        		"&nbsp &#160 Individu : OUI </html>");
-        		word = "   Individu en : x =" + x + ", y =" + y;
-        	}
-        	else {
-        		int x = debut.getX()+c1;
-        		int y = debut.getY()+c2;
-        		jl2.setText("<html> &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "<br/>" + 
-                		"&nbsp &#160 Individu : NON </html>");
-        	}
-        }
-
-        else {
-        	if(type != "Aucune") {
-        		int x = debut.getX()+c1;
-        		int y = debut.getY()+c2;
-        		jl2.setText("<html> &nbsp &#160 Type d'anomalie : " + type + "<br/>" +
-        				" &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "</html>");
-        		word = "   " + type  + " en : " + x + "," + y ;
-        	}
-        	else {
-        		int x = debut.getX()+c1;
-        		int y = debut.getY()+c2;
-        		jl2.setText("<html> &nbsp &#160 Type d'anomalie : " + type + "<br/>" +
-        				" &nbsp &#160 Coordonnées : x=" + x + ", y=" + y + "</html>");
-        	}
-        }
-        
-
-    }
-
-     */
 
     /**
      * Fonction qui cherche la prochaine personne/anomalie dans le GUI
@@ -340,13 +272,6 @@ public class Traitement extends Thread {
         return carte;
     }
 
-    /**
-     * Fonction qui retourne le contenu destiné à un JLabel
-     * @return Texte
-     */
-    public String getWord() {
-    	return this.word;
-    }
 
     /**
      * Fonction qui transforme un JLabel avec du html en String
@@ -377,13 +302,7 @@ public class Traitement extends Thread {
         return otage;
     }
 
-    /**
-     * Fonction qui retourne les coordonnées de début
-     * @return Début
-     */
-    public Coordonnees getDebut() {
-        return debut;
-    }
+
 
     /**
      * Fonction qui retourne le nombre d'otages
@@ -391,6 +310,10 @@ public class Traitement extends Thread {
      */
     public int getNbOtage() {
         return nbOtage;
+    }
+
+    public Coordonnees getDebut() {
+        return debut;
     }
 
     /**
@@ -427,5 +350,9 @@ public class Traitement extends Thread {
 
     public Element getSelected() {
         return selected;
+    }
+
+    public void setSelected(Element selected) {
+        this.selected = selected;
     }
 }
