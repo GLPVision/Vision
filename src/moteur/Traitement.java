@@ -405,22 +405,18 @@ public class Traitement extends Thread {
         return nbTotal;
     }
 
-    @SuppressWarnings("rawtypes")
 	public ArrayList<Intrusion> getIntrusion() {
         return intrusion;
     }
 
-    @SuppressWarnings("rawtypes")
 	public ArrayList<Feu> getFeu() {
         return feu;
     }
 
-    @SuppressWarnings("rawtypes")
 	public ArrayList<Maladie> getMaladie() {
         return maladie;
     }
 
-    @SuppressWarnings("rawtypes")
 	public ArrayList<Anomalie> getInconnue() {
         return inconnue;
     }

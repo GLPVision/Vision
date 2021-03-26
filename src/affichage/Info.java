@@ -232,7 +232,11 @@ public class Info extends JPanel {
             for(int i=0 ; i<traitement.getEntoure().size() ; i++){
                 Element e = traitement.getEntoure().get(i);
                 liste.setText(liste.getText() + "   Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY()) + "\n");
+                logger.info("Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY()));
             }
+            logger.info("Nombre total d'individus : " + traitement.getNbTotal().size());
+            logger.info("Nombre d'otages : " + traitement.getNbOtage());
+            logger.info("Nombre total d'assaillants : " + traitement.getNbAssaillant());
         }
         else {
             anomalie.setText("    " + traitement.getSelected().getDesc() + " en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
@@ -242,11 +246,22 @@ public class Info extends JPanel {
                     " &nbsp &#160 Nombre de maladies : " + traitement.getMaladie().size() + "<br/>" +
                     " &nbsp &#160 Nombre d'anomalies inconnues : " + traitement.getInconnue().size() + "</html>");
             liste.setText("");
+            logger.info("Total : " + (traitement.getInconnue().size()+traitement.getFeu().size()+traitement.getMaladie().size()+traitement.getIntrusion().size()));
+            logger.info("Anomalie sélectionée : " + traitement.getSelected().getDesc() + " en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
             for(int i=0 ; i<traitement.getEntoure().size() ; i++){
                 Element e = traitement.getEntoure().get(i);
                 liste.setText(liste.getText() + "   " + e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX()) + "\n");
+                logger.info(e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX()));
+                
             }
+            logger.info("Nombre de feux : " + traitement.getFeu().size());
+            logger.info("Nombre de d'intrusion : " + traitement.getIntrusion().size());
+            logger.info("Nombre de maladie : " + traitement.getMaladie().size());
+            logger.info("Nombre d'anomalies inconnues : " + traitement.getInconnue().size());
         }
+       
+        
+        
     }
     ActionListener actionListener = new ActionListener() {
         @Override
