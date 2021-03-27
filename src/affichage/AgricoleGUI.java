@@ -207,24 +207,23 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int state = 1;
+		int state = 0;
 		while (running) {
 			try {
 				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			if(state != 0){
+			if(state == 0){
 				state = traitement.scan();
 				infoPanel.majGUI();
 				carte.repaint();
 			}
-			/*
-			else{
-				traitement.move();
+			else if(traitement.move() == 1){
+				infoPanel.resetList();
+				infoPanel.majGUI();
+				carte.repaint();
 			}
-
-			 */
 		}
 		traitement.supp();
 	}

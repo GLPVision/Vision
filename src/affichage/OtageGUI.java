@@ -211,21 +211,20 @@ public class OtageGUI extends JFrame implements Runnable {
 		int state = 1;
 		while (running) {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			if(state != 0){
+			if(state == 0){
 				state = traitement.scan();
 				infoPanel.majGUI();
 				carte.repaint();
 			}
-			/*
-			else{
-				traitement.move();
+			else if(traitement.move() == 1){
+				infoPanel.resetList();
+				infoPanel.majGUI();
+				carte.repaint();
 			}
-
-			 */
 		}
 		traitement.supp();
 	}

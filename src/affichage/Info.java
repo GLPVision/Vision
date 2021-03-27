@@ -243,8 +243,7 @@ public class Info extends JPanel {
             total_individu.setText("    Nombre total d'individus : " + traitement.getNbTotal().size());
             nb_otage.setText("    Nombre d'otages : " + traitement.getNbOtage());
             total_assaillant.setText("    Nombre total d'assaillants : " + traitement.getNbAssaillant());
-            for(int i=0 ; i<traitement.getEntoure().size() ; i++){
-                Element e = traitement.getEntoure().get(i);
+            for(Element e : traitement.getEntoure().values()){
                 String txt = "Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
                 if(!liste.getText().contains(txt)){
                     liste.setText(liste.getText() + "   " + txt + "\n");
@@ -275,8 +274,7 @@ public class Info extends JPanel {
                     " &nbsp &#160 Nombre de maladies : " + traitement.getMaladie().size() + "<br/>" +
                     " &nbsp &#160 Nombre d'anomalies inconnues : " + traitement.getInconnue().size() + "</html>");
             logger.info("Total : " + (traitement.getInconnue().size()+traitement.getFeu().size()+traitement.getMaladie().size()+traitement.getIntrusion().size()));
-            for(int i=0 ; i<traitement.getEntoure().size() ; i++){
-                Element e = traitement.getEntoure().get(i);
+            for(Element e : traitement.getEntoure().values()){
                 String txt = e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX());
                 if(!liste.getText().contains(txt)){
                     liste.setText(liste.getText() + "   " + txt + "\n");
@@ -293,6 +291,11 @@ public class Info extends JPanel {
         
         
     }
+
+    public void resetList(){
+        liste.setText("");
+    }
+
     ActionListener actionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {

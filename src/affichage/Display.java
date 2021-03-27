@@ -5,9 +5,8 @@ import moteur.Traitement;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Display extends JPanel{
     /**
@@ -33,40 +32,35 @@ public class Display extends JPanel{
             e.printStackTrace();
         }
         if(traitement.getOtage()){
-			ArrayList <Personne> personne = traitement.getNbTotal();
-            for(int i=0 ; i<personne.size() ; i++){
-                paintStrategy.draw(personne.get(i), g);
-            }
-            ArrayList <Element> entoure = traitement.getEntoure();
-            for(int i=0 ; i<entoure.size() ; i++){
-                paintStrategy.draw((Element) entoure.get(i), g);
+			HashMap<Coordonnees, Personne> personne = traitement.getNbTotal();
+            for(Personne p : personne.values()){
+                paintStrategy.draw(p, g);
             }
         }
         else{
-			ArrayList <Anomalie> anomalie = traitement.getInconnue();
-            for(int i=0 ; i<anomalie.size() ; i++){
-                paintStrategy.draw((Anomalie) anomalie.get(i), g);
+			HashMap <Coordonnees, Anomalie> anomalie = traitement.getInconnue();
+            for(Anomalie a : anomalie.values()){
+                paintStrategy.draw(a, g);
             }
 
-			ArrayList <Feu> feu = traitement.getFeu();
-            for(int i=0 ; i<feu.size() ; i++){
-                paintStrategy.draw((Feu) feu.get(i), g);
+			HashMap <Coordonnees, Feu> feu = traitement.getFeu();
+            for(Feu f : feu.values()){
+                paintStrategy.draw(f, g);
             }
 
-			ArrayList <Intrusion> intrusion = traitement.getIntrusion();
-            for(int i=0 ; i<intrusion.size() ; i++){
-                paintStrategy.draw((Intrusion) intrusion.get(i), g);
+			HashMap <Coordonnees, Intrusion> intrusion = traitement.getIntrusion();
+            for(Intrusion i : intrusion.values()){
+                paintStrategy.draw(i, g);
             }
 
-			ArrayList <Maladie> maladie = traitement.getMaladie();
-            for(int i=0 ; i<maladie.size() ; i++){
-                paintStrategy.draw((Maladie) maladie.get(i), g);
+			HashMap <Coordonnees, Maladie> maladie = traitement.getMaladie();
+            for(Maladie m : maladie.values()){
+                paintStrategy.draw(m, g);
             }
-
-            ArrayList <Element> entoure = traitement.getEntoure();
-            for(int i=0 ; i<entoure.size() ; i++){
-                paintStrategy.draw((Element) entoure.get(i), g);
-            }
+        }
+        HashMap <Coordonnees, Element> entoure = traitement.getEntoure();
+        for(Element e : entoure.values()){
+            paintStrategy.draw((Element) e, g);
         }
         Element selected = traitement.getSelected();
         paintStrategy.draw_selected(selected, g);
