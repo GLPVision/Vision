@@ -213,7 +213,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 				e.printStackTrace();
 			}
 			traitement.scan();
-			//infoPanel.majGUI();
+			infoPanel.majGUI();
 			carte.repaint();
 		}
 		traitement.supp();
