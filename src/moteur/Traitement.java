@@ -2,9 +2,6 @@ package moteur;
 
 import data.*;
 
-import javax.swing.*;
-import java.beans.XMLEncoder;
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -81,7 +78,7 @@ public class Traitement{
      * Fonction qui scanne le nombre de personne/anomalies
      * @throws InterruptedException Erreur de sleep
      */
-    public void scan(){
+    public int scan(){
         Element[][] tab = carte.getTab(); //recup la carte
         Element element = tab[posX][posY];
         Coordonnees c = element.getCoordonnees();
@@ -140,9 +137,99 @@ public class Traitement{
                     posY = 0;
                     //circle = false;
                     //init();
+                    return 0;
                 }
             }
         }
+        return 1;
+    }
+
+    public void move(){
+        Element[][] tab = carte.getTab(); //recup la carte
+        int x = (int) (Math.random()* taille.getX());
+        int y = (int) (Math.random()*taille.getY());
+        if(!tab[y][x].getDesc().equals(".") && (int) (Math.random()*20) == 0){
+            int random = (int) (Math.random()*4);
+            switch (3){
+                case 0:
+                    up(x, y);
+                    System.out.println("up");
+                    break;
+                case 1:
+                    down(x, y);
+                    System.out.println("down");
+
+                    break;
+                case 2:
+                    left(x, y);
+                    System.out.println("left");
+
+                    break;
+                case 3:
+                    right(x, y);
+                    System.out.println("right");
+
+                    break;
+                default :
+                    break;
+            }
+        }
+    }
+
+    public void up(int x, int y){ // i=x, j=y
+        Element[][] tab = carte.getTab(); //recup la carte
+        if(y-1 >= 0 && tab[x][y-1].getDesc().equals(".")){ //si y a la place pour bouger
+            Element cache = tab[x][y];
+            cache.setCoordonnees(new Coordonnees(x, y-1));
+            tab[x][y] = new Element(new Coordonnees(x, y));
+            tab[x][y-1] = cache;
+            entoure.add(cache);
+        }
+    }
+    public void down(int x, int y){
+        Element[][] tab = carte.getTab(); //recup la carte
+        if(y+1 < taille.getY()-1 && tab[x][y+1].getDesc().equals(".")){ //si y a la place pour bouger
+            Element cache = tab[x][y];
+            cache.setCoordonnees(new Coordonnees(x, y+1));
+            tab[x][y] = new Element(new Coordonnees(x, y));
+            tab[x][y+1] = cache;
+            entoure.add(cache);
+
+        }
+    }
+    public void left(int x, int y){
+        Element[][] tab = carte.getTab(); //recup la carte
+        if(x-1 >= 0 && tab[x-1][y].getDesc().equals(".")){ //si y a la place pour bouger
+            Element cache = tab[x][y];
+            cache.setCoordonnees(new Coordonnees(x-1, y));
+            tab[x][y] = new Element(new Coordonnees(x, y));
+            tab[x-1][y] = cache;
+            entoure.add(cache);
+
+        }
+    }
+    public void right(int x, int y){
+        System.out.println(y + " " + x);
+
+        Element[][] tab = carte.getTab(); //recup la carte
+        entoure.remove(0);
+
+        if(x+1 < taille.getX()-1 && tab[x+1][y].getDesc().equals(".")){ //si y a la place pour bouger
+            for(Element element : entoure){
+                if(element.getCoordonnees().getX() == x && element.getCoordonnees().getY() == y){
+                    entoure.remove(element);
+                }
+            }
+            Element cache = tab[x][y];
+            cache.setCoordonnees(new Coordonnees(x+1, y));
+            entoure.remove(cache);
+            tab[x][y] = new Element(new Coordonnees(x, y));
+            tab[x+1][y] = cache;
+            entoure.add(cache);
+
+        }
+
+
     }
 
     public void next(){
@@ -151,7 +238,7 @@ public class Traitement{
         }
         else{
             selectedIndex++;
-            if(selectedIndex>entoure.size()){
+            if(selectedIndex>entoure.size()-1){
                 selectedIndex = 0;
             }
         }
@@ -171,12 +258,6 @@ public class Traitement{
         selected = entoure.get(selectedIndex);
     }
 
-
-
-
-
-
-
     /**
      * Fonction qui remet tout à zéro
      */
@@ -192,61 +273,6 @@ public class Traitement{
         this.scenario = null;
     }
 
-    /**
-     * Fonction qui cherche la prochaine personne/anomalie dans le GUI
-     */
-    /*
-    public void next(){
-        int selected = content.getSelectedIndex();
-        int c1 = selected%taille.getX(); //X
-        int c2 = selected/taille.getX(); //Y
-        Element[][] elt = carte.getTab(); //recup la carte
-        int j; //initialisation
-        for(int i = c2 ; i<taille.getY() ; i++) { //parcours y à partir de la personne/anomalie actuelle
-            if(i == c2)
-                j = c1;
-            else
-                j=0;
-            for (; j<taille.getX(); j++) { //parcours x
-                if(elt[i][j].getDesc()!="." && i* taille.getY()+j>c2* taille.getY()+c1){
-                    content.setSelectedIndex(i*taille.getY()+j);
-                    i = taille.getX();
-                    break; //sortir quand trouvé
-                }
-            }
-        }
-    }
-
-     */
-
-    /**
-     * Fonction qui cherche la personne/anomalie précédente dans le GUI
-     */
-    /*
-    public void previous(){
-        int selected = content.getSelectedIndex();
-        int c1 = selected%taille.getX(); //X
-        int c2 = selected/taille.getX(); //Y
-        Element[][] elt = carte.getTab(); //recup la carte
-        int j;
-        for(int i = c2 ; i>=0 ; i--) { //parcours y
-            if(i == c2)
-                j = c1;
-            else
-                j = taille.getX()-1;
-            for (; j>=0 ; j--) { //parcours x
-                if(elt[i][j].getDesc()!="." && i* taille.getY()+j<c2* taille.getY()+c1){
-                    content.setSelectedIndex(i*taille.getY()+j);
-                    content.revalidate();
-                    content.repaint();
-                    i = -1;
-                    break; //sortir quand trouvé
-                }
-            }
-        }
-    }
-
-     */
 
     /**
      * Fonction qui retourne le Scénario
@@ -272,20 +298,6 @@ public class Traitement{
         return carte;
     }
 
-
-    /**
-     * Fonction qui transforme un JLabel avec du html en String
-     * @param jl JLabel
-     * @return String
-     */
-    public String makeString (JLabel jl) {//This is the method which converts the Jlabel into a String
-		   ByteArrayOutputStream baos = new ByteArrayOutputStream ();
-		   XMLEncoder e = new XMLEncoder (baos);
-		   e.writeObject (jl);
-		   e.close ();
-		   return new String (baos.toByteArray ());
-    }
-
     /**
      * Fonction qui retourne la taille de la carte/matrice
      * @return Taille
@@ -301,8 +313,6 @@ public class Traitement{
     public boolean isOtage() {
         return otage;
     }
-
-
 
     /**
      * Fonction qui retourne le nombre d'otages

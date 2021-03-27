@@ -59,6 +59,8 @@ public class OtageGUI extends JFrame implements Runnable {
 	}
 
 	public void init(Coordonnees debut, Coordonnees taille) throws IOException {
+		ActionBar actionListener = new ActionBar();
+		Click click = new Click();
 		/**
 		 * Définition de la fenêtre		
 		 */
@@ -172,21 +174,20 @@ public class OtageGUI extends JFrame implements Runnable {
 		diffy = 600-tailley;
 		diffx = 950-taillex;
 
-		infoPanel = new Info(traitement, diffy);
-		contentPane.add(infoPanel);
-
 		/**
 		 * Mise en place du cadre contenant la carte
 		 */
 		PaintStrategy paintStrategy = new PaintStrategy();
 		carte = new Display(traitement, paintStrategy);
-		Click click = new Click();
 		carte.addMouseListener(click);
 		carte.setLayout(new BorderLayout());
 		carte.setBackground(new Color(0, 128, 128));
 		carte.setBounds(274, 50, taillex, tailley);
 		carte.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		contentPane.add(carte);
+
+		infoPanel = new Info(traitement, diffy, carte);
+		contentPane.add(infoPanel);
 
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
@@ -207,15 +208,24 @@ public class OtageGUI extends JFrame implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		int state = 1;
 		while (running) {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			traitement.scan();
-			infoPanel.majGUI();
-			carte.repaint();
+			if(state != 0){
+				state = traitement.scan();
+				infoPanel.majGUI();
+				carte.repaint();
+			}
+			/*
+			else{
+				traitement.move();
+			}
+
+			 */
 		}
 		traitement.supp();
 	}
@@ -224,7 +234,7 @@ public class OtageGUI extends JFrame implements Runnable {
 		running = false;
 	}
 
-	private ActionListener actionListener = new ActionListener() {
+	private class ActionBar implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			/**
@@ -269,7 +279,7 @@ public class OtageGUI extends JFrame implements Runnable {
 				logger.info("Retour à la fenêtre principale");
 			}
 		}
-	};
+	}
 
 	private class Click implements MouseListener {
 
@@ -279,6 +289,8 @@ public class OtageGUI extends JFrame implements Runnable {
 			int y = e.getY()/casey;
 			Element selected = traitement.getCarte().getElement(x, y);
 			traitement.setSelected(selected);
+			infoPanel.majGUI();
+			carte.repaint();
 		}
 
 		@Override

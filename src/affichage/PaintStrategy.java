@@ -1,8 +1,6 @@
 package affichage;
 
 import data.*;
-import logs.LoggerUtility;
-import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,8 +22,6 @@ public class PaintStrategy {
     }
     public void draw(Carte carte, Graphics graphics) throws IOException {
         Graphics2D g = (Graphics2D) graphics;
-        @SuppressWarnings("unused")
-		Element[][] elements = carte.getTab();
         Coordonnees taille = carte.getTaille();
         height = 600/taille.getY();
         width = 950/taille.getX();
@@ -41,7 +37,7 @@ public class PaintStrategy {
             fond = champ.getScaledInstance(width, height, Image.SCALE_DEFAULT);
         for(int i=0 ; i< taille.getY() ; i++){
             for(int j=0 ; j< taille.getX() ; j++){
-                g.drawImage(fond, (int)(j*width), (int)(i*height), null, null);
+                g.drawImage(fond, (j*width), (i*height), null, null);
             }
         }
 /*

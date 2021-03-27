@@ -1,10 +1,6 @@
 package data;
 
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
  * Classe carte
  * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
@@ -49,6 +45,7 @@ public class Carte {
         tab = new Element[taille.getY()][taille.getX()];
         init();
     }
+
     /**
      * Fonction initialisation
      */
@@ -62,8 +59,8 @@ public class Carte {
                 scan();
             }
         }
-        //export();
     }
+
     /**
      * Fonction pour régler la date
      */
@@ -123,38 +120,7 @@ public class Carte {
             System.out.print("\n");
         }
     }
-    /**
-     * Fonctione pour exporter la carte dans un fichier csv
-     * @throws IOException Erreur d'écriture lors de l'exportation
-     */
-    public void export() throws IOException {
-        StringBuffer out = new StringBuffer(); //initialisation de la variable
-        out.append(date.getJour() + ";" + date.getMois() + ";" + date.getAnnee() + ";" + date.getHeure().getHeure() + ";" + date.getHeure().getMinute() + ";" + date.getHeure().getSeconde() + "\n"); //date et heure
-        out.append(taille.getX() + ";" + taille.getY() + ";\n"); //taille de la carte
-        if (otage){
-            out.append(nb_assaillant + ";" + nb_otage + ";\n"); //nombre asaillants et otages
-        }
-        else{
-            out.append(nb_anomalie + ";\n"); //nombre anomalies
-        }
-        for (int i=0 ; i< taille.getX() ; i++){ //boucle ecrit la carte dans out
-            String line = "";
-            for (int j=0 ; j< taille.getY() ; j++){
-                line = line + tab[i][j].getDesc() +  ";";
-            }
-            line = line + "\n";
-            out.append(line);
-        }
-        BufferedWriter bw = null; //initialise la variable
-        if (otage) {
-            bw = new BufferedWriter(new FileWriter(".\\" + "last_otage.csv")); //creation fichier otage
-        }
-        else{
-            bw = new BufferedWriter(new FileWriter(".\\" + "last_agricole.csv")); //creation fichier agricole
-        }
-        bw.write(out.toString()); //ecriture du fichier
-        bw.close(); //fermer le fichier
-    }
+
     /**
      * Fonction pour détecter le nombre de personnes/anomalies
      */
@@ -174,6 +140,7 @@ public class Carte {
             nb_anomalie = nb; //calcul nombre d'anomalies
         }
     }
+
     /**
      * Fonction qui retourne la matrice
      * @return Matrice

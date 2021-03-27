@@ -40,4 +40,7 @@ public class Element {
     public void setDesc(String desc){
         this.desc = desc;
     }
+    public void setCoordonnees(Coordonnees coordonnees){
+        this.coordonnees = coordonnees;
+    }
 }

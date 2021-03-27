@@ -25,9 +25,11 @@ public class Info extends JPanel {
     private JButton next, prec;
     private int diffy;
     private Traitement traitement;
+    private Display display;
     
-    public Info(Traitement traitement, int diffy) {
+    public Info(Traitement traitement, int diffy, Display display) {
         this.traitement = traitement;
+        this.display = display;
         if(traitement.isOtage()){
             /**
              * Mise en place de l'encadré de texte affichant le nombre d'otages rempli par l'utilisateur au préalable
@@ -241,7 +243,6 @@ public class Info extends JPanel {
             total_individu.setText("    Nombre total d'individus : " + traitement.getNbTotal().size());
             nb_otage.setText("    Nombre d'otages : " + traitement.getNbOtage());
             total_assaillant.setText("    Nombre total d'assaillants : " + traitement.getNbAssaillant());
-            liste.setText("");
             for(int i=0 ; i<traitement.getEntoure().size() ; i++){
                 Element e = traitement.getEntoure().get(i);
                 String txt = "Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
@@ -273,7 +274,6 @@ public class Info extends JPanel {
                     " &nbsp &#160 Nombre d'intrusions : " + traitement.getIntrusion().size() + "<br/>" +
                     " &nbsp &#160 Nombre de maladies : " + traitement.getMaladie().size() + "<br/>" +
                     " &nbsp &#160 Nombre d'anomalies inconnues : " + traitement.getInconnue().size() + "</html>");
-            liste.setText("");
             logger.info("Total : " + (traitement.getInconnue().size()+traitement.getFeu().size()+traitement.getMaladie().size()+traitement.getIntrusion().size()));
             for(int i=0 ; i<traitement.getEntoure().size() ; i++){
                 Element e = traitement.getEntoure().get(i);
@@ -304,6 +304,8 @@ public class Info extends JPanel {
                 traitement.previous();
                 logger.info("Passage à l'anomalie précédente");
             }
+            majGUI();
+            display.repaint();
         }
     };
 }
