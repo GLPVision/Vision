@@ -16,7 +16,7 @@ public class Personne extends Element {
      */
     public Personne(Coordonnees c) {
         super(c);
-        this.personne = "Personne";
+        this.personne = "Individu";
     }
     /**
      * Fonction qui retourne la description
@@ -24,5 +24,9 @@ public class Personne extends Element {
      */
     public String getDesc(){
         return personne;
+    }
+
+    public void setDesc(String personne) {
+        this.personne = personne;
     }
 }

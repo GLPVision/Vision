@@ -1,6 +1,7 @@
 package affichage;
 
 import data.Element;
+import data.Personne;
 import logs.LoggerUtility;
 import moteur.Traitement;
 import org.apache.log4j.Logger;
@@ -252,8 +253,8 @@ public class Info extends JPanel {
 
                 }
                 else{
-                    individu.setText("    Individu en : x =" + traitement.getSelected().getCoordonnees().getX() + " , y =" + traitement.getSelected().getCoordonnees().getY());
-                    logger.info("Individu sélectionée en : x =" + traitement.getSelected().getCoordonnees().getX() + " , y =" + traitement.getSelected().getCoordonnees().getY());
+                    individu.setText("    " + traitement.getSelected().getDesc() + " en : x =" + traitement.getSelected().getCoordonnees().getX() + " , y =" + traitement.getSelected().getCoordonnees().getY());
+                    logger.info(traitement.getSelected().getDesc() + " sélectionée en : x =" + traitement.getSelected().getCoordonnees().getX() + " , y =" + traitement.getSelected().getCoordonnees().getY());
                 }
             }
             catch (NullPointerException nullPointerException){
@@ -267,11 +268,18 @@ public class Info extends JPanel {
                 txt = "";
             }
             for(Element e : traitement.getEntoure()){
-                String line = "Individu en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
+                String line = e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
                 if(!txt.contains(line)){
                     txt = txt + "   " + line + "\n";
                 }
-                logger.info("Individu en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY()));
+                logger.info(e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY()));
+            }
+            for(Element e : traitement.getIndividu()){
+                String line = e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
+                if(!txt.contains(line)){
+                    txt = txt + "   " + line + "\n";
+                }
+                logger.info(e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY()));
             }
             liste.setText(txt);
             logger.info("Nombre total d'individus : " + traitement.getNbIndividu());

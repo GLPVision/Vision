@@ -42,6 +42,7 @@ public class Traitement{
     private int posX = 0;
     private int posY = 0;
     private boolean circle = false;
+    private int nbMoving = 0;
 
     /**
      * Constructeur, initialise les variables
@@ -90,7 +91,7 @@ public class Traitement{
         Coordonnees c = element.getCoordonnees();
 
         if(!circle){
-            if(element.getDesc().equals("Personne")) { //si personne
+            if(element.getDesc().equals("Individu")) { //si personne
                 individu.add(new Personne(c));
             }
             else if(element.getDesc().equals("Intrusion")) { //si intrusion
@@ -116,10 +117,10 @@ public class Traitement{
             }
         }
         else{ //entourer
-            if(!element.getDesc().equals(".")){
+            if(!otage && !element.getDesc().equals(".")){
                 entoure.add(element);
             }
-            if(element.getDesc().equals("Personne")) { //si personne
+            if(element.getDesc().equals("Individu")) { //si personne
                 nbIndividu++;
             }
             else if(element.getDesc().equals("Intrusion")) { //si intrusion
@@ -152,59 +153,92 @@ public class Traitement{
 
     public int move(){
         if((int) (Math.random()* Configuration.PROBA_MOVE) == 0){
-            Element e = entoure.get((int) (Math.random() * entoure.size()));
-            int x = e.getCoordonnees().getX();
-            int y = e.getCoordonnees().getY();
-            if(e.getDesc().equals("Intrusion")){
-                switch ((int) (Math.random()*4)){
-                    case 0:
-                        up(x, y);
-                        break;
-                    case 1:
-                        down(x, y);
-                        break;
-                    case 2:
-                        left(x, y);
-                        break;
-                    case 3:
-                        right(x, y);
-                        break;
-                    default :
-                        break;
+            if(otage){
+                Personne p;
+                p = individu.get((int) (Math.random() * individu.size()));
+                int x = p.getCoordonnees().getX();
+                int y = p.getCoordonnees().getY();
+                if(nbMoving<nbAssaillant){
+                    p.setDesc("Assaillant");
+                    entoure.add(p);
+                    carte.getTab()[x][y] = p;
+                    nbMoving++;
+                    if(p.getDesc().equals("Individu")) {
+                        switch ((int) (Math.random() * 4)) {
+                            case 0:
+                                up(x, y);
+                                break;
+                            case 1:
+                                down(x, y);
+                                break;
+                            case 2:
+                                left(x, y);
+                                break;
+                            case 3:
+                                right(x, y);
+                                break;
+                            default:
+                                break;
+                        }
+                        return 1;
+                    }
                 }
-                return 1;
-            }
-            else if(e.getDesc().equals("Personne")){
-                switch ((int) (Math.random()*4)){
-                    case 0:
-                        up(x, y);
-                        break;
-                    case 1:
-                        down(x, y);
-                        break;
-                    case 2:
-                        left(x, y);
-                        break;
-                    case 3:
-                        right(x, y);
-                        break;
-                    default :
-                        break;
+                else if(p.getDesc().equals("Assaillant")){
+                    switch ((int) (Math.random()*4)){
+                        case 0:
+                            up(x, y);
+                            break;
+                        case 1:
+                            down(x, y);
+                            break;
+                        case 2:
+                            left(x, y);
+                            break;
+                        case 3:
+                            right(x, y);
+                            break;
+                        default :
+                            break;
+                    }
+                    return 1;
                 }
-                return 1;
             }
-            else if(e.getDesc().equals("Feu")){
-                burn(x, y);
-                return 1;
+            else{
+                Element e;
+                e = entoure.get((int) (Math.random() * entoure.size()));
+                int x = e.getCoordonnees().getX();
+                int y = e.getCoordonnees().getY();
+                if(e.getDesc().equals("Intrusion")){
+                    switch ((int) (Math.random()*4)){
+                        case 0:
+                            up(x, y);
+                            break;
+                        case 1:
+                            down(x, y);
+                            break;
+                        case 2:
+                            left(x, y);
+                            break;
+                        case 3:
+                            right(x, y);
+                            break;
+                        default :
+                            break;
+                    }
+                    return 1;
+                }
+                else if(e.getDesc().equals("Feu")){
+                    burn(x, y);
+                    return 1;
+                }
+                else if(e.getDesc().equals("Inconnue")){
+                    return 1;
+                }
+                else if(e.getDesc().equals("Maladie")){
+                    infect(x, y);
+                    return 1;
+                }
             }
-            else if(e.getDesc().equals("Inconnue")){
-                return 1;
-            }
-            else if(e.getDesc().equals("Maladie")){
-                infect(x, y);
-                return 1;
-            }
-
         }
         return 0;
     }
