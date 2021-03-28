@@ -225,6 +225,24 @@ public class Info extends JPanel {
         buttonPanel.add(next);
         this.add(buttonPanel);
     }
+    
+    public void setButtonBackground(Color color) {
+    	next.setBackground(color);
+    	prec.setBackground(color);
+    }
+    
+    public void setButtonForeground(Color color) {
+    	next.setForeground(color);
+    	prec.setForeground(color);
+    }
+    
+    public void setInfoBackground (Color color){
+    	liste.setBackground(color);
+    	buttonPanel.setBackground(color);
+    	nb_anomalie.setBackground(color);
+    	txt_nb_anomalie.setBackground(color);
+    }
+    
     public void majGUI(boolean reset){
         if (traitement.isOtage()){
             try{

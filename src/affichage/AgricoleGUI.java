@@ -76,7 +76,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		menu = new JMenuBar();//Barre de menu
 		setJMenuBar(menu);
 		menu.setBackground(Color.lightGray);//Couleur de l'arri�re plan
-		
+	
 		/**
 		 * Mise en place de l'onglet "Fichier"		
 		 */
@@ -250,14 +250,38 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			if(e.getSource()==sombre) {
 				contentPane.setBackground(Color.DARK_GRAY);
 				logger.info("Passage au thème sombre");
+				menu.setBackground(Color.LIGHT_GRAY);//Couleur de l'arri�re plan de la barre de menu
+				Aide.setBackground(Color.LIGHT_GRAY);
+				Aide.setForeground(null);
+				Fichier.setForeground(null);
+				Apparence.setForeground(null);
+				info.setBackground(SystemColor.activeCaption);
+				info.setForeground(null);
+				nomcarte.setBackground(SystemColor.activeCaption);
+				nomcarte.setForeground(null);
+				infoPanel.setButtonBackground(SystemColor.activeCaption);
+				infoPanel.setButtonForeground(null);
+				infoPanel.setInfoBackground(new Color(204, 190, 121));
 			}
 
 			/**
 			 * Action pour passer en thème clair
 			 */
 			if(e.getSource()==clair) {
-				contentPane.setBackground(Color.white);
+				contentPane.setBackground(new Color(145,203,222));
 				logger.info("Passage au thème clair");
+				menu.setBackground(new Color(84,96,143));//Couleur de l'arri�re plan de la barre de menu
+				Aide.setBackground(new Color(84,96,143));
+				Aide.setForeground(Color.white);
+				Fichier.setForeground(Color.white);
+				Apparence.setForeground(Color.white);
+				info.setBackground(new Color(84,96,143));
+				info.setForeground(Color.white);
+				nomcarte.setBackground(new Color(84,96,143));
+				nomcarte.setForeground(Color.white);
+				infoPanel.setButtonBackground(new Color(84,96,143));
+				infoPanel.setButtonForeground(Color.white);
+				infoPanel.setInfoBackground(Color.white);
 			}
 
 			/**
@@ -266,6 +290,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			if(e.getSource()==Aide) {
 				JOptionPane.showMessageDialog(AgricoleGUI.this, "Bienvenue sur Vision Détection ! \n\nNotre application vous permet de détecter une anomalie dans un champ agricole quelque soit l'origine de celui-ci.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivée pour que le drone puisse s'envoler et survoler l'endroit désiré.\n\nDe nombreuses informations sont disponibles à gauche de la cartographie pour que vous puissiez anticiper d'éventuels dommages causés par les anomalies. \nCela grâce à leur coordonnées GPS exacte et les images renvoyées en temps réel.\n\nAidez-nous à protéger notre champ agricole !", "Aide", JOptionPane.INFORMATION_MESSAGE);
 				logger.info("Affichage de l'aide");
+				
 			}
 
 			/**
