@@ -155,23 +155,56 @@ public class Traitement{
             Element e = entoure.get((int) (Math.random() * entoure.size()));
             int x = e.getCoordonnees().getX();
             int y = e.getCoordonnees().getY();
-            switch ((int) (Math.random()*4)){
-                case 0:
-                    up(x, y);
-                    break;
-                case 1:
-                    down(x, y);
-                    break;
-                case 2:
-                    left(x, y);
-                    break;
-                case 3:
-                    right(x, y);
-                    break;
-                default :
-                    break;
+            if(e.getDesc().equals("Intrusion")){
+                switch ((int) (Math.random()*4)){
+                    case 0:
+                        up(x, y);
+                        break;
+                    case 1:
+                        down(x, y);
+                        break;
+                    case 2:
+                        left(x, y);
+                        break;
+                    case 3:
+                        right(x, y);
+                        break;
+                    default :
+                        break;
+                }
+                return 1;
             }
-            return 1;
+            else if(e.getDesc().equals("Personne")){
+                switch ((int) (Math.random()*4)){
+                    case 0:
+                        up(x, y);
+                        break;
+                    case 1:
+                        down(x, y);
+                        break;
+                    case 2:
+                        left(x, y);
+                        break;
+                    case 3:
+                        right(x, y);
+                        break;
+                    default :
+                        break;
+                }
+                return 1;
+            }
+            else if(e.getDesc().equals("Feu")){
+                burn(x, y);
+                return 1;
+            }
+            else if(e.getDesc().equals("Inconnue")){
+                return 1;
+            }
+            else if(e.getDesc().equals("Maladie")){
+                infect(x, y);
+                return 1;
+            }
+
         }
         return 0;
     }
@@ -260,6 +293,132 @@ public class Traitement{
         tab[x+dx][y+dy] = cache;
     }
 
+    public void burn(int x, int y){
+        Element[][] tab = carte.getTab(); //recup la carte
+        switch((int) (Math.random() *Configuration.PROBA_FEU)){
+            case 0:
+                if(y-1 >= 0 && !tab[x][y-1].getDesc().equals("Feu")){
+                    remove(x, y-1);
+                    feu.add(new Feu(new Coordonnees(x, y-1)));
+                    nbFeu++;
+                    entoure.add(new Feu(new Coordonnees(x, y-1)));
+                    tab[x][y-1] = new Feu(new Coordonnees(x, y-1));
+                }
+                break;
+            case 1:
+                if(y+1 < taille.getY() && !tab[x][y+1].getDesc().equals("Feu")){
+                    remove(x, y+1);
+                    feu.add(new Feu(new Coordonnees(x, y+1)));
+                    nbFeu++;
+                    entoure.add(new Feu(new Coordonnees(x, y+1)));
+                    tab[x][y+1] = new Feu(new Coordonnees(x, y+1));
+                }
+                break;
+            case 2:
+                if(x+1 < taille.getX() && !tab[x+1][y].getDesc().equals("Feu")){
+                    remove(x+1, y);
+                    feu.add(new Feu(new Coordonnees(x+1, y)));
+                    nbFeu++;
+                    entoure.add(new Feu(new Coordonnees(x+1, y)));
+                    tab[x+1][y] = new Feu(new Coordonnees(x+1, y));
+                }
+                break;
+            case 3:
+                if(x-1 >= 0 && !tab[x-1][y].getDesc().equals("Feu")){
+                    remove(x-1, y);
+                    feu.add(new Feu(new Coordonnees(x-1, y)));
+                    nbFeu++;
+                    entoure.add(new Feu(new Coordonnees(x-1, y)));
+                    tab[x-1][y] = new Feu(new Coordonnees(x-1, y));
+                }
+                break;
+        }
+    }
+    public void infect(int x, int y){
+        Element[][] tab = carte.getTab(); //recup la carte
+        switch((int) (Math.random() *Configuration.PROBA_INFECT)){
+            case 0:
+                if(y-1 >= 0 && tab[x][y-1].getDesc().equals(".")){
+                    remove(x, y-1);
+                    maladie.add(new Maladie(new Coordonnees(x, y-1)));
+                    nbMaladie++;
+                    entoure.add(new Maladie(new Coordonnees(x, y-1)));
+                    tab[x][y-1] = new Maladie(new Coordonnees(x, y-1));
+                }
+                break;
+            case 1:
+                if(y+1 < taille.getY() && tab[x][y+1].getDesc().equals(".")){
+                    remove(x, y+1);
+                    maladie.add(new Maladie(new Coordonnees(x, y+1)));
+                    nbMaladie++;
+                    entoure.add(new Maladie(new Coordonnees(x, y+1)));
+                    tab[x][y+1] = new Maladie(new Coordonnees(x, y+1));
+                }
+                break;
+            case 2:
+                if(x+1 < taille.getX() && tab[x+1][y].getDesc().equals(".")){
+                    remove(x+1, y);
+                    maladie.add(new Maladie(new Coordonnees(x+1, y)));
+                    nbMaladie++;
+                    entoure.add(new Maladie(new Coordonnees(x+1, y)));
+                    tab[x+1][y] = new Maladie(new Coordonnees(x+1, y));
+                }
+                break;
+            case 3:
+                if(x-1 >= 0 && tab[x-1][y].getDesc().equals("")){
+                    remove(x-1, y);
+                    maladie.add(new Maladie(new Coordonnees(x-1, y)));
+                    nbMaladie++;
+                    entoure.add(new Maladie(new Coordonnees(x-1, y)));
+                    tab[x-1][y] = new Maladie(new Coordonnees(x-1, y));
+                }
+                break;
+        }
+    }
+
+    public void remove(int x, int y){
+        for(int i=0 ; i<intrusion.size() ; i++){
+            if(intrusion.get(i).getCoordonnees().getX()==x && intrusion.get(i).getCoordonnees().getY()==y){
+                intrusion.remove(i);
+                nbIntrusion--;
+                break;
+            }
+        }
+        for(int i=0 ; i<feu.size() ; i++){
+            if(feu.get(i).getCoordonnees().getX()==x && feu.get(i).getCoordonnees().getY()==y){
+                feu.remove(i);
+                nbFeu--;
+                break;
+            }
+        }
+        for(int i=0 ; i<maladie.size() ; i++){
+            if(maladie.get(i).getCoordonnees().getX()==x && maladie.get(i).getCoordonnees().getY()==y){
+                maladie.remove(i);
+                nbMaladie--;
+                break;
+            }
+        }
+        for(int i=0 ; i<inconnue.size() ; i++){
+            if(inconnue.get(i).getCoordonnees().getX()==x && inconnue.get(i).getCoordonnees().getY()==y){
+                inconnue.remove(i);
+                nbInconnue--;
+                break;
+            }
+        }
+        for(int i=0 ; i<individu.size() ; i++){
+            if(individu.get(i).getCoordonnees().getX()==x && individu.get(i).getCoordonnees().getY()==y){
+                individu.remove(i);
+                nbTotal--;
+                break;
+            }
+        }
+        for(int i=0 ; i<entoure.size() ; i++){
+            if(entoure.get(i).getCoordonnees().getX()==x && entoure.get(i).getCoordonnees().getY()==y){
+                entoure.remove(i);
+                break;
+            }
+        }
+    }
 
     public void next(){
         if(selected == null){
