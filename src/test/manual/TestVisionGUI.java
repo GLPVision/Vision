@@ -20,6 +20,6 @@ public class TestVisionGUI {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		VisionGUI fen = new VisionGUI();
+		JFrame fen = new VisionGUI();
 	}
 }
