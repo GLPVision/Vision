@@ -1,6 +1,8 @@
 package data;
 
 
+import config.Configuration;
+
 /**
  * Classe carte
  * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
@@ -76,7 +78,7 @@ public class Carte {
         for (int i=0 ; i< taille.getY() ; i++){ //parcours x
             for (int j=0 ; j< taille.getX() ; j++){ //parcours y
                 if(otage){
-                    int random = (int) (Math.random()*(5*nb_otage)); //aléatoire
+                    int random = (int) (Math.random()* Configuration.PROBA_INDIVIDU); //aléatoire
                     switch(random){
                         case 1:
                             tab[i][j] = new Personne(new Coordonnees(i, j)); //personne
@@ -87,7 +89,7 @@ public class Carte {
                     }
                 }
                 else{ //agricole
-                    int random = (int) (Math.random()*(taille.getX()* taille.getY())); //aléatoire
+                    int random = (int) (Math.random()*Configuration.PROBA_ANOMALIE); //aléatoire
                     switch (random) {
                         case 1:
                             tab[i][j] = new Maladie(new Coordonnees(i, j)); //maladie

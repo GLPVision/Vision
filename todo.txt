@@ -1,12 +1,12 @@
 à faire (à compléter si élément manquant):
 -tests JUnit - à refaire
 -logger log4J - FAIT (à optimiser)
--animations - FAIT (à optimiser)
+-animations - FAIT
 -sélection de cases sur la carte - FAIT
--bouton suivant précédent -FAIT
+-bouton suivant précédent - FAIT
 -utiliser les classes Date et Heure
 -terminer le panneau de gauche de AgricoleGUI et OtageGUI - FAIT
--éventuellement scanner la JList au lieu de la matrice (traitement d'image)
+-traitement d'image (optionnel)
 -nettoyer code
 -commentaires
 -documentation (javadoc + readme)

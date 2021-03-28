@@ -195,14 +195,15 @@ public class Info extends JPanel {
         buttonPanel.setBorder(new MatteBorder(0, 3, 3, 3, (Color) new Color(0, 0, 0)));
         buttonPanel.setBounds(0, 480, 255, 120-diffy);
         buttonPanel.setBackground(new Color(204, 190, 121));
-        
+
+        ButtonsListener listener = new ButtonsListener();
         prec.setBorder(null);
         prec.setBackground(SystemColor.activeCaption);
-        prec.addActionListener(actionListener);
+        prec.addActionListener(listener);
         
         next.setBorder(null);
         next.setBackground(SystemColor.activeCaption);
-        next.addActionListener(actionListener);
+        next.addActionListener(listener);
         
         this.setBounds(10, 50, 255, 600-diffy);
         this.setBorder(new MatteBorder(3, 3, 3, 3, (Color) Color.BLACK));
@@ -224,7 +225,7 @@ public class Info extends JPanel {
         buttonPanel.add(next);
         this.add(buttonPanel);
     }
-    public void majGUI(){
+    public void majGUI(boolean reset){
         if (traitement.isOtage()){
             try{
                 if(traitement.getSelected().getDesc().equals(".")){
@@ -238,19 +239,24 @@ public class Info extends JPanel {
                 }
             }
             catch (NullPointerException nullPointerException){
-                logger.warn("Pas d'élément sélectionnable");
+                logger.warn("Pas d'élément sélectionnable/sélectionné");
             }
-            total_individu.setText("    Nombre total d'individus : " + traitement.getNbTotal().size());
+            total_individu.setText("    Nombre total d'individus : " + traitement.getNbIndividu());
             nb_otage.setText("    Nombre d'otages : " + traitement.getNbOtage());
             total_assaillant.setText("    Nombre total d'assaillants : " + traitement.getNbAssaillant());
-            for(Element e : traitement.getEntoure().values()){
-                String txt = "Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
-                if(!liste.getText().contains(txt)){
-                    liste.setText(liste.getText() + "   " + txt + "\n");
+            String txt = liste.getText();
+            if(reset){
+                txt = "";
+            }
+            for(Element e : traitement.getEntoure()){
+                String line = "Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
+                if(!txt.contains(line)){
+                    txt = txt + "   " + line + "\n";
                 }
                 logger.info("Individu en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getY()));
             }
-            logger.info("Nombre total d'individus : " + traitement.getNbTotal().size());
+            liste.setText(txt);
+            logger.info("Nombre total d'individus : " + traitement.getNbIndividu());
             logger.info("Nombre d'otages : " + traitement.getNbOtage());
             logger.info("Nombre total d'assaillants : " + traitement.getNbAssaillant());
         }
@@ -266,37 +272,34 @@ public class Info extends JPanel {
                 }
             }
             catch (NullPointerException nullPointerException){
-                logger.warn("Pas d'élément sélectionnable");
+                logger.warn("Pas d'élément sélectionnable/séléctionné");
             }
-            total_anomalie.setText("   Total : " + (traitement.getInconnue().size()+traitement.getFeu().size()+traitement.getMaladie().size()+traitement.getIntrusion().size()));
-            nb_anomalie.setText("<html> &nbsp &#160 Nombre de feux : " + traitement.getFeu().size() + "<br/>" +
-                    " &nbsp &#160 Nombre d'intrusions : " + traitement.getIntrusion().size() + "<br/>" +
-                    " &nbsp &#160 Nombre de maladies : " + traitement.getMaladie().size() + "<br/>" +
-                    " &nbsp &#160 Nombre d'anomalies inconnues : " + traitement.getInconnue().size() + "</html>");
-            logger.info("Total : " + (traitement.getInconnue().size()+traitement.getFeu().size()+traitement.getMaladie().size()+traitement.getIntrusion().size()));
-            for(Element e : traitement.getEntoure().values()){
-                String txt = e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX());
-                if(!liste.getText().contains(txt)){
-                    liste.setText(liste.getText() + "   " + txt + "\n");
+            total_anomalie.setText("   Total : " + (traitement.getNbInconnue()+traitement.getNbFeu()+traitement.getNbMaladie()+traitement.getNbIntrusion()));
+            nb_anomalie.setText("<html> &nbsp &#160 Nombre de feux : " + traitement.getNbFeu() + "<br/>" +
+                    " &nbsp &#160 Nombre d'intrusions : " + traitement.getNbIntrusion() + "<br/>" +
+                    " &nbsp &#160 Nombre de maladies : " + traitement.getNbMaladie() + "<br/>" +
+                    " &nbsp &#160 Nombre d'anomalies inconnues : " + traitement.getNbInconnue() + "</html>");
+            logger.info("Total : " + (traitement.getNbInconnue()+traitement.getNbFeu()+traitement.getNbMaladie()+traitement.getNbIntrusion()));
+            String txt = liste.getText();
+            if(reset){
+                txt = "";
+            }
+            for(Element e : traitement.getEntoure()){
+                String line = e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX());
+                if(!txt.contains(line)){
+                    txt = txt + "   " + line + "\n";
                 }
                 logger.info(e.getDesc() + " en : " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (e.getCoordonnees().getY()+traitement.getDebut().getX()));
-                
             }
-            logger.info("Nombre de feux : " + traitement.getFeu().size());
-            logger.info("Nombre de d'intrusion : " + traitement.getIntrusion().size());
-            logger.info("Nombre de maladie : " + traitement.getMaladie().size());
-            logger.info("Nombre d'anomalies inconnues : " + traitement.getInconnue().size());
+            liste.setText(txt);
+            logger.info("Nombre de feux : " + traitement.getNbFeu());
+            logger.info("Nombre de d'intrusion : " + traitement.getNbIntrusion());
+            logger.info("Nombre de maladie : " + traitement.getNbMaladie());
+            logger.info("Nombre d'anomalies inconnues : " + traitement.getNbInconnue());
         }
-       
-        
-        
     }
 
-    public void resetList(){
-        liste.setText("");
-    }
-
-    ActionListener actionListener = new ActionListener() {
+    private class ButtonsListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==next) {
@@ -307,8 +310,8 @@ public class Info extends JPanel {
                 traitement.previous();
                 logger.info("Passage à l'anomalie précédente");
             }
-            majGUI();
+            majGUI(false);
             display.repaint();
         }
-    };
+    }
 }

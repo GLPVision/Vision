@@ -1,5 +1,6 @@
 package affichage;
 
+import config.Configuration;
 import data.Coordonnees;
 import logs.LoggerUtility;
 import org.apache.log4j.Logger;
@@ -215,7 +216,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
 				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
 				String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
-				while (txt.isEmpty() || Integer.parseInt(txt) > (x*y)/4){
+				while (txt.isEmpty() || Integer.parseInt(txt) > Configuration.MAX_OTAGES || Integer.parseInt(txt) < Configuration.MIN_OTAGES){
 					logger.error("Nombre d'otages invalide");
 					JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si le nombre d'otage saisie n'est pas valide
 					txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);

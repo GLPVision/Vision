@@ -1,5 +1,6 @@
 package affichage;
 
+import config.Configuration;
 import data.Coordonnees;
 import data.Element;
 import logs.LoggerUtility;
@@ -210,18 +211,17 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		int state = 0;
 		while (running) {
 			try {
-				Thread.sleep(5);
+				Thread.sleep(Configuration.SPEED);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			if(state == 0){
 				state = traitement.scan();
-				infoPanel.majGUI();
+				infoPanel.majGUI(false);
 				carte.repaint();
 			}
 			else if(traitement.move() == 1){
-				infoPanel.resetList();
-				infoPanel.majGUI();
+				infoPanel.majGUI(true);
 				carte.repaint();
 			}
 		}
@@ -289,7 +289,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			Element selected = traitement.getCarte().getElement(x, y);
 			traitement.setSelected(selected);
 			carte.repaint();
-			infoPanel.majGUI();
+			infoPanel.majGUI(false);
 		}
 
 		@Override

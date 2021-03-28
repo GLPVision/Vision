@@ -1,10 +1,9 @@
 package moteur;
 
+import config.Configuration;
 import data.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
 /**
  * Classe Traitement
@@ -15,13 +14,13 @@ public class Traitement{
     /**
      * Nombre d'otages, nombre d'assaillants, nombre total de personnes, nombre d'intrusions, nombre de feux, nombre de maladies, nombre d'inconnues
      */
-    private int nbOtage, nbAssaillant;
-    private HashMap <Coordonnees, Personne> nbTotal = new HashMap<>();
-    private HashMap <Coordonnees, Intrusion> intrusion = new HashMap<>();
-    private HashMap <Coordonnees, Feu> feu = new HashMap<>();
-    private HashMap <Coordonnees, Maladie> maladie = new HashMap<>();
-    private HashMap <Coordonnees, Anomalie> inconnue = new HashMap<>();
-    private HashMap <Coordonnees, Element> entoure = new HashMap<>();
+    private int nbOtage, nbAssaillant, nbTotal, nbIndividu, nbIntrusion, nbFeu, nbMaladie, nbInconnue;
+    private ArrayList <Personne> individu = new ArrayList<>();
+    private ArrayList <Intrusion> intrusion = new ArrayList<>();
+    private ArrayList <Feu> feu = new ArrayList<>();
+    private ArrayList <Maladie> maladie = new ArrayList<>();
+    private ArrayList <Anomalie> inconnue = new ArrayList<>();
+    private ArrayList <Element> entoure = new ArrayList<>();
     private int selectedIndex;
     private Element selected;
     /**
@@ -68,17 +67,22 @@ public class Traitement{
     }
 
     public void init(){
-        entoure = new HashMap<>();
-        nbTotal = new HashMap<>();
-        intrusion = new HashMap<>();
-        feu = new HashMap<>();
-        maladie = new HashMap<>();
-        inconnue = new HashMap<>();
+        entoure = new ArrayList<>();
+        individu = new ArrayList<>();
+        intrusion = new ArrayList<>();
+        feu = new ArrayList<>();
+        maladie = new ArrayList<>();
+        inconnue = new ArrayList<>();
+        nbTotal = 0;
+        nbIndividu = 0;
+        nbIntrusion = 0;
+        nbFeu = 0;
+        nbMaladie = 0;
+        nbInconnue = 0;
     }
 
     /**
      * Fonction qui scanne le nombre de personne/anomalies
-     * @throws InterruptedException Erreur de sleep
      */
     public int scan(){
         Element[][] tab = carte.getTab(); //recup la carte
@@ -87,19 +91,19 @@ public class Traitement{
 
         if(!circle){
             if(element.getDesc().equals("Personne")) { //si personne
-                nbTotal.put(c, new Personne(c));
+                individu.add(new Personne(c));
             }
             else if(element.getDesc().equals("Intrusion")) { //si intrusion
-                intrusion.put(c, new Intrusion(c));
+                intrusion.add(new Intrusion(c));
             }
             else if(element.getDesc().equals("Feu")) { //si feu
-                feu.put(c, new Feu(c));
+                feu.add(new Feu(c));
             }
             else if(element.getDesc().equals("Maladie")) { //si maladie
-                maladie.put(c, new Maladie(c));
+                maladie.add(new Maladie(c));
             }
             else if(element.getDesc().equals("Inconnue")){ //si inconnue
-                inconnue.put(c, new Anomalie(c));
+                inconnue.add(new Anomalie(c));
             }
             posX++;
             if(posX>=taille.getX()){
@@ -113,19 +117,32 @@ public class Traitement{
         }
         else{ //entourer
             if(!element.getDesc().equals(".")){
-                entoure.put(c, element);
+                entoure.add(element);
             }
-            if(otage) { //si derniere iteration otage
-                nbAssaillant = nbTotal.size() - nbOtage;
+            if(element.getDesc().equals("Personne")) { //si personne
+                nbIndividu++;
+            }
+            else if(element.getDesc().equals("Intrusion")) { //si intrusion
+                nbIntrusion++;
+            }
+            else if(element.getDesc().equals("Feu")) { //si feu
+                nbFeu++;
+            }
+            else if(element.getDesc().equals("Maladie")) { //si maladie
+                nbMaladie++;
+            }
+            else if(element.getDesc().equals("Inconnue")){ //si inconnue
+                nbInconnue++;
             }
             posX++;
             if(posX>=taille.getX()){
                 posX = 0;
                 posY++;
                 if(posY >= taille.getY()){
+                    if(otage) {
+                        nbAssaillant = nbIndividu - nbOtage;
+                    }
                     posY = 0;
-                    //circle = false;
-                    //init();
                     return 1;
                 }
             }
@@ -134,12 +151,11 @@ public class Traitement{
     }
 
     public int move(){
-        Element[][] tab = carte.getTab(); //recup la carte
-        int x = (int) (Math.random()* taille.getX());
-        int y = (int) (Math.random()*taille.getY());
-        if(!tab[x][y].getDesc().equals(".") && (int) (Math.random()*10) == 0){
-            int random = (int) (Math.random()*4);
-            switch (random){
+        if((int) (Math.random()* Configuration.PROBA_MOVE) == 0){
+            Element e = entoure.get((int) (Math.random() * entoure.size()));
+            int x = e.getCoordonnees().getX();
+            int y = e.getCoordonnees().getY();
+            switch ((int) (Math.random()*4)){
                 case 0:
                     up(x, y);
                     break;
@@ -163,61 +179,80 @@ public class Traitement{
     public void up(int x, int y){ // i=x, j=y
         Element[][] tab = carte.getTab(); //recup la carte
         if(y-1 >= 0 && tab[x][y-1].getDesc().equals(".")){ //si y a la place pour bouger
-            for(Coordonnees c : entoure.keySet()) { //elever cercle rouge et element
-                if (entoure.get(c).getCoordonnees().getX() == x && entoure.get(c).getCoordonnees().getY() == y) {
-                    remove(c);
-                    break;
-                }
-            }
-            Element element = tab[x][y];
-            swap(element, x, y, 0, -1);
-            add(element);
+            change(tab[x][y], x, y, 0, -1);
         }
     }
     public void down(int x, int y){
         Element[][] tab = carte.getTab(); //recup la carte
         if(y+1 < taille.getY() && tab[x][y+1].getDesc().equals(".")){ //si y a la place pour bouger
-            for(Coordonnees c : entoure.keySet()) { //elever cercle rouge et element
-                if (entoure.get(c).getCoordonnees().getX() == x && entoure.get(c).getCoordonnees().getY() == y) {
-                    remove(c);
-                    break;
-                }
-            }
-            Element element = tab[x][y];
-            swap(element, x, y, 0, 1);
-            add(element);
+            change(tab[x][y], x, y, 0, 1);
         }
     }
     public void left(int x, int y){
         Element[][] tab = carte.getTab(); //recup la carte
         if(x-1 >= 0 && tab[x-1][y].getDesc().equals(".")){ //si y a la place pour bouger
-            for(Coordonnees c : entoure.keySet()) { //elever cercle rouge et element
-                if (entoure.get(c).getCoordonnees().getX() == x && entoure.get(c).getCoordonnees().getY() == y) {
-                    remove(c);
-                    break;
-                }
-            }
-            Element element = tab[x][y];
-            swap(element, x, y, -1, 0);
-            add(element);
+            change(tab[x][y], x, y, -1, 0);
         }
     }
 
     public void right(int x, int y){
         Element[][] tab = carte.getTab(); //recup la carte
         if(x+1 < taille.getX() && tab[x+1][y].getDesc().equals(".")){ //si y a la place pour bouger
-            for(Coordonnees c : entoure.keySet()) { //elever cercle rouge et element
-                if (entoure.get(c).getCoordonnees().getX() == x && entoure.get(c).getCoordonnees().getY() == y) {
-                    remove(c);
-                    break;
-                }
-            }
-            Element element = tab[x][y];
-            swap(element, x, y, 1, 0);
-            add(element);
+            change(tab[x][y], x, y, 1, 0);
         }
     }
-    public void swap(Element element, int x, int y, int dx, int dy){
+
+    public void change(Element element, int x, int y, int dx, int dy){
+        for(int i=0 ; i<entoure.size() ; i++){
+            if (entoure.get(i).getCoordonnees().getX() == x && entoure.get(i).getCoordonnees().getY() == y) {
+                entoure.get(i).setCoordonnees(new Coordonnees(x+dx, y+dy));
+                break;
+            }
+        }
+        switch(element.getDesc()){
+            case "Personne":
+                for(int i=0 ; i<individu.size() ; i++){
+                    if (individu.get(i).getCoordonnees().getX() == x && individu.get(i).getCoordonnees().getY() == y) {
+                        individu.get(i).setCoordonnees(new Coordonnees(x+dx, y+dy));
+                        break;
+                    }
+                }
+                break;
+            case "Intrusion":
+                for(int i=0 ; i<intrusion.size() ; i++){
+                    if (intrusion.get(i).getCoordonnees().getX() == x && intrusion.get(i).getCoordonnees().getY() == y) {
+                        intrusion.get(i).setCoordonnees(new Coordonnees(x+dx, y+dy));
+                        break;
+                    }
+                }
+                break;
+            case "Feu":
+                for(int i=0 ; i<feu.size() ; i++){
+                    if (feu.get(i).getCoordonnees().getX() == x && feu.get(i).getCoordonnees().getY() == y) {
+                        feu.get(i).setCoordonnees(new Coordonnees(x+dx, y+dy));
+                        break;
+                    }
+                }
+                break;
+            case "Maladie":
+                for(int i=0 ; i<maladie.size() ; i++){
+                    if (maladie.get(i).getCoordonnees().getX() == x && maladie.get(i).getCoordonnees().getY() == y) {
+                        maladie.get(i).setCoordonnees(new Coordonnees(x+dx, y+dy));
+                        break;
+                    }
+                }
+                break;
+            case "Inconnue":
+                for(int i=0 ; i<inconnue.size() ; i++){
+                    if (inconnue.get(i).getCoordonnees().getX() == x && inconnue.get(i).getCoordonnees().getY() == y) {
+                        inconnue.get(i).setCoordonnees(new Coordonnees(x+dx, y+dy));
+                        break;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
         Element[][] tab = carte.getTab(); //recup la carte
         Element cache = tab[x][y];
         element.setCoordonnees(new Coordonnees(x+dx, y+dy));
@@ -225,57 +260,23 @@ public class Traitement{
         tab[x+dx][y+dy] = cache;
     }
 
-    public void remove(Coordonnees coordonnees){
-        entoure.remove(coordonnees);
-        nbTotal.remove(coordonnees);
-        intrusion.remove(coordonnees);
-        feu.remove(coordonnees);
-        maladie.remove(coordonnees);
-        inconnue.remove(coordonnees);
-    }
-
-    public void add(Element element){
-        entoure.put(element.getCoordonnees(), element);
-        switch(element.getDesc()){
-            case "Personne":
-                nbTotal.put(element.getCoordonnees(), (Personne) element);
-                break;
-            case "Intrusion":
-                intrusion.put(element.getCoordonnees(), (Intrusion) element);
-                break;
-            case "Feu":
-                feu.put(element.getCoordonnees(), (Feu) element);
-                break;
-            case "Maladie":
-                maladie.put(element.getCoordonnees(), (Maladie) element);
-                break;
-            case "Inconnue":
-                inconnue.put(element.getCoordonnees(), (Anomalie) element);
-            default:
-                break;
-        }
-    }
 
     public void next(){
-        Collection<Coordonnees> values = entoure.keySet();
-        ArrayList<Coordonnees> elements = new ArrayList<>(values);
         if(selected == null){
             selectedIndex = 0;
         }
         else{
             selectedIndex++;
-            if(selectedIndex>elements.size()-1){
+            if(selectedIndex>entoure.size()-1){
                 selectedIndex = 0;
             }
         }
-        selected = entoure.get(elements.get(selectedIndex));
+        selected = entoure.get(selectedIndex);
     }
 
     public void previous(){
-        Collection<Coordonnees> values = entoure.keySet();
-        ArrayList<Coordonnees> elements = new ArrayList<>(values);
         if(selected == null){
-            selectedIndex = elements.size()-1;
+            selectedIndex = entoure.size()-1;
         }
         else{
             selectedIndex--;
@@ -283,22 +284,28 @@ public class Traitement{
                 selectedIndex = entoure.size()-1;
             }
         }
-        selected = entoure.get(elements.get(selectedIndex));
+        selected = entoure.get(selectedIndex);
     }
 
     /**
      * Fonction qui remet tout à zéro
      */
     public void supp() {
-        this.nbOtage = 0;
-        this.nbAssaillant = 0;
-        this.nbTotal = null;
-        this.inconnue = null;
-        this.feu = null;
-        this.maladie = null;
-        this. intrusion = null;
-        this.carte = null;
-        this.scenario = null;
+        nbOtage = 0;
+        nbAssaillant = 0;
+        nbTotal = 0;
+        nbTotal = 0;
+        nbIndividu = 0;
+        nbIntrusion = 0;
+        nbFeu = 0;
+        nbMaladie = 0;
+        nbInconnue = 0;
+        inconnue = null;
+        feu = null;
+        maladie = null;
+        intrusion = null;
+        carte = null;
+        scenario = null;
     }
 
 
@@ -310,13 +317,6 @@ public class Traitement{
         return scenario;
     }
 
-    /**
-     * Fonction qui retourn si Otage ou Agricole
-     * @return Otage ou Agricole
-     */
-    public boolean getOtage() {
-        return otage;
-    }
 
     /**
      * Fonction qui retourne la carte/matrice
@@ -334,6 +334,10 @@ public class Traitement{
         return taille;
     }
 
+    public Coordonnees getDebut() {
+        return debut;
+    }
+
     /**
      * Fonction qui retourne si Otage ou Agricole
      * @return Otage ou Agricole
@@ -342,47 +346,59 @@ public class Traitement{
         return otage;
     }
 
-    /**
-     * Fonction qui retourne le nombre d'otages
-     * @return Otage
-     */
     public int getNbOtage() {
         return nbOtage;
     }
 
-    public Coordonnees getDebut() {
-        return debut;
-    }
-
-    /**
-     * Fonction qui retourne le nombre d'assaillants
-     * @return Assaillant
-     */
     public int getNbAssaillant() {
         return nbAssaillant;
     }
 
-    public HashMap<Coordonnees, Personne> getNbTotal() {
+    public int getNbTotal() {
         return nbTotal;
     }
 
-    public HashMap<Coordonnees, Intrusion> getIntrusion() {
+    public int getNbIndividu() {
+        return nbIndividu;
+    }
+
+    public int getNbIntrusion() {
+        return nbIntrusion;
+    }
+
+    public int getNbFeu() {
+        return nbFeu;
+    }
+
+    public int getNbMaladie() {
+        return nbMaladie;
+    }
+
+    public int getNbInconnue() {
+        return nbInconnue;
+    }
+
+    public ArrayList <Personne> getIndividu() {
+        return individu;
+    }
+
+    public ArrayList <Intrusion> getIntrusion() {
         return intrusion;
     }
 
-    public HashMap<Coordonnees, Feu> getFeu() {
+    public ArrayList <Feu> getFeu() {
         return feu;
     }
 
-    public HashMap<Coordonnees, Maladie> getMaladie() {
+    public ArrayList <Maladie> getMaladie() {
         return maladie;
     }
 
-    public HashMap<Coordonnees, Anomalie> getInconnue() {
+    public ArrayList <Anomalie> getInconnue() {
         return inconnue;
     }
 
-    public HashMap<Coordonnees, Element> getEntoure() {
+    public ArrayList <Element> getEntoure() {
         return entoure;
     }
 
