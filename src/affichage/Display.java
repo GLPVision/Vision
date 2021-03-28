@@ -33,8 +33,8 @@ public class Display extends JPanel{
         }
         if(traitement.isOtage()){
             ArrayList <Personne> personne = traitement.getIndividu();
-            for(Personne p : personne){
-                paintStrategy.draw(p, g);
+            for(int i=0 ; i<personne.size() ; i++){
+                paintStrategy.draw(personne.get(i), g);
             }
         }
         else{
@@ -56,8 +56,8 @@ public class Display extends JPanel{
             }
         }
         ArrayList <Element> entoure = traitement.getEntoure();
-        for(Element e : entoure){
-            paintStrategy.draw(e, g);
+        for(int i=0 ; i<entoure.size() ; i++){
+            paintStrategy.draw(entoure.get(i), g);
         }
         Element selected = traitement.getSelected();
         paintStrategy.draw_selected(selected, g);
