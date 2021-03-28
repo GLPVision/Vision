@@ -261,6 +261,8 @@ public class AgricoleGUI extends JFrame implements Runnable{
 				nomcarte.setForeground(null);
 				infoPanel.setButtonBackground(SystemColor.activeCaption);
 				infoPanel.setButtonForeground(null);
+				infoPanel.setButtonBackground(SystemColor.activeCaption);
+				infoPanel.setButtonForeground(null);
 				infoPanel.setInfoBackground(new Color(204, 190, 121));
 			}
 
@@ -281,8 +283,11 @@ public class AgricoleGUI extends JFrame implements Runnable{
 				nomcarte.setForeground(Color.white);
 				infoPanel.setButtonBackground(new Color(84,96,143));
 				infoPanel.setButtonForeground(Color.white);
+				infoPanel.setButtonBackground(new Color(84,96,143));
+				infoPanel.setButtonForeground(Color.white);
 				infoPanel.setInfoBackground(Color.white);
 			}
+
 
 			/**
 			 * Action affichant l'aide

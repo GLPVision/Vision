@@ -250,14 +250,42 @@ public class OtageGUI extends JFrame implements Runnable {
 			if(e.getSource()==sombre) {
 				contentPane.setBackground(Color.DARK_GRAY);
 				logger.info("Passage au thème sombre");
+				menu.setBackground(Color.LIGHT_GRAY);//Couleur de l'arri�re plan de la barre de menu
+				Aide.setBackground(Color.LIGHT_GRAY);
+				Aide.setForeground(null);
+				Fichier.setForeground(null);
+				Apparence.setForeground(null);
+				info.setBackground(SystemColor.activeCaption);
+				info.setForeground(null);
+				nomcarte.setBackground(SystemColor.activeCaption);
+				nomcarte.setForeground(null);
+				infoPanel.setButtonBackground(SystemColor.activeCaption);
+				infoPanel.setButtonForeground(null);
+				infoPanel.setButtonBackground(SystemColor.activeCaption);
+				infoPanel.setButtonForeground(null);
+				infoPanel.setInfoBackground(new Color(204, 190, 121));
 			}
 
 			/**
 			 * Action pour passer en thème clair
 			 */
 			if(e.getSource()==clair) {
-				contentPane.setBackground(Color.white);
+				contentPane.setBackground(new Color(145,203,222));
 				logger.info("Passage au thème clair");
+				menu.setBackground(new Color(84,96,143));//Couleur de l'arri�re plan de la barre de menu
+				Aide.setBackground(new Color(84,96,143));
+				Aide.setForeground(Color.white);
+				Fichier.setForeground(Color.white);
+				Apparence.setForeground(Color.white);
+				info.setBackground(new Color(84,96,143));
+				info.setForeground(Color.white);
+				nomcarte.setBackground(new Color(84,96,143));
+				nomcarte.setForeground(Color.white);
+				infoPanel.setButtonBackground(new Color(84,96,143));
+				infoPanel.setButtonForeground(Color.white);
+				infoPanel.setButtonBackground(new Color(84,96,143));
+				infoPanel.setButtonForeground(Color.white);
+				infoPanel.setInfoBackground(Color.white);
 			}
 
 			/**
