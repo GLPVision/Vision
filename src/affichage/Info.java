@@ -248,13 +248,13 @@ public class Info extends JPanel {
         if (traitement.isOtage()){
             try{
                 if(traitement.getSelected().getDesc().equals(".")){
-                    individu.setText("    " + "Aucun Individu en : x = " + traitement.getSelected().getCoordonnees().getX() + " , y =  " + traitement.getSelected().getCoordonnees().getY());
-                    logger.info("Aucun Individu en : " + traitement.getSelected().getCoordonnees().getX() + ", " + traitement.getSelected().getCoordonnees().getY());
+                    individu.setText("    " + "Aucun Individu en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y =  " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
+                    logger.info("Aucun Individu en : " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
 
                 }
                 else{
-                    individu.setText("    " + traitement.getSelected().getDesc() + " en : x = " + traitement.getSelected().getCoordonnees().getX() + " , y = " + traitement.getSelected().getCoordonnees().getY());
-                    logger.info(traitement.getSelected().getDesc() + " sélectionée en : x = " + traitement.getSelected().getCoordonnees().getX() + " , y = " + traitement.getSelected().getCoordonnees().getY());
+                    individu.setText("    " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
+                    logger.info(traitement.getSelected().getDesc() + " sélectionée en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                 }
             }
             catch (NullPointerException nullPointerException){
@@ -289,12 +289,12 @@ public class Info extends JPanel {
         else {
             try{
                 if(traitement.getSelected().getDesc().equals(".")){
-                    anomalie.setText("    " + "Aucune anomalie en : x = " + traitement.getSelected().getCoordonnees().getX() + " , y = " + traitement.getSelected().getCoordonnees().getY());
-                    logger.info("    " + "Aucune anomalie en : x = " + traitement.getSelected().getCoordonnees().getX() + " , y = " + traitement.getSelected().getCoordonnees().getY());
+                    anomalie.setText("    " + "Aucune anomalie en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
+                    logger.info("    " + "Aucune anomalie en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                 }
                 else{
-                    anomalie.setText("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + traitement.getSelected().getCoordonnees().getX() + " , y = " + traitement.getSelected().getCoordonnees().getY());
-                    logger.info("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + traitement.getSelected().getCoordonnees().getX() + " , y = " + traitement.getSelected().getCoordonnees().getY());
+                    anomalie.setText("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
+                    logger.info("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                 }
             }
             catch (NullPointerException nullPointerException){
