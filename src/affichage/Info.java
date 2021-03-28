@@ -253,8 +253,8 @@ public class Info extends JPanel {
 
                 }
                 else{
-                    individu.setText("    " + traitement.getSelected().getDesc() + " en : x =" + traitement.getSelected().getCoordonnees().getX() + " , y =" + traitement.getSelected().getCoordonnees().getY());
-                    logger.info(traitement.getSelected().getDesc() + " sélectionée en : x =" + traitement.getSelected().getCoordonnees().getX() + " , y =" + traitement.getSelected().getCoordonnees().getY());
+                    individu.setText("    " + traitement.getSelected().getDesc() + " en : x = " + traitement.getSelected().getCoordonnees().getX() + " , y = " + traitement.getSelected().getCoordonnees().getY());
+                    logger.info(traitement.getSelected().getDesc() + " sélectionée en : x = " + traitement.getSelected().getCoordonnees().getX() + " , y = " + traitement.getSelected().getCoordonnees().getY());
                 }
             }
             catch (NullPointerException nullPointerException){
