@@ -1,5 +1,12 @@
 package config;
 
+/**
+ * Configuration du programme
+ *
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ *
+ * @version 2
+ */
 public class Configuration {
     public static final int MAX_OTAGES = 10;
     public static final int MIN_OTAGES = 1;

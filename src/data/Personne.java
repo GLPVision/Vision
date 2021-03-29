@@ -26,6 +26,10 @@ public class Personne extends Element {
         return personne;
     }
 
+    /**
+     * Fonction qui définit la description
+     * @param personne Description
+     */
     public void setDesc(String personne) {
         this.personne = personne;
     }

@@ -151,14 +151,28 @@ public class Carte {
         return tab;
     }
 
+    /**
+     * Fonction qui retourne les dimensions de la carte
+     * @return Dimensions
+     */
     public Coordonnees getTaille() {
         return taille;
     }
 
+    /**
+     * Fonctione qui retourne si c'est une carte d'otage ou agricole
+     * @return Otage ou agricole
+     */
     public boolean isOtage() {
         return otage;
     }
 
+    /**
+     * Fonction qui retourne un élément à une position x y
+     * @param x position x
+     * @param y position y
+     * @return Elément
+     */
     public Element getElement(int x, int y) {
         return tab[x][y];
     }

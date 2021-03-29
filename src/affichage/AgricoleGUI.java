@@ -38,7 +38,13 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	private JTextField nomcarte, info;
 	private Traitement traitement;
 	private Coordonnees taille, debut;
+	/**
+	 * largeur à soustraire, hauteur à soustraire, largeur de case, hauteur de case
+	 */
 	private int diffx, diffy, casex, casey;
+	/**
+	 * Etat du Thread
+	 */
 	private boolean running = true;
 
 	/**
@@ -201,33 +207,39 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		this.setVisible(true);
 	}
 
+	/**
+	 * Thread
+	 */
 	@Override
 	public void run() {
 		try {
-			init(debut, taille);
+			init(debut, taille); //création fenêtre
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int state = 0;
+		int state = 0; //état du scan
 		while (running) {
 			try {
-				Thread.sleep(Configuration.SPEED);
+				Thread.sleep(Configuration.SPEED); //vitesse
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			if(state == 0){
-				state = traitement.scan();
-				infoPanel.majGUI(false);
-				carte.repaint();
+			if(state == 0){ //si scan non terminé
+				state = traitement.scan(); //scan
+				infoPanel.majGUI(false); //maj des info sans remise à zéro de la liste
+				carte.repaint(); //maj de la carte
 			}
-			else if(traitement.move() == 1){
-				infoPanel.majGUI(true);
-				carte.repaint();
+			else if(traitement.move() == 1){ //si a bougé
+				infoPanel.majGUI(true); //maj des info avec remise à zéro de la liste
+				carte.repaint(); //maj de la carte
 			}
 		}
-		traitement.supp();
+		traitement.supp(); //libère mémoire
 	}
 
+	/**
+	 * Arrêter le Thread
+	 */
 	public void stop(){
 		running = false;
 	}

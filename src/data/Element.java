@@ -37,9 +37,18 @@ public class Element {
         return coordonnees;
     }
 
+    /**
+     * Fonction qui définit la description
+     * @param desc Description
+     */
     public void setDesc(String desc){
         this.desc = desc;
     }
+
+    /**
+     * Fonction qui définit les coordonnées
+     * @param coordonnees Coordonnées
+     */
     public void setCoordonnees(Coordonnees coordonnees){
         this.coordonnees = coordonnees;
     }

@@ -243,16 +243,20 @@ public class Info extends JPanel {
     	this.setBackground(color);
     	
     }
-    
+
+    /**
+     * Met à jour la liste
+     * @param reset Remise à zéro
+     */
     public void majGUI(boolean reset){
-        if (traitement.isOtage()){
+        if (traitement.isOtage()){ //otage
             try{
-                if(traitement.getSelected().getDesc().equals(".")){
+                if(traitement.getSelected().getDesc().equals(".")){ //sélection vide
                     individu.setText("    " + "Aucun Individu en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y =  " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                     logger.info("Aucun Individu en : " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
 
                 }
-                else{
+                else{ //individu
                     individu.setText("    " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                     logger.info(traitement.getSelected().getDesc() + " sélectionée en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                 }
@@ -264,17 +268,17 @@ public class Info extends JPanel {
             nb_otage.setText("    Nombre d'otages : " + traitement.getNbOtage());
             total_assaillant.setText("    Nombre total d'assaillants : " + traitement.getNbAssaillant());
             String txt = liste.getText();
-            if(reset){
+            if(reset){ //vide la liste
                 txt = "";
             }
-            for(Element e : traitement.getEntoure()){
+            for(Element e : traitement.getEntoure()){ //liste les individus
                 String line = e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
                 if(!txt.contains(line)){
                     txt = txt + "   " + line + "\n";
                 }
                 logger.info(e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY()));
             }
-            for(Element e : traitement.getIndividu()){
+            for(Element e : traitement.getIndividu()){ //liste les assaillants
                 String line = e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
                 if(!txt.contains(line)){
                     txt = txt + "   " + line + "\n";
@@ -286,13 +290,13 @@ public class Info extends JPanel {
             logger.info("Nombre d'otages : " + traitement.getNbOtage());
             logger.info("Nombre total d'assaillants : " + traitement.getNbAssaillant());
         }
-        else {
+        else { //agricole
             try{
-                if(traitement.getSelected().getDesc().equals(".")){
+                if(traitement.getSelected().getDesc().equals(".")){ //sélection vide
                     anomalie.setText("    " + "Aucune anomalie en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                     logger.info("    " + "Aucune anomalie en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                 }
-                else{
+                else{ //anomalies
                     anomalie.setText("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                     logger.info("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                 }
@@ -307,10 +311,10 @@ public class Info extends JPanel {
                     " &nbsp &#160 Nombre d'anomalies inconnues : " + traitement.getNbInconnue() + "</html>");
             logger.info("Total : " + (traitement.getNbInconnue()+traitement.getNbFeu()+traitement.getNbMaladie()+traitement.getNbIntrusion()));
             String txt = liste.getText();
-            if(reset){
+            if(reset){ //vide la liste
                 txt = "";
             }
-            for(Element e : traitement.getEntoure()){
+            for(Element e : traitement.getEntoure()){ //liste les anomalies
                 String line = e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getX());
                 if(!txt.contains(line)){
                     txt = txt + "   " + line + "\n";
