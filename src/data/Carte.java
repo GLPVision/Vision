@@ -44,7 +44,7 @@ public class Carte {
         this.taille = taille;
         this.otage = mode;
         this.nb_otage = nb_otage;
-        tab = new Element[taille.getY()][taille.getX()];
+        tab = new Element[taille.getX()][taille.getY()];
         init();
     }
 
@@ -81,10 +81,10 @@ public class Carte {
                     int random = (int) (Math.random()* Configuration.PROBA_INDIVIDU); //aléatoire
                     switch(random){
                         case 1:
-                            tab[i][j] = new Personne(new Coordonnees(i, j)); //personne
+                            tab[j][i] = new Personne(new Coordonnees(j, i)); //personne
                             break;
                         default:
-                            tab[i][j] = new Element(new Coordonnees(i, j)); //rien
+                            tab[j][i] = new Element(new Coordonnees(j, i)); //rien
                             break;
                     }
                 }
@@ -92,19 +92,19 @@ public class Carte {
                     int random = (int) (Math.random()*Configuration.PROBA_ANOMALIE); //aléatoire
                     switch (random) {
                         case 1:
-                            tab[i][j] = new Maladie(new Coordonnees(i, j)); //maladie
+                            tab[j][i] = new Maladie(new Coordonnees(j, i)); //maladie
                             break;
                         case 2:
-                            tab[i][j] = new Intrusion(new Coordonnees(i, j)); //intrusion
+                            tab[j][i] = new Intrusion(new Coordonnees(j, i)); //intrusion
                             break;
                         case 3:
-                            tab[i][j] = new Feu(new Coordonnees(i, j)); //feu
+                            tab[j][i] = new Feu(new Coordonnees(j, i)); //feu
                             break;
                         case 4:
-                            tab[i][j] = new Anomalie(new Coordonnees(i, j)); //anomalie
+                            tab[j][i] = new Anomalie(new Coordonnees(j, i)); //anomalie
                             break;
                         default:
-                            tab[i][j] = new Element(new Coordonnees(i, j)); //rien
+                            tab[j][i] = new Element(new Coordonnees(j, i)); //rien
                             break;
                     }
                 }
@@ -130,7 +130,7 @@ public class Carte {
         int nb =0;
         for (int i=0 ; i< taille.getY() ; i++){ //parcours x
             for (int j=0 ; j< taille.getX() ; j++){ //parcours y
-                if (tab[i][j].getDesc() != "."){ //si pas rien
+                if (tab[j][i].getDesc() != "."){ //si pas rien
                     nb++;
                 }
             }
