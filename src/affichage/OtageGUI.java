@@ -22,7 +22,7 @@ import java.io.IOException;
  * 
  * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
  * 
- * @version 12
+ * @version 18
  */
 
 public class OtageGUI extends JFrame implements Runnable {
@@ -193,9 +193,16 @@ public class OtageGUI extends JFrame implements Runnable {
 		carte.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		contentPane.add(carte);
 
+		/**
+		 * Mise en place des informations
+		 */
 		infoPanel = new Info(traitement, diffy, carte);
 		contentPane.add(infoPanel);
+		
 
+		/**
+		 * Propriétés de la fenêtre
+		 */
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
 		this.setIconImage(icon.getImage());
@@ -213,29 +220,60 @@ public class OtageGUI extends JFrame implements Runnable {
 	 */
 	@Override
 	public void run(){
+		/**
+		 * Création de la fenêtre
+		 */
 		try {
-			init(debut, taille); //création fenêtre
+			init(debut, taille);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int state = 0; //état du scan
+		
+		/**
+		 * Mise en place de l'état du scan
+		 */
+		int state = 0;
 		while (running) {
+			
+			/**
+			 * Mise en place de la vitesse de simulation
+			 */
 			try {
-				Thread.sleep(Configuration.SPEED); //vitesse
+				Thread.sleep(Configuration.SPEED);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
+			/**
+			 * Si le scan n'est pas terminé
+			 * 
+			 * Mise à jour des informations sans remettre la liste à zéro
+			 * 
+			 * Mise à jour de la carte
+			 */
 			if(state == 0){
 				state = traitement.scan();
-				infoPanel.majGUI(false); //maj des info sans remise à zéro de la liste
-				carte.repaint(); //maj de la carte
+				infoPanel.majGUI(false);
+				carte.repaint();
 			}
+			
+			/**
+			 * Si le scan a rencontrer un changement
+			 * 
+			 * Mise à jour des informations sans remettre la liste à zéro
+			 * 
+			 * Mise à jour de la carte
+			 */
 			else if(traitement.move() == 1){
-				infoPanel.majGUI(true); //maj des info avec remise à zéro de la liste
-				carte.repaint(); //maj de la carte
+				infoPanel.majGUI(true);
+				carte.repaint();
 			}
 		}
-		traitement.supp(); //libère mémoire
+		
+		/**
+		 * Libération de la mémoire
+		 */
+		traitement.supp();
 	}
 
 	/**
@@ -312,6 +350,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 			 */
 			if(e.getSource()==recherche) {
+				@SuppressWarnings("unused")
 				VisionGUI fen = new VisionGUI();
 				OtageGUI.this.setVisible(false);
 				OtageGUI.this.stop();
@@ -322,6 +361,11 @@ public class OtageGUI extends JFrame implements Runnable {
 
 	private class Click implements MouseListener {
 
+		/**
+		 * 
+		 * Mise en place des évènement (actions réalisés lors d'une interraction avec la souris
+		 * 
+		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			int x = e.getX()/casex;

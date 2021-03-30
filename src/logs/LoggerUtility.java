@@ -11,8 +11,15 @@ import org.apache.log4j.PropertyConfigurator;
  * @version 2
  */
 public class LoggerUtility {
-	private static final String FILE_LOG_CONFIG = "src/logs/log4j-file.properties"; //txt
-	private static final String HTML_LOG_CONFIG = "src/logs/log4j-html.properties"; //html
+	/**
+	 * En txt
+	 */
+	private static final String FILE_LOG_CONFIG = "src/logs/log4j-file.properties";
+	
+	/**
+	 * En html
+	 */
+	private static final String HTML_LOG_CONFIG = "src/logs/log4j-html.properties";
 
 	/**
 	 * Logger
@@ -23,5 +30,13 @@ public class LoggerUtility {
 		PropertyConfigurator.configure(HTML_LOG_CONFIG);
 		String className = logClass.getName();
 		return Logger.getLogger(className);
+	}
+
+	/**
+	 * getter de Filelogconfig
+	 * @return
+	 */
+	public static String getFileLogConfig() {
+		return FILE_LOG_CONFIG;
 	}
 }

@@ -139,7 +139,7 @@ public class Carte {
             nb_assaillant = nb - nb_otage; //calcul nombre d'otages
         }
         else {
-            nb_anomalie = nb; //calcul nombre d'anomalies
+            setNb_anomalie(nb); //calcul nombre d'anomalies
         }
     }
 
@@ -176,5 +176,37 @@ public class Carte {
     public Element getElement(int x, int y) {
         return tab[x][y];
     }
+
+	/**
+	 * getter de Date
+	 * @return
+	 */
+    public Date getDate() {
+		return date;
+	}
+
+    /**
+     * Setter de Date
+     * @param date
+     */
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	/**
+	 * getter du nombre d'anomalies
+	 * @return
+	 */
+	public int getNb_anomalie() {
+		return nb_anomalie;
+	}
+
+	/**
+	 * Setter du nombre d'anomalies
+	 * @param nb_anomalie
+	 */
+	public void setNb_anomalie(int nb_anomalie) {
+		this.nb_anomalie = nb_anomalie;
+	}
 }
 

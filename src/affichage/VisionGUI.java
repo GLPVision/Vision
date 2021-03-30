@@ -16,7 +16,7 @@ import java.io.IOException;
  * 
  * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
  *
- * @version 5
+ * @version 8
  */
 public class VisionGUI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -158,6 +158,9 @@ public class VisionGUI extends JFrame implements ActionListener {
 		yfin.setBackground(new Color(204, 190, 121));
 		yfin.setBorder(null);
 
+		/**
+		 * Propriétés de la fenêtre
+		 */
 		this.getContentPane().setBackground(Color.DARK_GRAY);
 		ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("drone.png"));
 		this.setIconImage(icon.getImage());
@@ -182,8 +185,16 @@ public class VisionGUI extends JFrame implements ActionListener {
 		 */
 		if(e.getSource()==agricole) {
 			logger.info("Scénario : agriculure");
-			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
-				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
+			
+			/**
+			 * Vérification si il y a un nombre
+			 */
+			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){
+				
+				/**
+				 * Affichage d'un message d'erreur si les coordonnées saisie ne sont pas valides
+				 */
+				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);
 				logger.error("Coordonnées invalides");
 			}
 			else{
@@ -208,8 +219,16 @@ public class VisionGUI extends JFrame implements ActionListener {
 		 */
 		if(e.getSource()==otage) {
 			logger.info("Scénario : otage");
-			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){ //a ajouter verif si nombre
-				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);//Affiche un message d'erreur si les coordonn�es saisie ne sont pas valide
+			
+			/**
+			 * Vérification si il y a un nombre
+			 */
+			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){
+				
+				/**
+				 * Affichage d'un message d'erreur si les coordonnées saisie ne sont pas valides
+				 */
+				JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);
 				logger.error("Coordonnées invalides");
 			}
 			else {
@@ -219,7 +238,11 @@ public class VisionGUI extends JFrame implements ActionListener {
 				if(txt != null){
 					while (txt.isEmpty() || Integer.parseInt(txt) > Configuration.MAX_OTAGES || Integer.parseInt(txt) < Configuration.MIN_OTAGES){
 						logger.error("Nombre d'otages invalide");
-						JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE); //Affiche un message d'erreur si le nombre d'otage saisie n'est pas valide
+						
+						/**
+						 * Affichage d'un message d'erreur si le nombre d'otages saisis n'est pas valide
+						 */
+						JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE);
 						txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
 					}
 					logger.info("Création d'une fenêtre Otage");

@@ -1,7 +1,6 @@
 package affichage;
 
 import data.Element;
-import data.Personne;
 import logs.LoggerUtility;
 import moteur.Traitement;
 import org.apache.log4j.Logger;
@@ -12,10 +11,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Mise en place des différentes informations à afficher
+ * 
+ * @author Christian BERANGER, Alexis MOSQUERA, Antoine QIU
+ * 
+ * @version 10
+ */
+
 public class Info extends JPanel {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
     private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
     private JLabel txt_anomalie, anomalie, txt_liste_anomalie, txt_nb_anomalie, nb_anomalie, total_anomalie;
@@ -188,6 +192,9 @@ public class Info extends JPanel {
             total_anomalie.setBounds(0, 450, 255, 30);
             this.add(total_anomalie);
             
+            /**
+             * Texte des boutons
+             */
             prec = new JButton("Anomalie précédente");
             next = new JButton("Anomalie suivante");
         }
@@ -197,15 +204,24 @@ public class Info extends JPanel {
         buttonPanel.setBounds(0, 480, 255, 120-diffy);
         buttonPanel.setBackground(new Color(204, 190, 121));
 
+        /**
+         * Mise en place de la charte graphique du bouton "précédent"
+         */
         ButtonsListener listener = new ButtonsListener();
         prec.setBorder(null);
         prec.setBackground(SystemColor.activeCaption);
         prec.addActionListener(listener);
         
+        /**
+         * Mise en place de la charte graphique du bouton "suivant"
+         */
         next.setBorder(null);
         next.setBackground(SystemColor.activeCaption);
         next.addActionListener(listener);
         
+        /**
+         * Mise en place graphique
+         */
         this.setBounds(10, 50, 255, 600-diffy);
         this.setBorder(new MatteBorder(3, 3, 3, 3, (Color) Color.BLACK));
         this.setLayout(null);
@@ -222,21 +238,57 @@ public class Info extends JPanel {
         sl_panel.putConstraint(SpringLayout.WEST, next, 10, SpringLayout.WEST, buttonPanel);
         sl_panel.putConstraint(SpringLayout.EAST, next, -10, SpringLayout.EAST, buttonPanel);
         
+        
+        /**
+         * Ajout des boutons à l'application
+         */
         buttonPanel.add(prec);
         buttonPanel.add(next);
         this.add(buttonPanel);
     }
     
+    /**
+     * getter de diffy
+     * @return
+     */
+    public int getDiffy() {
+  		return diffy;
+  	}
+
+    /**
+     * setter de diffy
+     * @param diffy
+     */
+  	public void setDiffy(int diffy) {
+  		this.diffy = diffy;
+  	}
+
+    
+    /**
+     * Mise en place des changements de couleur de background des boutons pour les thèmes d'apparence
+     * 
+     * @param color
+     */
     public void setButtonBackground(Color color) {
     	next.setBackground(color);
     	prec.setBackground(color);
     }
     
+    /**
+     * Mise en place des changements de couleur de texte des boutons pour les thèmes d'apparence
+     * 
+     * @param color
+     */
     public void setButtonForeground(Color color) {
     	next.setForeground(color);
     	prec.setForeground(color);
     }
     
+    /**
+     * Mise en place des changements de couleur des différentes informations qui s'affichent dans la grille d'information
+     *     
+     * @param color
+     */
     public void setInfoBackground (Color color){
     	liste.setBackground(color);
     	buttonPanel.setBackground(color);
@@ -246,16 +298,29 @@ public class Info extends JPanel {
 
     /**
      * Met à jour la liste
+     * 
      * @param reset Remise à zéro
      */
     public void majGUI(boolean reset){
-        if (traitement.isOtage()){ //otage
+    	
+    	/**
+    	 * 
+    	 * Scénario Otage
+    	 * 
+    	 */
+        if (traitement.isOtage()){
             try{
-                if(traitement.getSelected().getDesc().equals(".")){ //sélection vide
+            	/**
+            	 * Si la case sélectionnée ne contient rien
+            	 */
+                if(traitement.getSelected().getDesc().equals(".")){ 
                     individu.setText("    " + "Aucun Individu en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y =  " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                     logger.info("Aucun Individu en : " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
 
                 }
+                /**
+                 * Si la case sélectionnée contient une image supplémentaire de celle du fond
+                 */
                 else{ //individu
                     individu.setText("    " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                     logger.info(traitement.getSelected().getDesc() + " sélectionée en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
@@ -264,38 +329,73 @@ public class Info extends JPanel {
             catch (NullPointerException nullPointerException){
                 logger.warn("Pas d'élément sélectionnable/sélectionné");
             }
+            
+            /**
+             * Affichage des nombres d'items recherchés
+             */
             total_individu.setText("    Nombre total d'individus : " + traitement.getNbIndividu());
             nb_otage.setText("    Nombre d'otages : " + traitement.getNbOtage());
             total_assaillant.setText("    Nombre total d'assaillants : " + traitement.getNbAssaillant());
             String txt = liste.getText();
+            
+            /**
+             * mise en place de la liste d'informations en fonction des coordonnées des individus repérés
+             */
             if(reset){ //vide la liste
                 txt = "";
             }
-            for(Element e : traitement.getEntoure()){ //liste les individus
+            
+            /**
+             * Liste des individus
+             */
+            for(Element e : traitement.getEntoure()){
                 String line = e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
                 if(!txt.contains(line)){
                     txt = txt + "   " + line + "\n";
                 }
                 logger.info(e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY()));
             }
-            for(Element e : traitement.getIndividu()){ //liste les assaillants
+            
+            /**
+             * Liste des assaillants
+             */
+            for(Element e : traitement.getIndividu()){
                 String line = e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY());
                 if(!txt.contains(line)){
                     txt = txt + "   " + line + "\n";
                 }
                 logger.info(e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (e.getCoordonnees().getY()+traitement.getDebut().getY()));
             }
+            
+            /**
+             * Ajout à la liste
+             */
             liste.setText(txt);
             logger.info("Nombre total d'individus : " + traitement.getNbIndividu());
             logger.info("Nombre d'otages : " + traitement.getNbOtage());
             logger.info("Nombre total d'assaillants : " + traitement.getNbAssaillant());
         }
-        else { //agricole
+        
+        
+        /**
+         * 
+         * Scénario Agricole
+         * 
+         */
+        else {
             try{
-                if(traitement.getSelected().getDesc().equals(".")){ //sélection vide
+            	
+            	/**
+            	 * Si la case sélectionnée ne contient rien
+            	 */
+                if(traitement.getSelected().getDesc().equals(".")){
                     anomalie.setText("    " + "Aucune anomalie en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                     logger.info("    " + "Aucune anomalie en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                 }
+                
+                /**
+                 * Si la case sélectionnée contient une anomalie
+                 */
                 else{ //anomalies
                     anomalie.setText("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                     logger.info("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
@@ -304,6 +404,10 @@ public class Info extends JPanel {
             catch (NullPointerException nullPointerException){
                 logger.warn("Pas d'élément sélectionnable/séléctionné");
             }
+            
+            /**
+             * Affichage des nombres d'items recherchés 
+             */
             total_anomalie.setText("   Total : " + (traitement.getNbInconnue()+traitement.getNbFeu()+traitement.getNbMaladie()+traitement.getNbIntrusion()));
             nb_anomalie.setText("<html> &nbsp &#160 Nombre de feux : " + traitement.getNbFeu() + "<br/>" +
                     " &nbsp &#160 Nombre d'intrusions : " + traitement.getNbIntrusion() + "<br/>" +
@@ -321,6 +425,10 @@ public class Info extends JPanel {
                 }
                 logger.info(e.getDesc() + " en : x = " + (e.getCoordonnees().getX()+traitement.getDebut().getX()) + ", y = " + (e.getCoordonnees().getY()+traitement.getDebut().getX()));
             }
+            
+            /**
+             * Ajout des éléments à la liste
+             */
             liste.setText(txt);
             logger.info("Nombre de feux : " + traitement.getNbFeu());
             logger.info("Nombre d'intrusion : " + traitement.getNbIntrusion());
@@ -329,8 +437,11 @@ public class Info extends JPanel {
         }
     }
 
-    private class ButtonsListener implements ActionListener{
+	private class ButtonsListener implements ActionListener{
         @Override
+        /**
+         * mise en place des action réalisées par les boutons
+         */
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==next) {
                 traitement.next();
