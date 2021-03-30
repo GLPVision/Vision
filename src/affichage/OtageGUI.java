@@ -1,10 +1,10 @@
 package affichage;
 
 import config.Configuration;
-import data.Chronometre;
 import data.Coordonnees;
 import data.Element;
 import logs.LoggerUtility;
+import moteur.Chronometre;
 import moteur.Traitement;
 import org.apache.log4j.Logger;
 
