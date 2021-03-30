@@ -39,7 +39,7 @@ public class Info extends JPanel {
             /**
              * Mise en place de l'encadré de texte affichant le nombre d'otages rempli par l'utilisateur au préalable
              */
-            nb_otage = new JLabel("    Nombre d'otages :");
+            nb_otage = new JLabel("  Nombre d'otages :");
             nb_otage.setHorizontalAlignment(SwingConstants.LEFT);
             nb_otage.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
             nb_otage.setBounds(0, 0, 255, 30);
@@ -48,7 +48,7 @@ public class Info extends JPanel {
             /**
              * Mise en place de l'encadré de texte affichant les coordonnées de l'individu que l'on a sélectionner sur la carte
              */
-            txt_individu = new JLabel("    Coordonnées de l'individu actuel");
+            txt_individu = new JLabel("  Coordonnées de l'individu actuel");
             txt_individu.setBackground(SystemColor.activeCaption);
             txt_individu.setHorizontalAlignment(SwingConstants.LEFT);
             txt_individu.setBounds(0, 30, 255, 30);
@@ -68,7 +68,7 @@ public class Info extends JPanel {
             /**
              * Mise en place du texte au dessus de la liste
              */
-            txt_liste_individu = new JLabel("    Coordonnées des individus repérés");
+            txt_liste_individu = new JLabel("  Liste des individus repérés par le drone");
             txt_liste_individu.setHorizontalAlignment(SwingConstants.LEFT);
             txt_liste_individu.setBorder(new MatteBorder(3, 0, 0, 0, (Color) new Color(0, 0, 0)));
             txt_liste_individu.setBackground(SystemColor.activeCaption);
@@ -97,7 +97,7 @@ public class Info extends JPanel {
             /**
              * Mise en place de l'encadré de texte affichant le nombre total d'individu présents sur la carte
              */
-            total_individu = new JLabel("    Nombre total d'individus :");
+            total_individu = new JLabel("  Nombre total d'individus :");
             total_individu.setHorizontalAlignment(SwingConstants.LEFT);
             total_individu.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
             total_individu.setBounds(0, 420, 255, 30);
@@ -106,7 +106,7 @@ public class Info extends JPanel {
             /**
              * Mise en place de l'encadré de texte affichant le nombre total d'assaillants présents sur la carte
              */
-            total_assaillant = new JLabel("    Nombre total d'assaillants : ");
+            total_assaillant = new JLabel("  Nombre total d'assaillants : ");
             total_assaillant.setHorizontalAlignment(SwingConstants.LEFT);
             total_assaillant.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
             total_assaillant.setBounds(0, 450, 255, 30);
@@ -120,7 +120,7 @@ public class Info extends JPanel {
             /**
              * Mise en place de l'encadré de texte affichant l'anomalie sélectionnée sur la carte
              */
-            txt_anomalie = new JLabel("    Anomalie sélectionnée");
+            txt_anomalie = new JLabel("  Anomalie sélectionnée");
             txt_anomalie.setHorizontalAlignment(SwingConstants.LEFT);
             txt_anomalie.setBounds(0, 0, 255, 30);
             txt_anomalie.setBorder(new MatteBorder(3, 0, 3, 0, (Color) new Color(0, 0, 0)));
@@ -139,7 +139,7 @@ public class Info extends JPanel {
             /**
              * Mise en place du texte au dessus de la liste
              */
-            txt_liste_anomalie = new JLabel("    Liste des anomalies présentes");
+            txt_liste_anomalie = new JLabel("  Liste des anomalies repérées par le drone");
             txt_liste_anomalie.setHorizontalAlignment(SwingConstants.LEFT);
             txt_liste_anomalie.setBorder(new MatteBorder(3, 0, 0, 0, (Color) new Color(0, 0, 0)));
             txt_liste_anomalie.setBounds(0, 80, 255, 30);
@@ -167,7 +167,7 @@ public class Info extends JPanel {
             /**
              * Mise en place de l'encadré de texte affichant le nombre d'anomalies de chaque catégorie présentes sur la carte
              */
-            txt_nb_anomalie = new JLabel("    Nombre d'anomalies");
+            txt_nb_anomalie = new JLabel("  Nombre d'anomalies");
             txt_nb_anomalie.setHorizontalAlignment(SwingConstants.LEFT);
             txt_nb_anomalie.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(0, 0, 0)));
             txt_nb_anomalie.setBounds(0, 340, 255, 30);
@@ -333,9 +333,9 @@ public class Info extends JPanel {
             /**
              * Affichage des nombres d'items recherchés
              */
-            total_individu.setText("    Nombre total d'individus : " + traitement.getNbIndividu());
-            nb_otage.setText("    Nombre d'otages : " + traitement.getNbOtage());
-            total_assaillant.setText("    Nombre total d'assaillants : " + traitement.getNbAssaillant());
+            total_individu.setText("  Nombre total d'individus : " + traitement.getNbIndividu());
+            nb_otage.setText("  Nombre d'otages : " + traitement.getNbOtage());
+            total_assaillant.setText("  Nombre total d'assaillants : " + traitement.getNbAssaillant());
             String txt = liste.getText();
             
             /**

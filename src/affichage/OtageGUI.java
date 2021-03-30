@@ -35,9 +35,12 @@ public class OtageGUI extends JFrame implements Runnable {
 	private JMenuBar menu;
 	private JMenu Fichier, Apparence;
 	private JMenuItem recherche, quitter, sombre, clair, Aide;
-	private JTextField nomcarte, info;
+	private JTextField nomcarte, info, date;
 	private Traitement traitement;
 	private Coordonnees taille, debut;
+	private JSlider vitesse;
+	private JLabel numero;
+	
 	/**
 	 * largeur à soustraire, hauteur à soustraire, largeur de case, hauteur de case
 	 */
@@ -151,13 +154,25 @@ public class OtageGUI extends JFrame implements Runnable {
 		 */
 		nomcarte = new JTextField();
 		nomcarte.setHorizontalAlignment(SwingConstants.CENTER);
-		nomcarte.setBounds(274, 25, 90, 25);
+		nomcarte.setBounds(274, 25, 180, 25);
 		contentPane.add(nomcarte);
 		nomcarte.setColumns(10);
-		nomcarte.setText("Cartographie : ");
+		nomcarte.setText("Cartographie : Vision du drone ");
 		nomcarte.setEditable(false);
 		nomcarte.setBackground(SystemColor.activeCaption);
 		nomcarte.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
+		
+		numero = new JLabel();
+		numero.setHorizontalAlignment(SwingConstants.LEFT);
+		numero.setBounds(640, 28, 150, 15);
+		contentPane.add(numero);
+		numero.setText("Vitesse de simulation : ");
+		numero.setForeground(Color.white);
+		
+		vitesse = new JSlider();
+		vitesse.setBounds(800, 25, 100, 25);
+		contentPane.add(vitesse);
+		vitesse.setBackground(Color.DARK_GRAY);
 		
 		/**
 		 * Mise en place du nom au dessus du cadre d'informations
@@ -180,6 +195,16 @@ public class OtageGUI extends JFrame implements Runnable {
 		int tailley = casey*traitement.getTaille().getY();
 		diffy = 600-tailley;
 		diffx = 950-taillex;
+		
+		date = new JTextField();
+		date.setHorizontalAlignment(SwingConstants.LEFT);
+		date.setBounds(1104-diffx, 25, 120, 25);
+		contentPane.add(date);
+		date.setColumns(10);
+		date.setText(" Temps : ");
+		date.setEditable(false);
+		date.setBackground(SystemColor.activeCaption);
+		date.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
 
 		/**
 		 * Mise en place du cadre contenant la carte
@@ -305,8 +330,12 @@ public class OtageGUI extends JFrame implements Runnable {
 				Aide.setForeground(null);
 				Fichier.setForeground(null);
 				Apparence.setForeground(null);
+				numero.setForeground(Color.white);
+				vitesse.setBackground(Color.DARK_GRAY);
 				info.setBackground(SystemColor.activeCaption);
 				info.setForeground(null);
+				date.setBackground(SystemColor.activeCaption);
+				date.setForeground(null);
 				nomcarte.setBackground(SystemColor.activeCaption);
 				nomcarte.setForeground(null);
 				infoPanel.setButtonBackground(SystemColor.activeCaption);
@@ -327,8 +356,12 @@ public class OtageGUI extends JFrame implements Runnable {
 				Aide.setForeground(Color.white);
 				Fichier.setForeground(Color.white);
 				Apparence.setForeground(Color.white);
+				numero.setForeground(null);
+				vitesse.setBackground(new Color(145,203,222));
 				info.setBackground(new Color(84,96,143));
 				info.setForeground(Color.white);
+				date.setBackground(new Color(84,96,143));
+				date.setForeground(Color.white);
 				nomcarte.setBackground(new Color(84,96,143));
 				nomcarte.setForeground(Color.white);
 				infoPanel.setButtonBackground(new Color(84,96,143));
