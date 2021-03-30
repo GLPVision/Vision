@@ -1,6 +1,7 @@
 package affichage;
 
 import config.Configuration;
+import data.Chronometre;
 import data.Coordonnees;
 import data.Element;
 import logs.LoggerUtility;
@@ -10,6 +11,8 @@ import org.apache.log4j.Logger;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,6 +52,8 @@ public class OtageGUI extends JFrame implements Runnable {
 	 * Etat du Thread
 	 */
 	private boolean running = true;
+	private Chronometre chronometre;
+	private int speed = Configuration.BASE_SPEED;
 
 	/**
 	 * 
@@ -71,6 +76,7 @@ public class OtageGUI extends JFrame implements Runnable {
 	public void init(Coordonnees debut, Coordonnees taille) throws IOException {
 		ActionBar actionListener = new ActionBar();
 		Click click = new Click();
+		Slider slider = new Slider();
 		/**
 		 * Définition de la fenêtre		
 		 */
@@ -166,13 +172,17 @@ public class OtageGUI extends JFrame implements Runnable {
 		numero.setHorizontalAlignment(SwingConstants.LEFT);
 		numero.setBounds(640, 28, 150, 15);
 		contentPane.add(numero);
-		numero.setText("Vitesse de simulation : ");
+		numero.setText("Vitesse de simulation : 1");
 		numero.setForeground(Color.white);
 		
 		vitesse = new JSlider();
 		vitesse.setBounds(800, 25, 100, 25);
 		contentPane.add(vitesse);
 		vitesse.setBackground(Color.DARK_GRAY);
+		vitesse.setMinimum(1);
+		vitesse.setMaximum(10);
+		vitesse.setValue(1);
+		vitesse.addChangeListener(slider);
 		
 		/**
 		 * Mise en place du nom au dessus du cadre d'informations
@@ -201,7 +211,7 @@ public class OtageGUI extends JFrame implements Runnable {
 		date.setBounds(1104-diffx, 25, 120, 25);
 		contentPane.add(date);
 		date.setColumns(10);
-		date.setText(" Temps : ");
+		date.setText(" Temps : 00:00:00");
 		date.setEditable(false);
 		date.setBackground(SystemColor.activeCaption);
 		date.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
@@ -253,21 +263,15 @@ public class OtageGUI extends JFrame implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		chronometre = new Chronometre();
 		
 		/**
 		 * Mise en place de l'état du scan
 		 */
 		int state = 0;
+		int timer = 0;
+		int s = 0;
 		while (running) {
-			
-			/**
-			 * Mise en place de la vitesse de simulation
-			 */
-			try {
-				Thread.sleep(Configuration.SPEED);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			
 			/**
 			 * Si le scan n'est pas terminé
@@ -277,9 +281,15 @@ public class OtageGUI extends JFrame implements Runnable {
 			 * Mise à jour de la carte
 			 */
 			if(state == 0){
+				try {
+					Thread.sleep(Configuration.SCAN_SPEED);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				state = traitement.scan();
 				infoPanel.majGUI(false);
 				carte.repaint();
+				timer = timer + Configuration.SCAN_SPEED;
 			}
 			
 			/**
@@ -289,9 +299,23 @@ public class OtageGUI extends JFrame implements Runnable {
 			 * 
 			 * Mise à jour de la carte
 			 */
-			else if(traitement.move() == 1){
-				infoPanel.majGUI(true);
-				carte.repaint();
+			else{
+				try {
+					Thread.sleep(speed);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if(traitement.move() == 1){
+					infoPanel.majGUI(true);
+					carte.repaint();
+				}
+				timer = timer + Configuration.BASE_SPEED*(Configuration.BASE_SPEED/speed);
+			}
+			if(timer/1000 > s){
+				for(int i=0 ; i<timer/1000-s ; i++){
+					incrementer();
+				}
+				s = timer/1000;
 			}
 		}
 		
@@ -306,6 +330,14 @@ public class OtageGUI extends JFrame implements Runnable {
 	 */
 	public void stop(){
 		running = false;
+	}
+
+	/**
+	 * Incrémente le chronomètre
+	 */
+	public void incrementer(){
+		chronometre.incrementer();
+		date.setText(" Temps : " + chronometre.getTimer());
 	}
 
 	private class ActionBar implements ActionListener{
@@ -427,6 +459,46 @@ public class OtageGUI extends JFrame implements Runnable {
 		@Override
 		public void mouseExited(MouseEvent e) {
 
+		}
+	}
+
+	private class Slider implements ChangeListener {
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			numero.setText("Vitesse de simulation : " + vitesse.getValue());
+			switch (vitesse.getValue()){
+				case 1:
+					speed = Configuration.BASE_SPEED;
+					break;
+				case 2:
+					speed = Configuration.BASE_SPEED/2;
+					break;
+				case 3:
+					speed = Configuration.BASE_SPEED/3;
+					break;
+				case 4:
+					speed = Configuration.BASE_SPEED/4;
+					break;
+				case 5:
+					speed = Configuration.BASE_SPEED/5;
+					break;
+				case 6:
+					speed = Configuration.BASE_SPEED/6;
+					break;
+				case 7:
+					speed = Configuration.BASE_SPEED/7;
+					break;
+				case 8:
+					speed = Configuration.BASE_SPEED/8;
+					break;
+				case 9:
+					speed = Configuration.BASE_SPEED/9;
+					break;
+				case 10:
+					speed = Configuration.BASE_SPEED/10;
+					break;
+			}
 		}
 	}
 }

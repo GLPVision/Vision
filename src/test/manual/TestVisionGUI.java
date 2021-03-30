@@ -2,8 +2,6 @@ package test.manual;
 
 import affichage.VisionGUI;
 
-import javax.swing.*;
-
 /**
  * Mise en place du lancement de l'application
  * 

@@ -15,10 +15,6 @@ public class Carte {
      */
     private Element[][] tab;
     /**
-     * Date
-     */
-    private Date date;
-    /**
      * Booléen true=otage, false=agricole
      */
     private boolean otage = false;
@@ -52,7 +48,6 @@ public class Carte {
      * Fonction initialisation
      */
     public void init(){
-        setDate();
         generer();
         scan();
         if(otage){
@@ -63,14 +58,6 @@ public class Carte {
         }
     }
 
-    /**
-     * Fonction pour régler la date
-     */
-    public void setDate(){
-        String date = java.time.LocalDate.now().toString();
-        String heure = java.time.LocalTime.now().toString();
-        this.date = new Date(date.substring(8, 10), date.substring(5, 7), date.substring(0, 4), new Heure(heure.substring(0, 2), heure.substring(3, 5), heure.substring(6, 8)));
-    }
     /**
      * Fonction pour générer la carte aléatoirement
      */
@@ -176,22 +163,6 @@ public class Carte {
     public Element getElement(int x, int y) {
         return tab[x][y];
     }
-
-	/**
-	 * getter de Date
-	 * @return
-	 */
-    public Date getDate() {
-		return date;
-	}
-
-    /**
-     * Setter de Date
-     * @param date
-     */
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 	/**
 	 * getter du nombre d'anomalies
