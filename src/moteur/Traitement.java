@@ -532,6 +532,7 @@ public class Traitement{
                 selectedIndex = 0;
             }
         }
+        trieEntoure();
         selected = entoure.get(selectedIndex);
     }
 
@@ -548,6 +549,7 @@ public class Traitement{
                 selectedIndex = entoure.size()-1;
             }
         }
+        trieEntoure();
         selected = entoure.get(selectedIndex);
     }
 
@@ -570,6 +572,26 @@ public class Traitement{
         intrusion = null;
         carte = null;
         scenario = null;
+    }
+
+    /**
+     * Trie la liste entoure pour avoir un parcours dans l'ordre avec les bouton suivant/précédent
+     */
+    public void trieEntoure(){
+        ArrayList <Element> list = new ArrayList<>();
+        for(int i=0 ; i<entoure.size() ; i++){
+            if(list.isEmpty()){
+                list.add(entoure.get(0));
+            }
+            else{
+                int index = 0;
+                while(index<list.size() && entoure.get(i).getCoordonnees().getY()*taille.getX() + entoure.get(i).getCoordonnees().getX() > list.get(index).getCoordonnees().getY()*taille.getX() + list.get(index).getCoordonnees().getX()){
+                    index++;
+                }
+                list.add(index, entoure.get(i));
+            }
+        }
+        entoure = list;
     }
 
 
