@@ -202,56 +202,22 @@ public class Traitement{
      * Fonction qui déplace les différents éléments
      * @return S'il y a du déplacement
      */
-    public int move(){
+    public int animate(){
         if((int) (Math.random()* Configuration.PROBA_MOVE) == 0){ //aleatoire
             if(otage){ //otage
                 Personne p;
                 p = individu.get((int) (Math.random() * individu.size()));
                 int x = p.getCoordonnees().getX();
                 int y = p.getCoordonnees().getY();
-                if(nbMoving<nbAssaillant){
+                if(nbMoving<nbAssaillant && !entoure.contains(p)){
                     p.setDesc("Assaillant");
                     entoure.add(p);
                     carte.getTab()[x][y] = p;
                     nbMoving++;
-                    if(p.getDesc().equals("Individu")) { //individu
-                        switch ((int) (Math.random() * 4)) { //choisi au hasard la direction
-                            case 0:
-                                up(x, y);
-                                break;
-                            case 1:
-                                down(x, y);
-                                break;
-                            case 2:
-                                left(x, y);
-                                break;
-                            case 3:
-                                right(x, y);
-                                break;
-                            default:
-                                break;
-                        }
-                        return 1; //a bougé
-                    }
+                    return move(x, y);
                 }
                 else if(p.getDesc().equals("Assaillant")){ //assaillant
-                    switch ((int) (Math.random()*4)){ //choisi au hasard la direction
-                        case 0:
-                            up(x, y);
-                            break;
-                        case 1:
-                            down(x, y);
-                            break;
-                        case 2:
-                            left(x, y);
-                            break;
-                        case 3:
-                            right(x, y);
-                            break;
-                        default :
-                            break;
-                    }
-                    return 1; //a bougé
+                    return move(x, y);
                 }
             }
             else{ //agricole
@@ -260,34 +226,16 @@ public class Traitement{
                 int x = e.getCoordonnees().getX();
                 int y = e.getCoordonnees().getY();
                 if(e.getDesc().equals("Intrusion")){ //intrusion
-                    switch ((int) (Math.random()*4)){ //choisi au hasard la direction
-                        case 0:
-                            up(x, y);
-                            break;
-                        case 1:
-                            down(x, y);
-                            break;
-                        case 2:
-                            left(x, y);
-                            break;
-                        case 3:
-                            right(x, y);
-                            break;
-                        default :
-                            break;
-                    }
-                    return 1; //a bougé
+                    return move(x, y);
                 }
                 else if(e.getDesc().equals("Feu")){ //étend le feu
-                    burn(x, y);
-                    return 1; //a bougé
+                    return burn(x, y);
                 }
                 else if(e.getDesc().equals("Inconnue")){ //rien pour le moment
-                    return 1; //a bougé
+                    return 0; //n'a pas bougé
                 }
                 else if(e.getDesc().equals("Maladie")){ //infecte les autres plantes
-                    infect(x, y);
-                    return 1; //a bougé
+                    return infect(x, y);
                 }
             }
         }
@@ -295,51 +243,84 @@ public class Traitement{
     }
 
     /**
+     * Bouge gauche droite haut ou bas
+     * @param x
+     * @param y
+     * @return etat
+     */
+    public int move(int x, int y){
+        switch ((int) (Math.random()*4)){ //choisi au hasard la direction
+            case 0:
+                return up(x, y);
+            case 1:
+                return down(x, y);
+            case 2:
+                return left(x, y);
+            case 3:
+                return right(x, y);
+            default :
+                return 0;
+        }
+    }
+
+    /**
      * Monter
      * @param x Position x
      * @param y Position y
+     * @return etat
      */
-    public void up(int x, int y){ // i=x, j=y
+    public int up(int x, int y){ // i=x, j=y
         Element[][] tab = carte.getTab(); //recup la carte
         if(y-1 >= 0 && tab[x][y-1].getDesc().equals(".")){ //si y a la place pour bouger
             change(tab[x][y], x, y, 0, -1);
+            return 1;
         }
+        return 0;
     }
 
     /**
      * Descendre
      * @param x Position x
      * @param y Position y
+     * @return etat
      */
-    public void down(int x, int y){
+    public int down(int x, int y){
         Element[][] tab = carte.getTab(); //recup la carte
         if(y+1 < taille.getY() && tab[x][y+1].getDesc().equals(".")){ //si y a la place pour bouger
             change(tab[x][y], x, y, 0, 1);
+            return 1;
         }
+        return 0;
     }
 
     /**
      * A gauche
      * @param x Position x
      * @param y Position y
+     * @return etat
      */
-    public void left(int x, int y){
+    public int left(int x, int y){
         Element[][] tab = carte.getTab(); //recup la carte
         if(x-1 >= 0 && tab[x-1][y].getDesc().equals(".")){ //si y a la place pour bouger
             change(tab[x][y], x, y, -1, 0);
+            return 1;
         }
+        return 0;
     }
 
     /**
      * A droite
      * @param x Position x
      * @param y Position y
+     * @return etat
      */
-    public void right(int x, int y){
+    public int right(int x, int y){
         Element[][] tab = carte.getTab(); //recup la carte
         if(x+1 < taille.getX() && tab[x+1][y].getDesc().equals(".")){ //si y a la place pour bouger
             change(tab[x][y], x, y, 1, 0);
+            return 1;
         }
+        return 0;
     }
 
     /**
@@ -374,33 +355,6 @@ public class Traitement{
                     }
                 }
                 break;
-            /*
-            case "Feu": //déplace feu
-                for(int i=0 ; i<feu.size() ; i++){
-                    if (feu.get(i).getCoordonnees().getX() == x && feu.get(i).getCoordonnees().getY() == y) {
-                        feu.get(i).setCoordonnees(new Coordonnees(x+dx, y+dy));
-                        break;
-                    }
-                }
-                break;
-            case "Maladie": //déplace maladie
-                for(int i=0 ; i<maladie.size() ; i++){
-                    if (maladie.get(i).getCoordonnees().getX() == x && maladie.get(i).getCoordonnees().getY() == y) {
-                        maladie.get(i).setCoordonnees(new Coordonnees(x+dx, y+dy));
-                        break;
-                    }
-                }
-                break;
-            case "Inconnue": //déplace inconnue
-                for(int i=0 ; i<inconnue.size() ; i++){
-                    if (inconnue.get(i).getCoordonnees().getX() == x && inconnue.get(i).getCoordonnees().getY() == y) {
-                        inconnue.get(i).setCoordonnees(new Coordonnees(x+dx, y+dy));
-                        break;
-                    }
-                }
-                break;
-
-             */
             default:
                 break;
         }
@@ -415,8 +369,9 @@ public class Traitement{
      * Brule
      * @param x Position x
      * @param y Position y
+     * @return etat
      */
-    public void burn(int x, int y){
+    public int burn(int x, int y){
         Element[][] tab = carte.getTab(); //recup la carte
         switch((int) (Math.random() *Configuration.PROBA_FEU)){ //aleatoire
             case 0: //haut
@@ -426,8 +381,9 @@ public class Traitement{
                     nbFeu++;
                     entoure.add(new Feu(new Coordonnees(x, y-1)));
                     tab[x][y-1] = new Feu(new Coordonnees(x, y-1));
+                    return 1;
                 }
-                break;
+                return 0;
             case 1: //bas
                 if(y+1 < taille.getY() && !tab[x][y+1].getDesc().equals("Feu")){
                     remove(x, y+1);
@@ -435,8 +391,9 @@ public class Traitement{
                     nbFeu++;
                     entoure.add(new Feu(new Coordonnees(x, y+1)));
                     tab[x][y+1] = new Feu(new Coordonnees(x, y+1));
+                    return 1;
                 }
-                break;
+                return 0;
             case 2: //droite
                 if(x+1 < taille.getX() && !tab[x+1][y].getDesc().equals("Feu")){
                     remove(x+1, y);
@@ -444,8 +401,9 @@ public class Traitement{
                     nbFeu++;
                     entoure.add(new Feu(new Coordonnees(x+1, y)));
                     tab[x+1][y] = new Feu(new Coordonnees(x+1, y));
+                    return 1;
                 }
-                break;
+                return 0;
             case 3: //gauche
                 if(x-1 >= 0 && !tab[x-1][y].getDesc().equals("Feu")){
                     remove(x-1, y);
@@ -453,56 +411,64 @@ public class Traitement{
                     nbFeu++;
                     entoure.add(new Feu(new Coordonnees(x-1, y)));
                     tab[x-1][y] = new Feu(new Coordonnees(x-1, y));
+                    return 1;
                 }
-                break;
+                return 0;
         }
+        return 0;
     }
 
     /**
      * Infecte les plantes aux alentours
      * @param x Position x
      * @param y Position y
+     * @return etat
      */
-    public void infect(int x, int y){
+    public int infect(int x, int y){
         Element[][] tab = carte.getTab(); //recup la carte
         switch((int) (Math.random() *Configuration.PROBA_INFECT)){ //aleatoire
             case 0: //haut
-                if(y-1 >= 0 && tab[x][y-1].getDesc().equals(".")){
+                if(y-1 >= 0 && tab[x][y-1].getDesc().equals(".") && !tab[x][y-1].getDesc().equals("Maladie")){
                     remove(x, y-1);
                     maladie.add(new Maladie(new Coordonnees(x, y-1)));
                     nbMaladie++;
                     entoure.add(new Maladie(new Coordonnees(x, y-1)));
                     tab[x][y-1] = new Maladie(new Coordonnees(x, y-1));
+                    return 1;
                 }
-                break;
+                return 0;
             case 1: //bas
-                if(y+1 < taille.getY() && tab[x][y+1].getDesc().equals(".")){
+                if(y+1 < taille.getY() && tab[x][y+1].getDesc().equals(".") && !tab[x][y+1].getDesc().equals("Maladie")){
                     remove(x, y+1);
                     maladie.add(new Maladie(new Coordonnees(x, y+1)));
                     nbMaladie++;
                     entoure.add(new Maladie(new Coordonnees(x, y+1)));
                     tab[x][y+1] = new Maladie(new Coordonnees(x, y+1));
+                    return 1;
                 }
-                break;
+                return 0;
             case 2: //droite
-                if(x+1 < taille.getX() && tab[x+1][y].getDesc().equals(".")){
+                if(x+1 < taille.getX() && tab[x+1][y].getDesc().equals(".") && !tab[x+1][y].getDesc().equals("Maladie")){
                     remove(x+1, y);
                     maladie.add(new Maladie(new Coordonnees(x+1, y)));
                     nbMaladie++;
                     entoure.add(new Maladie(new Coordonnees(x+1, y)));
                     tab[x+1][y] = new Maladie(new Coordonnees(x+1, y));
+                    return 1;
                 }
-                break;
+                return 0;
             case 3: //gauche
-                if(x-1 >= 0 && tab[x-1][y].getDesc().equals("")){
+                if(x-1 >= 0 && tab[x-1][y].getDesc().equals(".") && !tab[x-1][y].getDesc().equals("Maladie")){
                     remove(x-1, y);
                     maladie.add(new Maladie(new Coordonnees(x-1, y)));
                     nbMaladie++;
                     entoure.add(new Maladie(new Coordonnees(x-1, y)));
                     tab[x-1][y] = new Maladie(new Coordonnees(x-1, y));
+                    return 1;
                 }
-                break;
+                return 0;
         }
+        return 0;
     }
     /**
      * Retire un élément

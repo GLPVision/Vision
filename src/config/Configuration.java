@@ -17,5 +17,5 @@ public class Configuration {
     public static final int PROBA_INDIVIDU = 50;
     public static final int PROBA_MOVE = 4; //1/4
     public static final int PROBA_FEU = 4;
-    public static final int PROBA_INFECT = 6; //2/3
+    public static final int PROBA_INFECT = 8; //1/2
 }

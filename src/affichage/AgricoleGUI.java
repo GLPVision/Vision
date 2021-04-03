@@ -306,7 +306,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if(traitement.move() == 1){
+				if(traitement.animate() == 1){
 					infoPanel.majGUI(true);
 					carte.repaint();
 				}
