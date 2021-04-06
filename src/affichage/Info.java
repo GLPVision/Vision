@@ -28,7 +28,6 @@ public class Info extends JPanel {
     private JScrollPane scrollPane;
     private JPanel buttonPanel;
     private JButton next, prec;
-    private int diffy;
     private Traitement traitement;
     private Display display;
     
@@ -246,24 +245,7 @@ public class Info extends JPanel {
         buttonPanel.add(next);
         this.add(buttonPanel);
     }
-    
-    /**
-     * getter de diffy
-     * @return
-     */
-    public int getDiffy() {
-  		return diffy;
-  	}
 
-    /**
-     * setter de diffy
-     * @param diffy
-     */
-  	public void setDiffy(int diffy) {
-  		this.diffy = diffy;
-  	}
-
-    
     /**
      * Mise en place des changements de couleur de background des boutons pour les thèmes d'apparence
      * 
@@ -293,7 +275,6 @@ public class Info extends JPanel {
     	liste.setBackground(color);
     	buttonPanel.setBackground(color);
     	this.setBackground(color);
-    	
     }
 
     /**
@@ -397,8 +378,8 @@ public class Info extends JPanel {
                  * Si la case sélectionnée contient une anomalie
                  */
                 else{ //anomalies
-                    anomalie.setText("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
-                    logger.info("    Anomalie : " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
+                    anomalie.setText("    " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
+                    logger.info("    " + traitement.getSelected().getDesc() + " en : x = " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + " , y = " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
                 }
             }
             catch (NullPointerException nullPointerException){

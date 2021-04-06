@@ -202,12 +202,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
 				logger.info("Création d'une fenêtre Agricole");
 				AgricoleGUI fen = null;
-				try {
-					fen = new AgricoleGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y));
-				} catch (IOException ioException) {
-					ioException.printStackTrace();
-				}
-				Thread thread = new Thread(fen);
+                fen = new AgricoleGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y));
+                Thread thread = new Thread(fen);
 				thread.start();
 				this.setVisible(false);
 				logger.info("Fin de création de la fenêtre Agricole");
@@ -247,11 +243,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 					}
 					logger.info("Création d'une fenêtre Otage");
 					OtageGUI fen = null;
-					try {
-						fen = new OtageGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y), Integer.parseInt(txt));
-					} catch (IOException ioException) {
-						ioException.printStackTrace();
-					}
+					fen = new OtageGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y), Integer.parseInt(txt));
 					Thread thread = new Thread(fen);
 					thread.start();
 					this.setVisible(false);

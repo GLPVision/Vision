@@ -60,9 +60,8 @@ public class OtageGUI extends JFrame implements Runnable {
 	 * @param debut
 	 * @param taille
 	 * @param nbOtage
-	 * @throws IOException
 	 */
-	public OtageGUI(Coordonnees debut, Coordonnees taille, int nbOtage) throws IOException {
+	public OtageGUI(Coordonnees debut, Coordonnees taille, int nbOtage) {
 		/**
 		 * Définition du nom de la fenêtre
 		 */

@@ -38,14 +38,6 @@ public class Element {
     }
 
     /**
-     * Fonction qui définit la description
-     * @param desc Description
-     */
-    public void setDesc(String desc){
-        this.desc = desc;
-    }
-
-    /**
      * Fonction qui définit les coordonnées
      * @param coordonnees Coordonnées
      */

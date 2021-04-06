@@ -60,9 +60,8 @@ public class AgricoleGUI extends JFrame implements Runnable{
 	 * 
 	 * @param debut
 	 * @param taille
-	 * @throws IOException
 	 */
-	public AgricoleGUI(Coordonnees debut, Coordonnees taille) throws IOException {
+	public AgricoleGUI(Coordonnees debut, Coordonnees taille) {
 		/**
 		 * Définition du nom de la fenêtre
 		 */

@@ -117,7 +117,7 @@ public class Carte {
         int nb =0;
         for (int i=0 ; i< taille.getY() ; i++){ //parcours x
             for (int j=0 ; j< taille.getX() ; j++){ //parcours y
-                if (tab[j][i].getDesc() != "."){ //si pas rien
+                if (!tab[j][i].getDesc().equals(".")){ //si pas rien
                     nb++;
                 }
             }
@@ -163,14 +163,6 @@ public class Carte {
     public Element getElement(int x, int y) {
         return tab[x][y];
     }
-
-	/**
-	 * getter du nombre d'anomalies
-	 * @return
-	 */
-	public int getNb_anomalie() {
-		return nb_anomalie;
-	}
 
 	/**
 	 * Setter du nombre d'anomalies

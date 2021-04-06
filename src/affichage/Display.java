@@ -51,11 +51,7 @@ public class Display extends JPanel{
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        try {
-            paintStrategy.draw(carte, g); //dessine fond
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        paintStrategy.draw(carte, g); //dessine fond
         if(traitement.isOtage()){ //otage
             ArrayList <Personne> personne = traitement.getIndividu(); //recup liste
             for(int i=0 ; i<personne.size() ; i++){ //dessine tous les individus

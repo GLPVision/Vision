@@ -137,20 +137,22 @@ public class Traitement{
         Element element = tab[posX][posY]; //élément à la position x y
         Coordonnees c = element.getCoordonnees();
         if(!circle){ //ne pas entourer
-            if(element.getDesc().equals("Individu")) { //si personne
-                individu.add(new Personne(c));
-            }
-            else if(element.getDesc().equals("Intrusion")) { //si intrusion
-                intrusion.add(new Intrusion(c));
-            }
-            else if(element.getDesc().equals("Feu")) { //si feu
-                feu.add(new Feu(c));
-            }
-            else if(element.getDesc().equals("Maladie")) { //si maladie
-                maladie.add(new Maladie(c));
-            }
-            else if(element.getDesc().equals("Inconnue")){ //si inconnue
-                inconnue.add(new Anomalie(c));
+            switch (element.getDesc()) {
+                case "Individu":  //si personne
+                    individu.add(new Personne(c));
+                    break;
+                case "Intrusion":  //si intrusion
+                    intrusion.add(new Intrusion(c));
+                    break;
+                case "Feu":  //si feu
+                    feu.add(new Feu(c));
+                    break;
+                case "Maladie":  //si maladie
+                    maladie.add(new Maladie(c));
+                    break;
+                case "Inconnue":  //si inconnue
+                    inconnue.add(new Anomalie(c));
+                    break;
             }
             posX++;
             if(posX>=taille.getX()){ //si au bout de la ligne
@@ -167,20 +169,22 @@ public class Traitement{
                 entoure.add(element);
             }
             //comptage
-            if(element.getDesc().equals("Individu")) { //si personne
-                nbIndividu++;
-            }
-            else if(element.getDesc().equals("Intrusion")) { //si intrusion
-                nbIntrusion++;
-            }
-            else if(element.getDesc().equals("Feu")) { //si feu
-                nbFeu++;
-            }
-            else if(element.getDesc().equals("Maladie")) { //si maladie
-                nbMaladie++;
-            }
-            else if(element.getDesc().equals("Inconnue")){ //si inconnue
-                nbInconnue++;
+            switch (element.getDesc()) {
+                case "Individu":  //si personne
+                    nbIndividu++;
+                    break;
+                case "Intrusion":  //si intrusion
+                    nbIntrusion++;
+                    break;
+                case "Feu":  //si feu
+                    nbFeu++;
+                    break;
+                case "Maladie":  //si maladie
+                    nbMaladie++;
+                    break;
+                case "Inconnue":  //si inconnue
+                    nbInconnue++;
+                    break;
             }
             posX++;
             if(posX>=taille.getX()){
@@ -225,17 +229,16 @@ public class Traitement{
                 e = entoure.get((int) (Math.random() * entoure.size()));
                 int x = e.getCoordonnees().getX();
                 int y = e.getCoordonnees().getY();
-                if(e.getDesc().equals("Intrusion")){ //intrusion
-                    return move(x, y);
-                }
-                else if(e.getDesc().equals("Feu")){ //étend le feu
-                    return burn(x, y);
-                }
-                else if(e.getDesc().equals("Inconnue")){ //rien pour le moment
-                    return 0; //n'a pas bougé
-                }
-                else if(e.getDesc().equals("Maladie")){ //infecte les autres plantes
-                    return infect(x, y);
+                switch (e.getDesc()) {
+                    case "Intrusion":  //intrusion
+                        return move(x, y);
+                    case "Feu":  //étend le feu
+                        return burn(x, y);
+                    case "Inconnue":  //rien pour le moment
+                        return 0; //n'a pas bougé
+
+                    case "Maladie":  //infecte les autres plantes
+                        return infect(x, y);
                 }
             }
         }
@@ -559,7 +562,6 @@ public class Traitement{
     public void supp() {
         nbOtage = 0;
         nbAssaillant = 0;
-        nbTotal = 0;
         nbTotal = 0;
         nbIndividu = 0;
         nbIntrusion = 0;

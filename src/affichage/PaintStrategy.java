@@ -62,9 +62,8 @@ public class PaintStrategy {
      * Dessine la fond de la carte
      * @param carte carte
      * @param graphics graphics
-     * @throws IOException Erreur de lecture des images
      */
-    public void draw(Carte carte, Graphics graphics) throws IOException {
+    public void draw(Carte carte, Graphics graphics) {
         Graphics2D g = (Graphics2D) graphics;
         Coordonnees taille = carte.getTaille(); //dimension de la carte
         height = 600/taille.getY(); //hauteur case
@@ -73,7 +72,6 @@ public class PaintStrategy {
             size = height/2;
         else
             size = width/2;
-        //afficher les cases
         Image fond = null;
         if(carte.isOtage())
             fond = bat.getScaledInstance(width, height, Image.SCALE_DEFAULT); //batiment

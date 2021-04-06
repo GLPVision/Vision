@@ -31,12 +31,4 @@ public class LoggerUtility {
 		String className = logClass.getName();
 		return Logger.getLogger(className);
 	}
-
-	/**
-	 * getter de Filelogconfig
-	 * @return
-	 */
-	public static String getFileLogConfig() {
-		return FILE_LOG_CONFIG;
-	}
 }
