@@ -14,7 +14,7 @@ public class Traitement{
     /**
      * Nombre d'otages, nombre d'assaillants, nombre total de personnes, nombre d'intrusions, nombre de feux, nombre de maladies, nombre d'anomalies inconnues
      */
-    private int nbOtage, nbAssaillant, nbTotal, nbIndividu, nbIntrusion, nbFeu, nbMaladie, nbInconnue;
+    private int nbOtage, nbAssaillant, nbIndividu, nbIntrusion, nbFeu, nbMaladie, nbInconnue;
     /**
      * Liste d'individus
      */
@@ -120,7 +120,6 @@ public class Traitement{
         feu = new ArrayList<>();
         maladie = new ArrayList<>();
         inconnue = new ArrayList<>();
-        nbTotal = 0;
         nbIndividu = 0;
         nbIntrusion = 0;
         nbFeu = 0;
@@ -510,7 +509,7 @@ public class Traitement{
         for(int i=0 ; i<individu.size() ; i++){ //individu
             if(individu.get(i).getCoordonnees().getX()==x && individu.get(i).getCoordonnees().getY()==y){
                 individu.remove(i);
-                nbTotal--;
+                nbIndividu--;
                 break;
             }
         }
@@ -562,7 +561,6 @@ public class Traitement{
     public void supp() {
         nbOtage = 0;
         nbAssaillant = 0;
-        nbTotal = 0;
         nbIndividu = 0;
         nbIntrusion = 0;
         nbFeu = 0;
@@ -572,6 +570,7 @@ public class Traitement{
         feu = null;
         maladie = null;
         intrusion = null;
+        individu = null;
         carte = null;
         scenario = null;
     }
@@ -650,13 +649,6 @@ public class Traitement{
      */
     public int getNbAssaillant() {
         return nbAssaillant;
-    }
-    /**
-     * Fonction qui retourne le nombre total
-     * @return Nombre total
-     */
-    public int getNbTotal() {
-        return nbTotal;
     }
     /**
      * Fonction qui retourne le nombre d'individus

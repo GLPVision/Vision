@@ -5,7 +5,6 @@ import moteur.Traitement;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -21,10 +20,6 @@ public class Display extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
     /**
-     * Carte
-     */
-	private Carte carte;
-    /**
      * Traitement/données
      */
     private Traitement traitement;
@@ -39,7 +34,6 @@ public class Display extends JPanel{
      * @param paintStrategy Dessins
      */
     Display(Traitement traitement, PaintStrategy paintStrategy){
-        this.carte = traitement.getCarte();
         this.paintStrategy = paintStrategy;
         this.traitement = traitement;
     }
@@ -51,7 +45,7 @@ public class Display extends JPanel{
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        paintStrategy.draw(carte, g); //dessine fond
+        paintStrategy.draw(traitement.getCarte(), g); //dessine fond
         if(traitement.isOtage()){ //otage
             ArrayList <Personne> personne = traitement.getIndividu(); //recup liste
             for(int i=0 ; i<personne.size() ; i++){ //dessine tous les individus

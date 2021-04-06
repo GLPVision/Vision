@@ -9,7 +9,7 @@ import org.junit.runners.Suite;
  * @version 1
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TestTraitementOtage.class, TestTraitementAgricole.class})
+@Suite.SuiteClasses({TestTraitement.class})
 /**
  * Classe qui lance tous les tests
  */
