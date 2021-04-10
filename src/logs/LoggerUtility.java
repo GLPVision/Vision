@@ -11,10 +11,6 @@ import org.apache.log4j.PropertyConfigurator;
  * @version 2
  */
 public class LoggerUtility {
-	/**
-	 * En txt
-	 */
-	private static final String FILE_LOG_CONFIG = "src/logs/log4j-file.properties";
 	
 	/**
 	 * En html
