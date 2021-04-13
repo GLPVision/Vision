@@ -126,6 +126,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		xinit.setColumns(10);
 		xinit.setBackground(new Color(204, 190, 121));
 		xinit.setBorder(null);
+		xinit.setText("0");
 		
 		/**
 		 * Définition des coordonnées de départ en y
@@ -136,6 +137,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		yinit.setColumns(10);
 		yinit.setBackground(new Color(204, 190, 121));
 		yinit.setBorder(null);
+		yinit.setText("0");
 		
 		/**
 		 * Définition des coordonnées d'arrivée en x
@@ -146,6 +148,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		xfin.setColumns(10);
 		xfin.setBackground(new Color(204, 190, 121));
 		xfin.setBorder(null);
+		xfin.setText("10");
 		
 		/**
 		 * Définition des coordonnées d'arrivée en y
@@ -156,6 +159,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		yfin.setColumns(10);
 		yfin.setBackground(new Color(204, 190, 121));
 		yfin.setBorder(null);
+		yfin.setText("10");
 
 		/**
 		 * Propriétés de la fenêtre
@@ -177,8 +181,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+
 		/**
 		 * Appellation du scénario agricole et mise en place de la fenêtre
 		 */
@@ -188,7 +191,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 			/**
 			 * Vérification si il y a un nombre
 			 */
-			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){
+			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty() || !isNumber()){
 				
 				/**
 				 * Affichage d'un message d'erreur si les coordonnées saisie ne sont pas valides
@@ -199,13 +202,23 @@ public class VisionGUI extends JFrame implements ActionListener {
 			else{
 				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
 				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
-				logger.info("Création d'une fenêtre Agricole");
-				AgricoleGUI fen = null;
-                fen = new AgricoleGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y));
-                Thread thread = new Thread(fen);
-				thread.start();
-				this.setVisible(false);
-				logger.info("Fin de création de la fenêtre Agricole");
+				if(x == 0 || y == 0){
+
+					/**
+					 * Affichage d'un message d'erreur si les coordonnées saisie ne sont pas valides
+					 */
+					JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);
+					logger.error("Coordonnées invalides");
+				}
+				else{
+					logger.info("Création d'une fenêtre Agricole");
+					AgricoleGUI fen = null;
+					fen = new AgricoleGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y));
+					Thread thread = new Thread(fen);
+					thread.start();
+					this.setVisible(false);
+					logger.info("Fin de création de la fenêtre Agricole");
+				}
 			}
 		}
 		
@@ -218,7 +231,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 			/**
 			 * Vérification si il y a un nombre
 			 */
-			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty()){
+			if(xinit.getText().isEmpty() || yinit.getText().isEmpty() || xfin.getText().isEmpty() || yfin.getText().isEmpty() || !isNumber()){
 				
 				/**
 				 * Affichage d'un message d'erreur si les coordonnées saisie ne sont pas valides
@@ -229,29 +242,79 @@ public class VisionGUI extends JFrame implements ActionListener {
 			else {
 				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
 				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
-				String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
-				if(txt != null){
-					while (txt.isEmpty() || Integer.parseInt(txt) > Configuration.MAX_OTAGES || Integer.parseInt(txt) < Configuration.MIN_OTAGES){
-						logger.error("Nombre d'otages invalide");
-						
-						/**
-						 * Affichage d'un message d'erreur si le nombre d'otages saisis n'est pas valide
-						 */
-						JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages (peut être trop grand nombre)", "Erreur", JOptionPane.ERROR_MESSAGE);
-						txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
-					}
-					logger.info("Création d'une fenêtre Otage");
-					OtageGUI fen = null;
-					fen = new OtageGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y), Integer.parseInt(txt));
-					Thread thread = new Thread(fen);
-					thread.start();
-					this.setVisible(false);
-					logger.info("Fin de création de la fenêtre Otage");
+				if(x == 0 || y == 0){
+
+					/**
+					 * Affichage d'un message d'erreur si les coordonnées saisie ne sont pas valides
+					 */
+					JOptionPane.showMessageDialog(null ,"Veuillez vérifier les coordonnées", "Erreur", JOptionPane.ERROR_MESSAGE);
+					logger.error("Coordonnées invalides");
 				}
-				else {
-					logger.info("Otage annulé");
+				else{
+					String txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
+					if(txt != null){
+						while (txt.isEmpty() || !isNumber(txt) || Integer.parseInt(txt) > Configuration.MAX_OTAGES || Integer.parseInt(txt) < Configuration.MIN_OTAGES){
+							logger.error("Nombre d'otages invalide");
+
+							/**
+							 * Affichage d'un message d'erreur si le nombre d'otages saisis n'est pas valide
+							 */
+							JOptionPane.showMessageDialog(null ,"Veuillez vérifier le nombre d'otages", "Erreur", JOptionPane.ERROR_MESSAGE);
+							txt = JOptionPane.showInputDialog(null ,"Nombre d'otages", "Prise d'otages", JOptionPane.INFORMATION_MESSAGE);
+							if(txt == null){
+								break;
+							}
+						}
+						if(txt != null){
+							logger.info("Création d'une fenêtre Otage");
+							OtageGUI fen = null;
+							fen = new OtageGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y), Integer.parseInt(txt));
+							Thread thread = new Thread(fen);
+							thread.start();
+							this.setVisible(false);
+							logger.info("Fin de création de la fenêtre Otage");
+						}
+						else{
+							logger.info("Otage annulé");
+						}
+					}
+					else {
+						logger.info("Otage annulé");
+					}
 				}
 			}
 		}
+	}
+
+	/**
+	 * Vérifie si les coordonnées sont valides
+	 * @return si les coordonnées sont valides
+	 */
+	public boolean isNumber(){
+		try{
+			Integer.parseInt(xinit.getText());
+			Integer.parseInt(yinit.getText());
+			Integer.parseInt(xfin.getText());
+			Integer.parseInt(yfin.getText());
+		}
+		catch (NumberFormatException e){
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Vérifie si le nombre d'otages est valide
+	 * @param txt nombre d'otages
+	 * @return si le nombre d'otages valide
+	 */
+	public boolean isNumber(String txt){
+		try{
+			Integer.parseInt(txt);
+		}
+		catch (NumberFormatException e){
+			return false;
+		}
+		return true;
 	}
 }
