@@ -425,12 +425,22 @@ public class Info extends JPanel {
          */
         public void actionPerformed(ActionEvent e) {
             if(e.getSource()==next) {
-                traitement.next();
-                logger.info("Passage à l'anomalie suivante");
+                try{
+                    traitement.next();
+                    logger.info("Passage à l'anomalie suivante");
+                }
+                catch (IndexOutOfBoundsException indexOutOfBoundsException){
+                    logger.error("Aucun élément entouré");
+                }
             }
             if(e.getSource()==prec) {
-                traitement.previous();
-                logger.info("Passage à l'anomalie précédente");
+                try{
+                    traitement.previous();
+                    logger.info("Passage à l'anomalie précédente");
+                }
+                catch (IndexOutOfBoundsException indexOutOfBoundsException){
+                    logger.error("Aucun élément entouré");
+                }
             }
             majGUI(false);
             display.repaint();
