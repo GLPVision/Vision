@@ -15,7 +15,7 @@ public class LoggerUtility {
 	/**
 	 * En html
 	 */
-	private static final String HTML_LOG_CONFIG = "src/logs/log4j-html.properties";
+	private static final String HTML_LOG_CONFIG = "log4j-html.properties";
 
 	/**
 	 * Logger
@@ -23,7 +23,7 @@ public class LoggerUtility {
 	 * @return logs
 	 */
 	public static Logger getLogger(Class<?> logClass) {
-		PropertyConfigurator.configure(HTML_LOG_CONFIG);
+		PropertyConfigurator.configure(ClassLoader.getSystemResource(HTML_LOG_CONFIG));
 		String className = logClass.getName();
 		return Logger.getLogger(className);
 	}
