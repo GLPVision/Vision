@@ -240,8 +240,8 @@ public class VisionGUI extends JFrame implements ActionListener {
 				logger.error("Coordonnées invalides");
 			}
 			else {
-				int x = Math.abs(Integer.parseInt(xfin.getText()) - Integer.parseInt(xinit.getText()));
-				int y = Math.abs(Integer.parseInt(yfin.getText()) - Integer.parseInt(yinit.getText()));
+				int x = Math.abs(Integer.parseInt(xfin.getText())+1 - Integer.parseInt(xinit.getText()));
+				int y = Math.abs(Integer.parseInt(yfin.getText())+1 - Integer.parseInt(yinit.getText()));
 				if(x == 0 || y == 0){
 
 					/**
