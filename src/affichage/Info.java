@@ -111,8 +111,8 @@ public class Info extends JPanel {
             total_assaillant.setBounds(0, 450, 255, 30);
             this.add(total_assaillant);
             
-            prec = new JButton("Individu précédent");
-            next = new JButton("Individu suivant");
+            prec = new JButton("Assaillant précédent");
+            next = new JButton("Assaillant suivant");
             
         }
         else{
