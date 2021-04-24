@@ -177,7 +177,7 @@ public class Carte {
 
 	/**
 	 * Setter du nombre d'anomalies
-	 * @param nb_anomalie
+	 * @param nb_anomalie Nombre d'anomalies
 	 */
 	public void setNb_anomalie(int nb_anomalie) {
 		this.nb_anomalie = nb_anomalie;

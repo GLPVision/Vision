@@ -14,7 +14,7 @@ public class TestVisionGUI {
 
 	/**
 	 * Fonction principale
-	 * @param args
+	 * @param args Non utilisé
 	 */
 	public static void main(String[] args) {
 		VisionGUI fen = new VisionGUI();
