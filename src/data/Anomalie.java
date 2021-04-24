@@ -6,10 +6,12 @@ package data;
  * @version 2
  */
 public class Anomalie extends Element{
+
     /**
      * Description
      */
     private String anomalie;
+
     /**
      * Constructeur, initialise les variables
      * @param c Coordonnées
@@ -18,6 +20,7 @@ public class Anomalie extends Element{
         super(c);
         anomalie = "Inconnue";
     }
+
     /**
      * Fonction qui retourne la description
      * @return Description

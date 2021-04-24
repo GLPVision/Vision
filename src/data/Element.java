@@ -6,14 +6,17 @@ package data;
  * @version 2
  */
 public class Element {
+
     /**
      * Coordonnées
      */
     private Coordonnees coordonnees;
+
     /**
      * Description
      */
     private String desc;
+
     /**
      * Constructeur, initialise les variables
      * @param c Coordonnées
@@ -22,6 +25,7 @@ public class Element {
         coordonnees = c;
         this.desc = ".";
     }
+
     /**
      * Fonction qui retourne la description
      * @return Description
@@ -29,6 +33,7 @@ public class Element {
     public String getDesc(){
         return desc;
     }
+
     /**
      * Fonction qui retourne les coordonnées
      * @return Coordonnées

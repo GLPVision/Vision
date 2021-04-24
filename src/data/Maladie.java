@@ -6,10 +6,12 @@ package data;
  * @version 2
  */
 public class Maladie extends Anomalie {
+
     /**
      * Maladie
      */
     private String maladie;
+
     /**
      * Constructeur, initialise les variables
      * @param c Coodonnées
@@ -18,6 +20,7 @@ public class Maladie extends Anomalie {
         super(c);
         maladie = "Maladie";
     }
+
     /**
      * Fonction qui retourne la description
      * @return Description

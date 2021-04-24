@@ -14,7 +14,6 @@ public class TestVisionGUI {
 
 	/**
 	 * Fonction principale
-	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {

@@ -246,8 +246,8 @@ public class Traitement{
 
     /**
      * Bouge gauche droite haut ou bas
-     * @param x
-     * @param y
+     * @param x Position x
+     * @param y Position Y
      * @return etat
      */
     public int move(int x, int y){
@@ -734,8 +734,10 @@ public class Traitement{
     public Element getSelected() {
         return selected;
     }
+
     /**
      * Fonction qui définit l'élément sélectionné
+     * @param selected Nouvel élément sélectionné
      */
     public void setSelected(Element selected) {
         this.selected = selected;

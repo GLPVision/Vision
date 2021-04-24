@@ -9,27 +9,37 @@ import config.Configuration;
  * @version 4
  */
 public class Carte {
+
+    /**
+     * Taille de la carte
+     */
     private Coordonnees taille;
+
     /**
      * Matrice de dimension 2 / carte
      */
     private Element[][] tab;
+
     /**
      * Booléen true=otage, false=agricole
      */
     private boolean otage = false;
+
     /**
      * Nombre d'anomalies
      */
     private int nb_anomalie;
+
     /**
      * Nombre d'otages
      */
     private int nb_otage;
+
     /**
      * Nombre d'asaillants
      */
     private int nb_assaillant;
+
     /**
      * Constructeur, initialise les variables
      * @param taille Taille de la carte
@@ -98,6 +108,7 @@ public class Carte {
             }
         }
     }
+
     /**
      * Fonction pour afficher la carte dans le terminal (pour tester)
      */

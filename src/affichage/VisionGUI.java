@@ -19,15 +19,47 @@ import java.awt.event.ActionListener;
  */
 public class VisionGUI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Journalisation
+	 */
 	private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
+
+	/**
+	 * Fenêtre
+	 */
 	private JPanel contentPane;
+
+	/**
+	 * Boutons de choix de scénario
+	 */
 	private JButton agricole, otage;
+
+	/**
+	 * Coordonnées de départ et de fin
+	 */
 	private JTextField depart, fin, choix, xinit, yinit, xfin, yfin;
+
+	/**
+	 * Logo
+	 */
 	private JLabel droneimg;
+
+	/**
+	 * Image du drone
+	 */
 	private ImageIcon img;
+
+	/**
+	 * Icône du drone
+	 */
 	private Image drone;
-	
+
+	/**
+	 * Constructeur, initialise la fenêtre
+	 */
 	public VisionGUI(){
+
 		/**
 		 * Définition du nom de la fenêtre
 		 */
@@ -176,6 +208,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 		this.setVisible(true);
 		logger.info("Fenêtre principale construite");
 	}
+
 	/**
 	 * permet d'interagir avec les boutons
 	 */
@@ -211,6 +244,10 @@ public class VisionGUI extends JFrame implements ActionListener {
 					logger.error("Coordonnées invalides");
 				}
 				else{
+
+					/**
+					 * Création du scénario
+					 */
 					logger.info("Création d'une fenêtre Agricole");
 					AgricoleGUI fen = null;
 					fen = new AgricoleGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y));
@@ -266,6 +303,9 @@ public class VisionGUI extends JFrame implements ActionListener {
 							}
 						}
 						if(txt != null){
+							/**
+							 * Création du scénario
+							 */
 							logger.info("Création d'une fenêtre Otage");
 							OtageGUI fen = null;
 							fen = new OtageGUI(new Coordonnees(Integer.parseInt(xinit.getText()), Integer.parseInt(yinit.getText())), new Coordonnees(x, y), Integer.parseInt(txt));

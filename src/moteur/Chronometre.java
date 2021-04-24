@@ -6,14 +6,17 @@ package moteur;
  * @version 1
  */
 public class Chronometre {
+
     /**
      * Seconde
      */
     private int s;
+
     /**
      * Minute
      */
     private int m;
+
     /**
      * Heure
      */

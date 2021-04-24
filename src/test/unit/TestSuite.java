@@ -10,6 +10,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({TestTraitement.class})
+
 /**
  * Classe qui lance tous les tests
  */

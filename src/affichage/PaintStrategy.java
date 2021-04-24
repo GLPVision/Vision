@@ -14,38 +14,47 @@ import java.io.IOException;
  * @version 3
  */
 public class PaintStrategy {
+
     /**
      * Hauteur et largeur des cases
      */
     private int width, height;
+
     /**
      * rayon du icônes
      */
     private int size;
+
     /**
      * Image de champ
      */
     private Image champ = ImageIO.read(ClassLoader.getSystemResource("champ.jpg"));
+
     /**
      * Image de bâtiments
      */
     private Image bat = ImageIO.read(ClassLoader.getSystemResource("fondotage.png"));
+
     /**
      * Image de personne
      */
     private Image personne = ImageIO.read(ClassLoader.getSystemResource("personne.png"));
+
     /**
      * Image d'inconnue
      */
     private Image inconnue = ImageIO.read(ClassLoader.getSystemResource("inconnue.png"));
+
     /**
      * Image de feu
      */
     private Image feu = ImageIO.read(ClassLoader.getSystemResource("feu.png"));
+
     /**
      * Image d'intrusion
      */
     private Image intrusion = ImageIO.read(ClassLoader.getSystemResource("intrusion.png"));
+
     /**
      * Image de virus
      */
@@ -105,6 +114,7 @@ public class PaintStrategy {
         Coordonnees pos = f.getCoordonnees();
         graphics.drawImage(feu, pos.getX()*width+(width/2-size/2), pos.getY()*height+(height/2-size/2), null, null); //dessine
     }
+
     /**
      * Dessine les intrusions
      * @param i liste des intrusions
@@ -115,6 +125,7 @@ public class PaintStrategy {
         Coordonnees pos = i.getCoordonnees();
         graphics.drawImage(intrusion, pos.getX()*width+(width/2-size/2), pos.getY()*height+(height/2-size/2), null, null); //dessine
     }
+
     /**
      * Dessine les maladies
      * @param m liste des maladies
@@ -125,6 +136,7 @@ public class PaintStrategy {
         Coordonnees pos = m.getCoordonnees();
         graphics.drawImage(maladie, pos.getX()*width+(width/2-size/2), pos.getY()*height+(height/2-size/2), null, null); //dessine
     }
+
     /**
      * Dessine les individus
      * @param p liste des individus
@@ -135,6 +147,7 @@ public class PaintStrategy {
         Coordonnees pos = p.getCoordonnees();
         graphics.drawImage(personne, pos.getX()*width+(width/2-size/2), pos.getY()*height+(height/2-size/2), null, null); //dessine
     }
+
     /**
      * Entoure les éléments
      * @param e liste des éléments à entourer
@@ -163,7 +176,6 @@ public class PaintStrategy {
             graphics.setColor(Color.BLACK); //noir
         }
         catch (NullPointerException nullPointerException){ //aucun élément sélectionné
-
         }
     }
 }

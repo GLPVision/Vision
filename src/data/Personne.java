@@ -6,10 +6,12 @@ package data;
  * @version 2
  */
 public class Personne extends Element {
+
     /**
      * Description
      */
     private String personne;
+
     /**
      * Constructeur, initialise les variables
      * @param c Coordonnées
@@ -18,6 +20,7 @@ public class Personne extends Element {
         super(c);
         this.personne = "Individu";
     }
+
     /**
      * Fonction qui retourne la description
      * @return Description

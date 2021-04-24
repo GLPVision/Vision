@@ -8,11 +8,17 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNull;
 
-public class TestTraitement {/**
- * Traitement
- */
-private Traitement otage;
-private Traitement agricole;
+public class TestTraitement {
+
+    /**
+     * Traitement prise d'otage
+     */
+    private Traitement otage;
+
+    /**
+     * Traitement agricole
+     */
+    private Traitement agricole;
 
     /**
      * prepartaion

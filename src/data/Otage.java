@@ -6,6 +6,7 @@ package data;
  * @version 2
  */
 public class Otage extends Scenario{
+
     /**
      * Constructeur, initialise les variables
      * @param taille Taille de la carte

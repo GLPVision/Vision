@@ -31,35 +31,91 @@ import java.io.IOException;
 
 public class AgricoleGUI extends JFrame implements Runnable{
 	private static final long serialVersionUID = 1L;
-	private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
-	private Info infoPanel;
-	private Display carte;
-	private JPanel contentPane;
-	private JMenuBar menu;
-	private JMenu Fichier, Apparence;
-	private JMenuItem recherche, quitter, sombre, clair, Aide;
-	private JTextField nomcarte, info, date;
-	private Traitement traitement;
-	private Coordonnees taille, debut;
-	private JSlider vitesse;
-	private JLabel numero;
-	
+
 	/**
-	 * largeur à soustraire, hauteur à soustraire, largeur de case, hauteur de case
+	 * Journalisation
+	 */
+	private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
+
+	/**
+	 * Panneau d'informations
+	 */
+	private Info infoPanel;
+
+	/**
+	 * Carte
+	 */
+	private Display carte;
+
+	/**
+	 * Fenêtre du scénario
+	 */
+	private JPanel contentPane;
+
+	/**
+	 * Barre de menu
+	 */
+	private JMenuBar menu;
+
+	/**
+	 * Eléments de la barre de menu
+	 */
+	private JMenu Fichier, Apparence;
+
+	/**
+	 * Sous-éléments de la barre de menu
+	 */
+	private JMenuItem recherche, quitter, sombre, clair, Aide;
+
+	/**
+	 * Etiquettes et horloge
+	 */
+	private JTextField nomcarte, info, date;
+
+	/**
+	 * Traitement
+	 */
+	private Traitement traitement;
+
+	/**
+	 * Taille de la carte et coordonnées du début
+	 */
+	private Coordonnees taille, debut;
+
+	/**
+	 * Curseur de vitesse de simulation
+	 */
+	private JSlider vitesse;
+
+	/**
+	 * Indicateur de la vitesse de simulation
+	 */
+	private JLabel numero;
+
+	/**
+	 * Largeur à soustraire, hauteur à soustraire, largeur de case, hauteur de case
 	 */
 	private int diffx, diffy, casex, casey;
+
 	/**
 	 * Etat du Thread
 	 */
 	private boolean running = true;
-	private Chronometre chronometre;
-	private int speed = Configuration.BASE_SPEED;
-
 
 	/**
-	 * 
-	 * @param debut
-	 * @param taille
+	 * Horloge
+	 */
+	private Chronometre chronometre;
+
+	/**
+	 * Vitesse de simulation
+	 */
+	private int speed = Configuration.BASE_SPEED;
+
+	/**
+	 * Constructeur, initialise les variables
+	 * @param debut Coordonnées du début
+	 * @param taille Taille de la carte
 	 */
 	public AgricoleGUI(Coordonnees debut, Coordonnees taille) {
 		/**
@@ -71,11 +127,20 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		logger.info("Affichage de la fenêtre d'agriculture");
 	}
 
-
+	/**
+	 * Initialisation de la fenêtre
+	 * @param debut Coordonnées du début
+	 * @param taille Taille de la carte
+	 * @throws IOException Exception lié aux images
+	 */
 	public void init(Coordonnees debut, Coordonnees taille) throws IOException {
+		/**
+		 * Définition des listeners
+		 */
 		ActionBar actionListener = new ActionBar();
 		Click click = new Click();
 		Slider slider = new Slider();
+
 		/**
 		 * Définition de la fenêtre		
 		 */
@@ -166,14 +231,20 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		nomcarte.setEditable(false);
 		nomcarte.setBackground(SystemColor.activeCaption);
 		nomcarte.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
-		
+
+		/**
+		 * Mise en place de l'indicateur de vitesse de simulation
+		 */
 		numero = new JLabel();
 		numero.setHorizontalAlignment(SwingConstants.LEFT);
 		numero.setBounds(640, 28, 150, 15);
 		contentPane.add(numero);
 		numero.setText("Vitesse de simulation : 1");
 		numero.setForeground(Color.white);
-		
+
+		/**
+		 * Mise en place du curseur de la vitesse de simulation
+		 */
 		vitesse = new JSlider();
 		vitesse.setBounds(800, 25, 100, 25);
 		contentPane.add(vitesse);
@@ -182,8 +253,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		vitesse.setMaximum(10);
 		vitesse.setValue(1);
 		vitesse.addChangeListener(slider);
-		
-		
+
 		/**
 		 * Mise en place du nom au dessus du cadre d'informations
 		 */
@@ -197,8 +267,14 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		info.setBackground(SystemColor.activeCaption);
 		info.setBorder(new MatteBorder(3, 3, 0, 3, (Color) Color.BLACK));
 
+		/**
+		 * Initialisation du traitement
+		 */
 		traitement = new Traitement(taille, debut);
-		
+
+		/**
+		 * Calcul de la taille des différents composants de la fenêtre
+		 */
 		casex = 950/traitement.getTaille().getX();
 		casey = 600/traitement.getTaille().getY();
 		int taillex = casex*traitement.getTaille().getX();
@@ -206,6 +282,9 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		diffy = 600-tailley;
 		diffx = 950-taillex;
 
+		/**
+		 * Mise en place de l'affichage de l'horloge
+		 */
 		date = new JTextField();
 		date.setHorizontalAlignment(SwingConstants.LEFT);
 		date.setBounds(1104-diffx, 25, 120, 25);
@@ -263,6 +342,10 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		/**
+		 * Initialisation de l'horloge
+		 */
 		chronometre = new Chronometre();
 		
 		/**
@@ -275,10 +358,9 @@ public class AgricoleGUI extends JFrame implements Runnable{
 
 			/**
 			 * Si le scan n'est pas terminé
-			 * 
 			 * Mise à jour des informations sans remettre la liste à zéro
-			 * 
 			 * Mise à jour de la carte
+			 * Avancement du temps
 			 */
 			if(state == 0){
 				try {
@@ -294,10 +376,9 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			
 			/**
 			 * Si le scan a rencontré un changement
-			 * 
 			 * Mise à jour des informations sans remettre la liste à zéro
-			 * 
 			 * Mise à jour de la carte
+			 * Avancement du temps
 			 */
 			else {
 				try {
@@ -311,6 +392,10 @@ public class AgricoleGUI extends JFrame implements Runnable{
 				}
 				timer = timer + Configuration.BASE_SPEED*(Configuration.BASE_SPEED/speed);
 			}
+
+			/**
+			 * Mise à jour de l'horloge
+			 */
 			if(timer/1000 > s){
 				for(int i=0 ; i<timer/1000-s ; i++){
 					incrementer();
@@ -340,6 +425,9 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		date.setText(" Temps : " + chronometre.getTimer());
 	}
 
+	/**
+	 * Actions de la barre de menu
+	 */
 	private class ActionBar implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -404,14 +492,12 @@ public class AgricoleGUI extends JFrame implements Runnable{
 				infoPanel.setInfoBackground(Color.white);
 			}
 
-
 			/**
 			 * Action affichant l'aide
 			 */
 			if(e.getSource()==Aide) {
 				JOptionPane.showMessageDialog(AgricoleGUI.this, "Bienvenue sur Vision Détection ! \n\nNotre application vous permet de détecter une anomalie dans un champ agricole quelque soit l'origine de celui-ci.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivée pour que le drone puisse s'envoler et survoler l'endroit désiré.\n\nDe nombreuses informations sont disponibles à gauche de la cartographie pour que vous puissiez anticiper d'éventuels dommages causés par les anomalies. \nCela grâce à leur coordonnées GPS exacte et les images renvoyées en temps réel.\n\nAidez-nous à protéger notre champ agricole !", "Aide", JOptionPane.INFORMATION_MESSAGE);
 				logger.info("Affichage de l'aide");
-				
 			}
 
 			/**
@@ -427,12 +513,12 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		}
 	}
 
+	/**
+	 * Actions de la souris sur la carte
+	 */
 	private class Click implements MouseListener {
-
 		/**
-		 * 
 		 * Mise en place des évènement (actions réalisés lors d'une interraction avec la souris
-		 * 
 		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -465,8 +551,13 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		}
 	}
 
+	/**
+	 * Actions du curseur de vitesse de simulation
+	 */
 	private class Slider implements ChangeListener {
-
+		/**
+		 * Changement de valeur
+		 */
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			numero.setText("Vitesse de simulation : " + vitesse.getValue());

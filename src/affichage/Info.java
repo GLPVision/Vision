@@ -21,20 +21,63 @@ import java.awt.event.ActionListener;
 
 public class Info extends JPanel {
 	private static final long serialVersionUID = 1L;
+
+    /**
+     * Journalisation
+     */
     private static Logger logger = LoggerUtility.getLogger(AgricoleGUI.class);
+
+    /**
+     * Etiquette anomalie actuelle, anomalies actuelle, étiquette liste d'anomalies, étiquette nombre d'anomalies, nombre d'anomalies de chaque types, nombre total d'anomalies
+     */
     private JLabel txt_anomalie, anomalie, txt_liste_anomalie, txt_nb_anomalie, nb_anomalie, total_anomalie;
-	private JLabel nb_otage, txt_individu, individu, txt_liste_individu, total_individu, total_assaillant;
+
+    /**
+     * Nombre d'otages, étiquette individu actuel, individu actuel, étiquete liste d'individus, nombre total d'individus, nombre d'assaillants
+     */
+    private JLabel nb_otage, txt_individu, individu, txt_liste_individu, total_individu, total_assaillant;
+
+    /**
+     * Liste d'anomalies ou d'individus
+     */
     private JTextArea liste;
+
+    /**
+     * Curseur si la liste est longue
+     */
     private JScrollPane scrollPane;
+
+    /**
+     * Panneau de boutons
+     */
     private JPanel buttonPanel;
+
+    /**
+     * Boutons anomalie/assaillant suivant et précédent
+     */
     private JButton next, prec;
+
+    /**
+     * Traitement
+     */
     private Traitement traitement;
+
+    /**
+     * Carte
+     */
     private Display display;
-    
+
+    /**
+     * Constructeur, initialise le panneau
+     * @param traitement Traitement
+     * @param diffy Hauteur à soustraire
+     * @param display Carte
+     */
     public Info(Traitement traitement, int diffy, Display display) {
         this.traitement = traitement;
         this.display = display;
         if(traitement.isOtage()){
+
             /**
              * Mise en place de l'encadré de texte affichant le nombre d'otages rempli par l'utilisateur au préalable
              */
@@ -85,7 +128,6 @@ public class Info extends JPanel {
             /**
              * Mise en place de la liste contenant les informations sur les individus de la carte
              */
-            
             liste = new JTextArea();
             liste.setEditable(false);
             scrollPane.setViewportView(liste);
@@ -110,12 +152,16 @@ public class Info extends JPanel {
             total_assaillant.setBorder(new MatteBorder(0, 0, 3, 0, (Color) Color.BLACK));
             total_assaillant.setBounds(0, 450, 255, 30);
             this.add(total_assaillant);
-            
+
+            /**
+             * Mise en place des boutons
+             */
             prec = new JButton("Assaillant précédent");
             next = new JButton("Assaillant suivant");
             
         }
         else{
+
             /**
              * Mise en place de l'encadré de texte affichant l'anomalie sélectionnée sur la carte
              */
@@ -192,12 +238,15 @@ public class Info extends JPanel {
             this.add(total_anomalie);
             
             /**
-             * Texte des boutons
+             * Mise en place des boutons
              */
             prec = new JButton("Anomalie précédente");
             next = new JButton("Anomalie suivante");
         }
-        
+
+        /**
+         * Mise en place du panneau de boutons
+         */
         buttonPanel = new JPanel();
         buttonPanel.setBorder(new MatteBorder(0, 3, 3, 3, (Color) new Color(0, 0, 0)));
         buttonPanel.setBounds(0, 480, 255, 120-diffy);
@@ -225,7 +274,10 @@ public class Info extends JPanel {
         this.setBorder(new MatteBorder(3, 3, 3, 3, (Color) Color.BLACK));
         this.setLayout(null);
         this.setBackground(new Color(204, 190, 121));
-        
+
+        /**
+         * Layout du panneau de boutons pour que la taille et la position des boutons se régulent
+         */
         SpringLayout sl_panel = new SpringLayout();
         buttonPanel.setLayout(sl_panel);
         sl_panel.putConstraint(SpringLayout.SOUTH, next, -10, SpringLayout.SOUTH, buttonPanel);
@@ -236,8 +288,7 @@ public class Info extends JPanel {
         sl_panel.putConstraint(SpringLayout.EAST, prec, -10, SpringLayout.EAST, buttonPanel);
         sl_panel.putConstraint(SpringLayout.WEST, next, 10, SpringLayout.WEST, buttonPanel);
         sl_panel.putConstraint(SpringLayout.EAST, next, -10, SpringLayout.EAST, buttonPanel);
-        
-        
+
         /**
          * Ajout des boutons à l'application
          */
@@ -248,8 +299,7 @@ public class Info extends JPanel {
 
     /**
      * Mise en place des changements de couleur de background des boutons pour les thèmes d'apparence
-     * 
-     * @param color
+     * @param color Couleur
      */
     public void setButtonBackground(Color color) {
     	next.setBackground(color);
@@ -258,8 +308,7 @@ public class Info extends JPanel {
     
     /**
      * Mise en place des changements de couleur de texte des boutons pour les thèmes d'apparence
-     * 
-     * @param color
+     * @param color Couleur
      */
     public void setButtonForeground(Color color) {
     	next.setForeground(color);
@@ -268,8 +317,7 @@ public class Info extends JPanel {
     
     /**
      * Mise en place des changements de couleur des différentes informations qui s'affichent dans la grille d'information
-     *     
-     * @param color
+     * @param color Couleur
      */
     public void setInfoBackground (Color color){
     	liste.setBackground(color);
@@ -279,18 +327,16 @@ public class Info extends JPanel {
 
     /**
      * Met à jour la liste
-     * 
      * @param reset Remise à zéro
      */
     public void majGUI(boolean reset){
     	
     	/**
-    	 * 
     	 * Scénario Otage
-    	 * 
     	 */
         if (traitement.isOtage()){
             try{
+
             	/**
             	 * Si la case sélectionnée ne contient rien
             	 */
@@ -299,6 +345,7 @@ public class Info extends JPanel {
                     logger.info("Aucun Individu en : " + (traitement.getSelected().getCoordonnees().getX()+traitement.getDebut().getX()) + ", " + (traitement.getSelected().getCoordonnees().getY()+traitement.getDebut().getY()));
 
                 }
+
                 /**
                  * Si la case sélectionnée contient une image supplémentaire de celle du fond
                  */
@@ -356,12 +403,9 @@ public class Info extends JPanel {
             logger.info("Nombre d'otages : " + traitement.getNbOtage());
             logger.info("Nombre total d'assaillants : " + traitement.getNbAssaillant());
         }
-        
-        
+
         /**
-         * 
          * Scénario Agricole
-         * 
          */
         else {
             try{
@@ -418,12 +462,19 @@ public class Info extends JPanel {
         }
     }
 
+    /**
+     * Actions des boutons
+     */
 	private class ButtonsListener implements ActionListener{
         @Override
         /**
-         * mise en place des action réalisées par les boutons
+         * Mise en place des action réalisées par les boutons
          */
         public void actionPerformed(ActionEvent e) {
+
+            /**
+             * Suivant
+             */
             if(e.getSource()==next) {
                 try{
                     traitement.next();
@@ -433,6 +484,10 @@ public class Info extends JPanel {
                     logger.error("Aucun élément entouré");
                 }
             }
+
+            /**
+             * Précédent
+             */
             if(e.getSource()==prec) {
                 try{
                     traitement.previous();
@@ -442,6 +497,10 @@ public class Info extends JPanel {
                     logger.error("Aucun élément entouré");
                 }
             }
+
+            /**
+             * Mise à jour de la fenêtre
+             */
             majGUI(false);
             display.repaint();
         }

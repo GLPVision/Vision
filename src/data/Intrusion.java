@@ -6,10 +6,12 @@ package data;
  * @version 2
  */
 public class Intrusion extends Anomalie{
+
     /**
      * Description
      */
     private String intrusion;
+
     /**
      * Constructeur, initialise les variables
      * @param c Coordonnées
@@ -18,6 +20,7 @@ public class Intrusion extends Anomalie{
         super(c);
         intrusion = "Intrusion";
     }
+
     /**
      * Fonction qui retourne la description
      * @return Description
