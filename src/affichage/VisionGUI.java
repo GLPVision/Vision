@@ -235,7 +235,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 			else{
 				int x = Math.abs(Integer.parseInt(xfin.getText())+1 - Integer.parseInt(xinit.getText()));
 				int y = Math.abs(Integer.parseInt(yfin.getText())+1 - Integer.parseInt(yinit.getText()));
-				if(x == 0 || y == 0){
+				if(x-1 == 0 || y-1 == 0 || x-1 > 30 || y-1 > 30){
 
 					/**
 					 * Affichage d'un message d'erreur si les coordonnées saisie ne sont pas valides
@@ -279,7 +279,7 @@ public class VisionGUI extends JFrame implements ActionListener {
 			else {
 				int x = Math.abs(Integer.parseInt(xfin.getText())+1 - Integer.parseInt(xinit.getText()));
 				int y = Math.abs(Integer.parseInt(yfin.getText())+1 - Integer.parseInt(yinit.getText()));
-				if(x == 0 || y == 0){
+				if(x-1 == 0 || y-1 == 0 || x-1 > 30 || y-1 > 30){
 
 					/**
 					 * Affichage d'un message d'erreur si les coordonnées saisie ne sont pas valides
