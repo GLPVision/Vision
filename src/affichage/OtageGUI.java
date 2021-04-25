@@ -445,7 +445,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			if(e.getSource()==sombre) {
 				contentPane.setBackground(Color.DARK_GRAY);
 				logger.info("Passage au thème sombre");
-				menu.setBackground(Color.LIGHT_GRAY);//Couleur de l'arri�re plan de la barre de menu
+				menu.setBackground(Color.LIGHT_GRAY);//Couleur de l'arrière plan de la barre de menu
 				Aide.setBackground(Color.LIGHT_GRAY);
 				Aide.setForeground(null);
 				Fichier.setForeground(null);
@@ -471,7 +471,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			if(e.getSource()==clair) {
 				contentPane.setBackground(new Color(145,203,222));
 				logger.info("Passage au thème clair");
-				menu.setBackground(new Color(84,96,143));//Couleur de l'arri�re plan de la barre de menu
+				menu.setBackground(new Color(84,96,143));//Couleur de l'arrière plan de la barre de menu
 				Aide.setBackground(new Color(84,96,143));
 				Aide.setForeground(Color.white);
 				Fichier.setForeground(Color.white);
@@ -495,7 +495,7 @@ public class OtageGUI extends JFrame implements Runnable {
 			 * Action affichant l'aide
 			 */
 			if(e.getSource()==Aide) {
-				JOptionPane.showMessageDialog(OtageGUI.this, "Bienvenue sur Vision Détection ! \n\nNotre application vous permet de repérer le nombre d'aissaillants lors d'une prise d'otage.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivée pour que le drone puisse s'envoler et survoler l'endroit désiré. \n\nA gauche, de nombreuse informations sont disponibles pour que vous puissiez localiser l'endroit précis de ces malfaiteurs.\nIl est aussi possible de determiner leur nombre précis grâce aux images renvoyées en temps réel.\n\nAidez-nous à sauvez les otages en collaborant avec les forces de l'orde !\n", "Aide", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(OtageGUI.this, "Bienvenue sur Vision Détection ! \n\nNotre application vous permet de repérer le nombre d'aissaillants lors d'une prise d'otage.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivée pour que le drone puisse s'envoler et survoler l'endroit désiré. \n\nA gauche, de nombreuse informations sont disponibles pour que vous puissiez localiser l'endroit précis de ces malfaiteurs.\nIl est aussi possible de déterminer leur nombre précis grâce aux images renvoyées en temps réel.\n\nAidez-nous à sauvez les otages en collaborant avec les forces de l'ordre !\n", "Aide", JOptionPane.INFORMATION_MESSAGE);
 				logger.info("Affichage de l'aide");
 			}
 
@@ -503,7 +503,6 @@ public class OtageGUI extends JFrame implements Runnable {
 			 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 			 */
 			if(e.getSource()==recherche) {
-				@SuppressWarnings("unused")
 				VisionGUI fen = new VisionGUI();
 				OtageGUI.this.setVisible(false);
 				OtageGUI.this.stop();

@@ -85,7 +85,7 @@ public class PaintStrategy {
         if(carte.isOtage())
             fond = bat.getScaledInstance(width, height, Image.SCALE_DEFAULT); //batiment
         else
-            fond = champ.getScaledInstance(width, height, Image.SCALE_DEFAULT); //champ
+            fond = champ.getScaledInstance(width, height, Image.SCALE_DEFAULT); //champs
         for(int i=0 ; i< taille.getY() ; i++){ //dessine fond dans chaque cases
             for(int j=0 ; j< taille.getX() ; j++){
                 g.drawImage(fond, (j*width), (i*height), null, null); //dessine

@@ -155,7 +155,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		 */
 		menu = new JMenuBar();//Barre de menu
 		setJMenuBar(menu);
-		menu.setBackground(Color.lightGray);//Couleur de l'arri�re plan
+		menu.setBackground(Color.lightGray);//Couleur de l'arrière plan
 	
 		/**
 		 * Mise en place de l'onglet "Fichier"		
@@ -166,7 +166,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		/**
 		 * Mise en place de l'onglet "Apparence"
 		 */
-		Apparence = new JMenu("Apparence");//Permet � l'utuilisateur de choisir entre le th�me sombre et le th�me clair
+		Apparence = new JMenu("Apparence");//Permet à l'utuilisateur de choisir entre le thème sombre et le thème clair
 		menu.add(Apparence);
 		
 		/**
@@ -200,7 +200,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 		/**
 		 * Mise en place de la fonctionnalité pour quitter l'application
 		 */
-		quitter = new JMenuItem("Quitter/Fermer Vision Détection");//Permet � l'utilisateur de quitter l'application
+		quitter = new JMenuItem("Quitter/Fermer Vision Détection");//Permet à l'utilisateur de quitter l'application
 		Fichier.add(quitter);
 		quitter.addActionListener(actionListener);
 		
@@ -446,7 +446,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			if(e.getSource()==sombre) {
 				contentPane.setBackground(Color.DARK_GRAY);
 				logger.info("Passage au thème sombre");
-				menu.setBackground(Color.LIGHT_GRAY);//Couleur de l'arri�re plan de la barre de menu
+				menu.setBackground(Color.LIGHT_GRAY);//Couleur de l'arrière plan de la barre de menu
 				Aide.setBackground(Color.LIGHT_GRAY);
 				Aide.setForeground(null);
 				Fichier.setForeground(null);
@@ -472,7 +472,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			if(e.getSource()==clair) {
 				contentPane.setBackground(new Color(145,203,222));
 				logger.info("Passage au thème clair");
-				menu.setBackground(new Color(84,96,143));//Couleur de l'arri�re plan de la barre de menu
+				menu.setBackground(new Color(84,96,143));//Couleur de l'arrière plan de la barre de menu
 				Aide.setBackground(new Color(84,96,143));
 				Aide.setForeground(Color.white);
 				Fichier.setForeground(Color.white);
@@ -496,7 +496,7 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 * Action affichant l'aide
 			 */
 			if(e.getSource()==Aide) {
-				JOptionPane.showMessageDialog(AgricoleGUI.this, "Bienvenue sur Vision Détection ! \n\nNotre application vous permet de détecter une anomalie dans un champ agricole quelque soit l'origine de celui-ci.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivée pour que le drone puisse s'envoler et survoler l'endroit désiré.\n\nDe nombreuses informations sont disponibles à gauche de la cartographie pour que vous puissiez anticiper d'éventuels dommages causés par les anomalies. \nCela grâce à leur coordonnées GPS exacte et les images renvoyées en temps réel.\n\nAidez-nous à protéger notre champ agricole !", "Aide", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(AgricoleGUI.this, "Bienvenue sur Vision Détection ! \n\nNotre application vous permet de détecter une anomalie dans un champs agricole quelque soit l'origine de celui-ci.\nVous devrez entrer des coordonnées de départ et des coordonnées d'arrivée pour que le drone puisse s'envoler et survoler l'endroit désiré.\n\nDe nombreuses informations sont disponibles à gauche de la cartographie pour que vous puissiez anticiper d'éventuels dommages causés par les anomalies. \nCela, grâce à leur coordonnées GPS exactes et les images renvoyées en temps réel.\n\nAidez-nous à protéger notre champ agricole !", "Aide", JOptionPane.INFORMATION_MESSAGE);
 				logger.info("Affichage de l'aide");
 			}
 
@@ -504,7 +504,6 @@ public class AgricoleGUI extends JFrame implements Runnable{
 			 * Action fermant la fenêtre actuelle et renvoyant vers la fenêtre d'accueil
 			 */
 			if(e.getSource()==recherche) {
-				@SuppressWarnings("unused")
 				VisionGUI fen = new VisionGUI();
 				AgricoleGUI.this.setVisible(false);
 				AgricoleGUI.this.stop();
