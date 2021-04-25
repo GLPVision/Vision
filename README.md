@@ -20,6 +20,11 @@ Les livrables sont :
 
 --------------------------------
 
+Prérequis :
+Java version 11 ou supérieur
+
+--------------------------------
+
 Exécuter le programme :
 
 java -jar Vision.jar
@@ -41,3 +46,5 @@ Exécuter le programme sur Eclipse :
 --------------------------------
 
 Le Manuel Utilisateur se trouve dans le rapport du projet.
+
+--------------------------------
